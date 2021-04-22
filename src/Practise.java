@@ -1,9 +1,43 @@
 public class Practise {
 
     public static void main(String[] args) {
-       int[] a = {1,2,3,4,5,6,7,8};
+		int[][] arr = new int[][]{{2},{3,4},{6,5,7},{4,1,8,3}};
+//		[[2],[3,4],[6,5,7],[4,1,8,3]]
 
-        leftRotate(a,3,a.length);
+		minSumInTriangle(arr);
+
+    }
+
+    public static void minSumInTriangle(int[][] triangle){
+
+    	int min_sum = triangle[0][0];
+    	int n = triangle.length;
+
+		int index = 0;
+    	for (int i=1;i<n ;i++ ) {
+    		if (triangle[i][index] < triangle[i][index+1]){
+    			min_sum += triangle[i][index];
+			}else {
+    			min_sum += triangle[i][index+1];
+    			index += 1;
+			}
+    	}
+
+    	System.out.println(min_sum);
+    }
+
+
+    public static void leadersOfArray(int[] arr,int size){
+		for (int i = 0; i < size; i++) {
+			int j;
+			for (j = i + 1; j < size; j++) {
+				if (arr[i] < arr[j])
+					break;
+			}
+			if (j == size)
+				System.out.print(arr[i] + " ");
+		}
+
     }
 
     public static void leftRotate(int[] arr,int d,int n){
