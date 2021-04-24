@@ -1,13 +1,15 @@
 public class Practise {
 
     public static void main(String[] args) {
-		int[][] arr = new int[][]{{2},{3,4},{6,5,7},{4,1,8,3}};
-//		[[2],[3,4],[6,5,7],[4,1,8,3]]
-
-
-
+		System.out.println(trapRainWater(new int[]{5,0,6,2,3}));
     }
 
+    public static void printArray(int[] a){
+		for (int x:a
+			 ) {
+			System.out.println(x);
+		}
+	}
    public static int trapRainWater(int[] heights){
 
 	   	int water = 0;
@@ -20,13 +22,18 @@ public class Practise {
 		for(int i = 1 ; i < n ;i++){
 			leftSide[i] = Math.max(heights[i],leftSide[i-1]);
 		}
+		printArray(leftSide);
 
 		rightSide[n-1] = heights[n-1];
 		for (int j = n-2;j >= 0 ;j-- ) {
-			rightSide[j] = Math.max(rightSide[j-1],heights[j]);
+			rightSide[j] = Math.max(rightSide[j+1],heights[j]);
 		}
 
-		for(int i = 1 ;i < n-2 ;i++){
+	   	System.out.println("-----------");
+		printArray(rightSide);
+
+
+		for(int i = 1 ;i < n-1 ;i++){
 			water += Math.min(rightSide[i],leftSide[i]) - heights[i];
 		}
 
