@@ -1,9 +1,32 @@
 public class Practise {
 
     public static void main(String[] args) {
-		System.out.println(trapRainWater(new int[]{5,0,6,2,3}));
+		int b= maxSubArray(new int[]{-3,8,-2,4,-5,6},6);
+		System.out.println(b);
     }
+	//Kadane's Algorithm.
+    public static int maxSubArray(int[] nums,int n){
+//    	int res = nums[0];
+//
+//    	for(int i = 1;i < n;  i++ ){
+//			System.out.println("Curr Res is :: " + res);
+//    		res = Math.max(nums[i] + res,res);
+//		}
+//
+				//WRONG ANSWER!!!!!!!!! because I am changing the main variable which was supposed to
+//		hold my max sum.
+//    	return  res;
+		int max=nums[0];
 
+		int curr_sum=max;
+
+		for(int i=1;i<nums.length;i++){
+
+			curr_sum=Math.max(nums[i],nums[i]+curr_sum);
+			max=Math.max(max,curr_sum);
+		}
+		return max;
+	}
 	public int maxSubArray(int[] nums) {
 		int max_sum = Integer.MIN_VALUE;
 		int n = nums.length;
