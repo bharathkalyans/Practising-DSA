@@ -4,13 +4,27 @@ public class Practise {
 		System.out.println(trapRainWater(new int[]{5,0,6,2,3}));
     }
 
+	public int maxSubArray(int[] nums) {
+		int max_sum = Integer.MIN_VALUE;
+		int n = nums.length;
+
+		for(int i=0;i<n;i++){
+			int curr_sum = nums[i];
+			for(int j = i+1 ;j<n;j++){
+				curr_sum += nums[j];
+				max_sum = Math.max(max_sum,curr_sum);
+			}
+		}
+		return max_sum;
+	}
+
     public static void printArray(int[] a){
 		for (int x:a
 			 ) {
 			System.out.println(x);
 		}
 	}
-   public static int trapRainWater(int[] heights){
+   	public static int trapRainWater(int[] heights){
 
 	   	int water = 0;
 
