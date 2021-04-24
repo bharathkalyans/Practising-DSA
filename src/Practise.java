@@ -4,27 +4,34 @@ public class Practise {
 		int[][] arr = new int[][]{{2},{3,4},{6,5,7},{4,1,8,3}};
 //		[[2],[3,4],[6,5,7],[4,1,8,3]]
 
-		minSumInTriangle(arr);
+
 
     }
 
-    public static void minSumInTriangle(int[][] triangle){
+   public static int trapRainWater(int[] heights){
 
-    	int min_sum = triangle[0][0];
-    	int n = triangle.length;
+	   	int water = 0;
 
-		int index = 0;
-    	for (int i=1;i<n ;i++ ) {
-    		if (triangle[i][index] < triangle[i][index+1]){
-    			min_sum += triangle[i][index];
-			}else {
-    			min_sum += triangle[i][index+1];
-    			index += 1;
-			}
-    	}
+	   	int n = heights.length;
+	   	int[] leftSide = new int[n];
+	   	int[] rightSide = new int[n];
 
-    	System.out.println(min_sum);
-    }
+	   	leftSide[0] = heights[0];
+		for(int i = 1 ; i < n ;i++){
+			leftSide[i] = Math.max(heights[i],leftSide[i-1]);
+		}
+
+		rightSide[n-1] = heights[n-1];
+		for (int j = n-2;j >= 0 ;j-- ) {
+			rightSide[j] = Math.max(rightSide[j-1],heights[j]);
+		}
+
+		for(int i = 1 ;i < n-2 ;i++){
+			water += Math.min(rightSide[i],leftSide[i]) - heights[i];
+		}
+
+		return water;
+   }
 
 
     public static void leadersOfArray(int[] arr,int size){
