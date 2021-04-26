@@ -1,9 +1,35 @@
 public class Practise {
 
     public static void main(String[] args) {
-		int b= maxSubArray(new int[]{-3,8,-2,4,-5,6},6);
-		System.out.println(b);
+		int[][] a = new int[][]{{1,2},{3,4}};
+		reverse(a);
+		printMatrix(a);
     }
+
+
+    public static void transposeOfMatrix(int[][] matrix){
+
+	}
+    public static void printMatrix(int[][]a){
+    	for (int[] x: a){
+    		for (int y : x){
+				System.out.print(y+" ");
+    		}
+			System.out.println();
+		}
+	}
+	public  static void reverse(int[][] matrix){
+		int n = matrix.length;
+		for(int i=0;i<n;i++){
+			for(int j=0;j<n/2;j++){
+				int temp = matrix[i][j];
+				matrix[i][j] = matrix[i][n-j-1];
+				matrix[i][n-j-1] = temp;
+			}
+		}
+	}
+
+
 	//Kadane's Algorithm.
     public static int maxSubArray(int[] nums,int n){
 //    	int res = nums[0];
