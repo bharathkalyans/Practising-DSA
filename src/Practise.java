@@ -1,12 +1,19 @@
 public class Practise {
 
     public static void main(String[] args) {
-		int[][] a = new int[][]{{1,2,3},{4,5,6},{7,8,9}};
-		transposeOfMatrix(a);
-		reverse(a);
-		printMatrix(a);
+
+		System.out.println(isPowerOfThree(24));
     }
 
+	public static boolean isPowerOfThree(int n) {
+		int i = 1;
+
+		while(i < n){
+			i = i * 3;
+		}
+
+		return i == n;
+	}
 
     public static void transposeOfMatrix(int[][] matrix){
 		int n = matrix.length;
