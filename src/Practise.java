@@ -2,9 +2,66 @@ public class Practise {
 
     public static void main(String[] args) {
 
-		int [][] grid =new int[][]{{0,0,0},{0,1,0},{0,0,0}};
-		System.out.println(uniquePathsWithObstacles(grid));
+	int[] a = new int[]{5,7,7,8,8,10};
+	int[] b = new Practise().searchRange(a,8);
+
+	for(int x: b)
+		System.out.println(x);
     }
+
+	public int[] searchRange(int[] nums, int target) {
+//		int first = -1,last = -1;
+//		boolean first_flag = false,last_flag = false;
+//		int low =0,high = nums.length - 1;
+//
+//
+//		while(low<high){
+//			if(first_flag && last_flag)
+//				break;
+//
+//			if(nums[low] == target && !first_flag){
+//				first = low;
+//				first_flag = true;
+//			}
+//			if(nums[high] == target && !last_flag){
+//				last = high;
+//				last_flag = true;
+//			}
+//			low++;
+//			high--;
+//		}
+//
+//
+//		int [] a = new int[]{first,last};
+//
+//		return a;
+		//Worst Solution Ever for a Simple Problem.
+
+		int first =-1,last = -1;
+
+		for(int i =0;i< nums.length;i++)
+			if (nums[i] == target){
+				first = i;
+			break;
+			}
+
+		for (int i = nums.length-1;i>=0;i--)
+			if (nums[i] == target){
+				last = i;
+			break;
+			}
+
+
+		int [] a = new int[]{first,last};
+
+		return a;
+
+	}
+
+
+
+
+
 
 	public int uniquePathsWithObstaclesDP(int[][] grid) {
 
