@@ -2,10 +2,31 @@ public class Practise {
 
     public static void main(String[] args) {
 
-		System.out.println(uniquePaths(3,7));
-		System.out.println(uniquePathsDP(3,7));
+		int [][] grid =new int[][]{{0,0,0},{0,1,0},{0,0,0}};
+		System.out.println(uniquePathsWithObstacles(grid));
     }
 
+	public static int uniquePathsWithObstacles(int[][] obstacleGrid) {
+
+    	int m = obstacleGrid.length;
+    	int n = obstacleGrid[m-1].length;
+
+    	return Uniquepaths(obstacleGrid, m -1 , n - 1,0,0);
+	}
+	public static int Uniquepaths(int[][] grid,int m,int n,int i,int j){
+    	if (i == m && j == n)
+    		return 1;
+    	else {
+    		if (i > m )
+    			return 0;
+    		if (j > n)
+    			return 0;
+    		if (grid[i][j] ==1)
+    		  	return 0;
+
+    		return Uniquepaths(grid,m,n,i+1,j) + Uniquepaths(grid,m,n,i,j+1);
+		}
+	}
     public static  int uniquePathsDP(int m,int n){
 
     	int[][] dp =new int[m][n];
