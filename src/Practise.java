@@ -2,8 +2,28 @@ public class Practise {
 
     public static void main(String[] args) {
 
-		System.out.println(isPowerOfThree(24));
+		System.out.println(uniquePaths(3,7));
     }
+
+	public static int uniquePaths(int m, int n) {
+		return up(1,1,m,n);
+	}
+
+	public static int up(int i,int j,int m,int n){
+    	if(i > m )
+    		return 0;
+    	if (j>n)
+    		return 0;
+    	if( i == m && j == n )
+    		return 1;
+    	else {
+    		return ( up(i+1,j,m,n) ) + up(i,j+1,m,n);
+		}
+	}
+//	public int uniquePathsWithObstacles(int[][] obstacleGrid) {
+//
+//
+//	}
 
 	public static boolean isPowerOfThree(int n) {
 		int i = 1;
