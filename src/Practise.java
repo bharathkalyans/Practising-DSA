@@ -14,8 +14,11 @@ public class Practise {
     	return Uniquepaths(obstacleGrid, m -1 , n - 1,0,0);
 	}
 	public static int Uniquepaths(int[][] grid,int m,int n,int i,int j){
-    	if (i == m && j == n)
-    		return 1;
+    	if (i == m && j == n && grid[i][j]!=1){
+    		if(grid[i][j] == 0)
+    			return 1;
+    		else return 0;
+    	}
     	else {
     		if (i > m )
     			return 0;
