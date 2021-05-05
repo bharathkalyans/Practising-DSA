@@ -1,13 +1,31 @@
+import java.util.Arrays;
+import java.util.Comparator;
+
 public class Practise {
 
     public static void main(String[] args) {
 
-	int[] a = new int[]{5,7,7,8,8,10};
-	int[] b = new Practise().searchRange(a,8);
+    	Integer[] a= new Integer[]{1,6,3,5,7,8,0,12,14,13};
+		Arrays.sort(a, new MyComp(){
+			@Override
+			public int compare(Integer a, Integer b) {
+				return super.compare(a, b);
+			}
+		});
 
-	for(int x: b)
-		System.out.println(x);
+		for (Integer x:
+			 a) {
+			System.out.println(x);
+		}
     }
+
+
+
+
+
+
+
+
 
 	public int[] searchRange(int[] nums, int target) {
 //		int first = -1,last = -1;
@@ -57,11 +75,6 @@ public class Practise {
 		return a;
 
 	}
-
-
-
-
-
 
 	public int uniquePathsWithObstaclesDP(int[][] grid) {
 
@@ -337,5 +350,12 @@ public class Practise {
 		for (int i=0 ;i<res ;i++ ) {
 			System.out.println(arr[i]);
 		}
+	}
+}
+
+class MyComp implements Comparator<Integer> {
+
+	public int compare(Integer a,Integer b){
+		return a%2 - b%2;
 	}
 }
