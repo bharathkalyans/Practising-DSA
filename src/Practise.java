@@ -5,23 +5,32 @@ public class Practise {
 
     public static void main(String[] args) {
 
-    	Integer[] a= new Integer[]{1,6,3,5,7,8,0,12,14,13};
-		Arrays.sort(a, new MyComp(){
-			@Override
-			public int compare(Integer a, Integer b) {
-				return super.compare(a, b);
-			}
-		});
+		System.out.println("------------------------------");
+		int x = minJumps(new int[]{2,3,0,1,1},5,0);
 
-		for (Integer x:
-			 a) {
-			System.out.println(x);
-		}
+		System.out.println("Min Jumps is :: " + x);
     }
 
 
 
+	public static int minJumps(int[] nums,int n,int currPos){
+    	if (currPos>=n-1)
+    		return 0;
 
+
+    	int minJump = Integer.MAX_VALUE;
+
+    	int maxSteps = nums[currPos];
+
+    	while(maxSteps>0){
+			minJump = Math.min(minJump,minJumps(nums,n,currPos + maxSteps) + 1);
+			maxSteps -= 1;
+		}
+
+
+    	return minJump;
+
+	}
 
 
 
