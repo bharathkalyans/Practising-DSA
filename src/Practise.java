@@ -5,13 +5,29 @@ public class Practise {
 
     public static void main(String[] args) {
 
-		System.out.println("------------------------------");
-		int x = minJumps(new int[]{2,3,0,1,1},5,0);
-
-		System.out.println("Min Jumps is :: " + x);
+    	InsertionSort(new int[]{12,0,9,-11111,0,121212,3,1,78,4});
     }
 
 
+
+    public static void InsertionSort(int []arr){
+    	for(int i=1;i<arr.length;i++){
+    		int key = arr[i];
+    		int j = i-1;
+
+
+    		while(j>=0 && arr[j]>key){
+    			arr[j+1] = arr[j];
+    			j--;
+			}
+    		arr[j+1] = key;
+		}
+
+		for (int x :
+				arr) {
+			System.out.println(x);
+		}
+	}
 
 	public static int minJumps(int[] nums,int n,int currPos){
     	if (currPos>=n-1)
@@ -31,10 +47,6 @@ public class Practise {
     	return minJump;
 
 	}
-
-
-
-
 
 	public int[] searchRange(int[] nums, int target) {
 //		int first = -1,last = -1;
