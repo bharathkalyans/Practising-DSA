@@ -1,11 +1,48 @@
 import java.util.Arrays;
 import java.util.Comparator;
 
+class A{
+
+
+	public void getClassName(){
+		System.out.println("A");
+	}
+
+	public void getName(){
+		System.out.println("Hi My Name is BHARATH!");
+	}
+}
+
+class  B extends  A{
+	public void getClassName(){
+		System.out.println("B");
+	}
+}
+class C  extends  B{
+	public void getClassName(){
+		System.out.println("C");
+	}
+}
+
+
+
+
+
+
+
 public class Practise {
 
     public static void main(String[] args) {
 
-    	InsertionSort(new int[]{12,0,9,-11111,0,121212,3,1,78,4});
+    	A obj1 = new A();
+    	B obj2 =  new B();
+    	A obj3 = new C();
+    	obj1.getClassName();
+		obj2.getClassName();
+		obj3.getClassName();
+		obj3.getName();
+		obj2.getName();
+
     }
 
 
