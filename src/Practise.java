@@ -1,4 +1,3 @@
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
@@ -7,10 +6,42 @@ public class Practise {
 
     public static void main(String[] args) {
 
-    	int x =	new Practise().findDuplicate(new int[]{2,2,2,2,2,2});
-		System.out.println(x);
+    	int[] a= new int[]{3,9,0,12,-1,1000,2,1,4,5};
+		QuickSort(a,0,a.length);
+
+		for (int x :
+				a) {
+			System.out.println(x);
+		}
+
     }
 
+    public static void QuickSort(int[] arr,int l,int h){
+
+    	if(l<h){
+			int p = partition(arr,l,h);
+			QuickSort(arr,l,p-1);
+			QuickSort(arr,p+1,h);
+    	}
+	}
+
+    public static int partition(int[] arr, int l, int h){
+    	int swapIndex = l-1;
+
+    	int key = arr[h-1];
+
+
+    	for (int i=l;i<h-1;i++){
+    		if (arr[i]<key){
+    			swapIndex++;
+    			swap(arr,swapIndex,i);
+			}
+		}
+    	swap(arr,h-1,++swapIndex);
+
+    	return swapIndex;
+
+	}
 	public int findDuplicate(int[] nums) {
 		HashMap<Integer,Integer> map = new HashMap<>();
 		for(int i=0;i<nums.length;i++){
