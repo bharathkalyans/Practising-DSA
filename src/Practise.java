@@ -1,50 +1,38 @@
 import java.util.Arrays;
 import java.util.Comparator;
-
-class A{
-
-
-	public void getClassName(){
-		System.out.println("A");
-	}
-
-	public void getName(){
-		System.out.println("Hi My Name is BHARATH!");
-	}
-}
-
-class  B extends  A{
-	public void getClassName(){
-		System.out.println("B");
-	}
-}
-class C  extends  B{
-	public void getClassName(){
-		System.out.println("C");
-	}
-}
-
-
-
-
-
-
+import java.util.HashMap;
+import java.util.Map;
 
 public class Practise {
 
     public static void main(String[] args) {
 
-    	A obj1 = new A();
-    	B obj2 =  new B();
-    	A obj3 = new C();
-    	obj1.getClassName();
-		obj2.getClassName();
-		obj3.getClassName();
-		obj3.getName();
-		obj2.getName();
-
+    	int x =	new Practise().findDuplicate(new int[]{2,2,2,2,2,2});
+		System.out.println(x);
     }
 
+	public int findDuplicate(int[] nums) {
+		HashMap<Integer,Integer> map = new HashMap<>();
+		for(int i=0;i<nums.length;i++){
+			if(!map.containsKey(nums[i])){
+				map.put(nums[i],1);
+			}else{
+				map.put(nums[i],map.get(nums[i])+1);
+			}
+		}
+		//Second For Loop.
+		int extraValue = nums[0];
+		for (Map.Entry<Integer,Integer> m: map.entrySet()
+			 ) {
+			int x = m.getValue();
+			if (x>=2) {
+				extraValue = m.getKey();
+				break;
+			}
+		}
+
+		return nums[0];
+	}
 
 
     public static void InsertionSort(int []arr){
