@@ -1,4 +1,3 @@
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,12 +6,8 @@ public class Practise {
     public static void main(String[] args) {
 
     	int[] a= new int[]{3,9,0,12,-1,1000,2,1,4,5};
-		QuickSort(a,0,a.length);
 
-		for (int x :
-				a) {
-			System.out.println(x);
-		}
+
 
     }
 
@@ -42,6 +37,7 @@ public class Practise {
     	return swapIndex;
 
 	}
+
 	public int findDuplicate(int[] nums) {
 		HashMap<Integer,Integer> map = new HashMap<>();
 		for(int i=0;i<nums.length;i++){
@@ -64,7 +60,6 @@ public class Practise {
 
 		return nums[0];
 	}
-
 
     public static void InsertionSort(int []arr){
     	for(int i=1;i<arr.length;i++){
@@ -248,7 +243,6 @@ public class Practise {
 		}
 	}
 
-
 	public static boolean isPowerOfThree(int n) {
 		int i = 1;
 
@@ -332,6 +326,7 @@ public class Practise {
 			System.out.println(x);
 		}
 	}
+
    	public static int trapRainWater(int[] heights){
 
 	   	int water = 0;
@@ -361,7 +356,6 @@ public class Practise {
 
 		return water;
    }
-
 
     public static void leadersOfArray(int[] arr,int size){
 		for (int i = 0; i < size; i++) {
@@ -409,11 +403,13 @@ public class Practise {
 			high--;
 		}
 	}
+
 	public static void swap(int [] arr,int i,int j){
 		int temp = arr[i];
 		arr[i]  =  arr[j];
 		arr[j]  =  temp;
 	}
+
 	public static void removeDuplicates(int[] arr){
 		int n= arr.length;
 		int res = 1;
@@ -427,12 +423,5 @@ public class Practise {
 		for (int i=0 ;i<res ;i++ ) {
 			System.out.println(arr[i]);
 		}
-	}
-}
-
-class MyComp implements Comparator<Integer> {
-
-	public int compare(Integer a,Integer b){
-		return a%2 - b%2;
 	}
 }
