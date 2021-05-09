@@ -5,9 +5,63 @@ public class Practise {
 
     public static void main(String[] args) {
 
-
+    	int[] array = new int[]{999,0,12,4,-1,-1212};
+    	mergeSort(array,0,array.length-1);
+    	printArray(array);
 
     }
+
+	public static void mergeSort(int[]a,int l,int r){
+
+		if(l<r){
+			int m = l + (r-l)/2;
+			mergeSort(a,l,m);
+			mergeSort(a,m+1,r);
+			mergeArray(a,l,m,r);
+		}
+
+
+	}
+
+	public static void mergeArray(int[]a,int l,int m,int r){
+
+		int n1= m-l+1;
+		int n2= r-m;
+		int []L = new int[n1];
+		int []R = new int[n2];
+
+		int k = l;
+
+
+		for(int i=0;i<n1;i++){
+			L[i] = a[i+l];
+		}
+
+		for (int j=0; j<n2; j++) {
+			R[j] = a[j+m+1];
+		}
+
+		int i=0,j=0;
+		while(i<n1 && j<n2){
+			if(L[i]<=R[j]){
+				a[k] = L[i];
+				i++;
+			}else{
+				a[k] = R[j];
+				j++;
+			}
+			k++;
+		}
+
+		while(i<n1){
+			a[k++] = L[i++];
+		}
+
+		while(j<n2){
+			a[k++] = R[j++];
+		}
+
+	}
 
 	public boolean validPalindrome(String s) {
 		int left = 0;
@@ -63,11 +117,11 @@ public class Practise {
 
 	public int findDuplicate(int[] nums) {
 		HashMap<Integer,Integer> map = new HashMap<>();
-		for(int i=0;i<nums.length;i++){
-			if(!map.containsKey(nums[i])){
-				map.put(nums[i],1);
-			}else{
-				map.put(nums[i],map.get(nums[i])+1);
+		for (int num : nums) {
+			if (!map.containsKey(num)) {
+				map.put(num, 1);
+			} else {
+				map.put(num, map.get(num) + 1);
 			}
 		}
 		//Second For Loop.
@@ -76,7 +130,6 @@ public class Practise {
 			 ) {
 			int x = m.getValue();
 			if (x>=2) {
-				extraValue = m.getKey();
 				break;
 			}
 		}
@@ -165,9 +218,7 @@ public class Practise {
 			}
 
 
-		int [] a = new int[]{first,last};
-
-		return a;
+		return new int[]{first,last};
 
 	}
 
@@ -344,9 +395,8 @@ public class Practise {
 	}
 
     public static void printArray(int[] a){
-		for (int x:a
-			 ) {
-			System.out.println(x);
+		for (int x:a) {
+			System.out.print(x+" ");
 		}
 	}
 
