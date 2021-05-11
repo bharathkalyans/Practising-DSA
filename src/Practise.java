@@ -5,11 +5,30 @@ public class Practise {
 
     public static void main(String[] args) {
 
-    	int[] array = new int[]{0,1,1,0,1,0,0,0,1,0};
-    	SegregateArray(array);
-    	printArray(array);
+    	int[] array = new int[]{2,0,1,1,0,1,0,0,2,1,1,0,2};
+		SegregateArrayII(array);
+		printArray(array);
 
     }
+
+    public static void SegregateArrayII(int[] arr){
+    	int l=0,h=arr.length-1;
+
+    	int mid= 0;
+    	while(mid<h){
+    		switch (arr[mid]){
+				case 0:swap(arr,l,mid);
+						l++;
+						mid++;
+						break;
+				case 1: mid++;
+						break;
+				case 2:swap(arr,mid,h);
+						h--;
+						break;
+			}
+		}
+	}
 
     public static void SegregateArray(int[] arr){
 		int l = 0, h = arr.length - 1;
