@@ -5,11 +5,23 @@ public class Practise {
 
     public static void main(String[] args) {
 
-    	int[] array = new int[]{999,0,12,4,-1,-1212};
-    	mergeSort(array,0,array.length-1);
+    	int[] array = new int[]{0,1,1,0,1,0,0,0,1,0};
+    	SegregateArray(array);
     	printArray(array);
 
     }
+
+    public static void SegregateArray(int[] arr){
+		int l = 0, h = arr.length - 1;
+		while(l<h){
+			if (arr[l] == 1){
+				swap(arr,l,h);
+				h--;
+			}else
+				l++;
+
+		}
+	}
 
 	public static void mergeSort(int[]a,int l,int r){
 
