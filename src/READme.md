@@ -4,7 +4,6 @@
 
 ## I am a CS UnderGrad @CIT, Gubbi!
 
-----------------
 - ### 🌱 I’m currently learning Android Development.
 
 
