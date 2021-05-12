@@ -1,15 +1,31 @@
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Stack;
 
 public class Practise {
 
     public static void main(String[] args) {
 
-    	int[] array = new int[]{2,0,1,1,0,1,0,0,2,1,1,0,2};
-		SegregateArrayII(array);
-		printArray(array);
-
+		System.out.println(reverseWords("I am Bharath"));
     }
+
+	public static 	String reverseWords(String S) {
+		String[] set = S.split(" ");
+
+		Stack<String> stack = new Stack<>();
+
+		String ans ="";
+		for(String x : set){
+			stack.push(x);
+		}
+
+		for (int i=stack.size()-1;i>=0;i--){
+			ans += stack.pop() +" ";
+		}
+
+		return ans;
+
+	}
 
     public static void SegregateArrayII(int[] arr){
     	int l=0,h=arr.length-1;
