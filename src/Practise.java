@@ -1,13 +1,44 @@
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Stack;
+import java.util.*;
+
 
 public class Practise {
 
     public static void main(String[] args) {
 
-		System.out.println(reverseWords("I am Bharath"));
+		Interval arr[]=new Interval[4];
+		arr[0]=new Interval(1,3);
+		arr[1]=new Interval(2,4);
+		arr[2]=new Interval(5,7);
+		arr[3]=new Interval(6,8);
+		MergeIntervals(arr);
     }
+
+    public static void MergeIntervals(Interval[] arr){
+		Arrays.sort(arr, new Comparator<>() {
+			public int compare(Interval i1, Interval i2) {
+				return i1.start - i2.start;
+			}
+
+		});
+
+		int resIndex = 0;
+		for (int i=1;i<arr.length;i++){
+			if(arr[i].start<=arr[resIndex].end){
+				arr[resIndex].end = Math.max(arr[resIndex].end,arr[i].end);
+				arr[resIndex].start = Math.min(arr[resIndex].start,arr[resIndex].start);
+			}else{
+				resIndex++;
+				arr[resIndex] = arr[i];
+			}
+		}
+
+		System.out.println(arr[resIndex].start +" :: " + arr[resIndex].end);
+
+		for (int i = 0; i <=resIndex; i++) {
+			System.out.print("[" + arr[i].start + ","
+					+ arr[i].end + "]");
+		}
+	}
 
 	public static 	String reverseWords(String S) {
 		String[] set = S.split(" ");
@@ -543,5 +574,13 @@ public class Practise {
 		for (int i=0 ;i<res ;i++ ) {
 			System.out.println(arr[i]);
 		}
+	}
+}
+
+class Interval{
+	int start,end;
+	Interval(int start,int end){
+		this.start = start;
+		this.end = end;
 	}
 }
