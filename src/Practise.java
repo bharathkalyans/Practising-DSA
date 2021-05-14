@@ -5,8 +5,32 @@ public class Practise {
 
     public static void main(String[] args) {
 
-		System.out.println("Result is :: " +nextPermutation("312"));
+		System.out.println(Ceil(24.00));
+		System.out.println(Ceil(24.10));
+		System.out.println(Ceil(111123.997238572385));
+		System.out.println(Math.ceil(111123.997238572385));
+		System.out.println(Floor(23.0000));
+		System.out.println(Floor(121212.121212121));
+		System.out.println(Floor(23.999999));
+		System.out.println(Math.floor(23.999999));
+
     }
+
+    public static Double Ceil(double number){
+    	int num = (int)number;
+
+    	if((double)num == number)
+    		return (double)num;
+    	else return (double)num+1;
+
+	}
+
+	public static Double Floor(double number){
+    	int num = (int)number;
+
+    	return (double)num;
+
+	}
 
   	private static List<Integer> l = new ArrayList<>();
     public  static void permute(String str,String cur){
