@@ -5,8 +5,39 @@ public class Practise {
 
     public static void main(String[] args) {
 
-		printDuplicates("Bharath");
+		System.out.println("Result is :: " +nextPermutation("312"));
     }
+
+  	private static List<Integer> l = new ArrayList<>();
+    public  static void permute(String str,String cur){
+    	if (str.length() == 0){
+			System.out.println(cur+" ");
+			l.add(Integer.parseInt(cur));
+    	}
+
+    	for (int i=0;i<str.length();i++){
+    		String newCurrString = cur + str.charAt(i);
+    		String newString = str.substring(0,i) + str.substring(i+1);
+    		permute(newString,newCurrString);
+		}
+	}
+    public static String nextPermutation(String str){
+    	permute(str,"");
+
+		int number = Integer.parseInt(str);
+		int index = 0;
+		for (int i=0;i<l.size();i++){
+			int x  = l.get(i);
+			if (x == number){
+				index = i;
+				break;
+			}
+		}
+
+		if (index == l.size()-1)
+			return "-1";
+		else return l.get(index+1).toString();
+	}
 
 	public static void printDuplicates(String word){
 		HashMap<Character,Integer> map = new HashMap<>();
@@ -52,7 +83,7 @@ public class Practise {
 		}
 	}
 
-	public static 	String reverseWords(String S) {
+	public static String reverseWords(String S) {
 		String[] set = S.split(" ");
 
 		Stack<String> stack = new Stack<>();
@@ -352,9 +383,9 @@ public class Practise {
     	int m = obstacleGrid.length;
     	int n = obstacleGrid[m-1].length;
 
-    	return Uniquepaths(obstacleGrid, m -1 , n - 1,0,0);
+    	return UniquePaths(obstacleGrid, m -1 , n - 1,0,0);
 	}
-	public static int Uniquepaths(int[][] grid,int m,int n,int i,int j){
+	public static int UniquePaths(int[][] grid, int m, int n, int i, int j){
     	if(grid[0][0] == 1)
     		return 0;
     	if (i == m && j == n && grid[i][j]!=1){
@@ -370,7 +401,7 @@ public class Practise {
     		if (grid[i][j] ==1)
     		  	return 0;
 
-    		return Uniquepaths(grid,m,n,i+1,j) + Uniquepaths(grid,m,n,i,j+1);
+    		return UniquePaths(grid,m,n,i+1,j) + UniquePaths(grid,m,n,i,j+1);
 		}
 	}
     public static  int uniquePathsDP(int m,int n){
