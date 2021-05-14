@@ -1,3 +1,4 @@
+import java.math.BigInteger;
 import java.util.*;
 
 
@@ -5,16 +6,19 @@ public class Practise {
 
     public static void main(String[] args) {
 
-		System.out.println(Ceil(24.00));
-		System.out.println(Ceil(24.10));
-		System.out.println(Ceil(111123.997238572385));
-		System.out.println(Math.ceil(111123.997238572385));
-		System.out.println(Floor(23.0000));
-		System.out.println(Floor(121212.121212121));
-		System.out.println(Floor(23.999999));
-		System.out.println(Math.floor(23.999999));
+		System.out.println(factorialOfLargeNumber(100));
+
 
     }
+
+    public static BigInteger factorialOfLargeNumber(Integer n){
+		BigInteger factorial = new BigInteger("1");
+
+		for (int i = 2;i<=n;i++)
+			factorial = factorial.multiply(BigInteger.valueOf(i));
+
+		return factorial;
+	}
 
     public static Double Ceil(double number){
     	int num = (int)number;
