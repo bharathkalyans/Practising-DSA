@@ -5,11 +5,39 @@ import java.util.*;
 public class Practise {
 
     public static void main(String[] args) {
-
-		System.out.println(factorialOfLargeNumber(100));
-
+    	int[][] matrix = new int[][]{{1,2,3},{4,5,6},{7,8,9}};
+		printArray(matrix);
+		System.out.println("--------------------------");
+		matrix =  rotateMatrixBy90(matrix);
+		matrix = rotateMatrixBy90(matrix);
+		matrix = rotateMatrixBy90(matrix);
+		printArray(matrix);
 
     }
+
+
+    public static int[][] rotateMatrixBy90(int[][] matrix){
+    	int n=matrix.length;
+    	int[][] dup = new int[n][n];
+
+    	for (int i=0; i<n; i++) {
+    		for (int j=0; j<n; j++) {
+    			dup[j][i] = matrix[i][j];
+    		}
+    	}
+
+    	reverse(dup);
+
+    	return dup;
+    }
+
+    public static void printArray(int[][] array){
+    	for (int[] a: array){
+    		for (int x:a)
+				System.out.print(x+" ");
+			System.out.println();
+    	}
+	}
 
     public static BigInteger factorialOfLargeNumber(Integer n){
 		BigInteger factorial = new BigInteger("1");
