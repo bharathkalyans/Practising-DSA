@@ -9,9 +9,36 @@ public class Practise {
     	int[][] matrix = new int[][]{{1,2,3},{4,5,6},{7,8,9}};
     	printArray(matrix);
 		System.out.println("-------------------------------");
-    	snakePatternOfMatrix(matrix);
+    	boundaryOfMatrix(matrix);
 
     }
+
+    public static void boundaryOfMatrix(int[][] matrix){
+    	for (int i=0;i<matrix[0].length;i++){
+			System.out.print(matrix[0][i]+" ");
+		}
+
+		System.out.println();
+
+    	for (int i = 0;i<matrix[1].length;i++){
+			System.out.print(matrix[i][matrix.length-1]+" ");
+		}
+
+		System.out.println();
+
+    	for (int i=matrix.length-1;i>=0;i--){
+			System.out.print(matrix[matrix.length-1][i]+" ");
+		}
+
+		System.out.println();
+
+    	for (int i= matrix.length-1;i>=0;i--){
+			System.out.print(matrix[i][0]+" ");
+		}
+
+		System.out.println();
+
+	}
 
     public static void snakePatternOfMatrix(int[][] matrix){
     	for (int i=0;i<matrix.length;i++){
