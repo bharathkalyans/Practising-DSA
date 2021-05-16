@@ -7,11 +7,27 @@ public class Practise {
     public static void main(String[] args) {
 
     	int[][] matrix = new int[][]{{1,2,3},{4,5,6},{7,8,9}};
+
     	printArray(matrix);
 		System.out.println("-------------------------------");
-    	boundaryOfMatrix(matrix);
+    	reverseMatrixTopToDown(matrix);
+    	printArray(matrix);
 
     }
+
+    public static void reverseMatrixTopToDown(int[][] matrix){
+    	for (int i=0;i<matrix[0].length;i++){
+    		int low=0,high = matrix.length-1;
+
+    		while (low<high){
+    			int temp = matrix[low][i];
+    			matrix[low][i] = matrix[high][i] ;
+    			matrix[high][i] = temp;
+    			low++;
+    			high--;
+			}
+		}
+	}
 
     public static void boundaryOfMatrix(int[][] matrix){
     	for (int i=0;i<matrix[0].length;i++){
