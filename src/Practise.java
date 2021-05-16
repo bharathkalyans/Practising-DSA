@@ -6,14 +6,40 @@ public class Practise {
 
     public static void main(String[] args) {
 
-    	int[][] matrix = new int[][]{{1,2,3},{4,5,6},{7,8,9}};
-
-    	int[][] matrix2 = new int[][]{{10,20,30,40},{15,25,35,45},{27,29,37,48},{32,33,39,50}};
+    	int[][] matrix = new int[][]{{1,2,3},{4,5,6}};
+    	int[][] matrix2 = new int[][]{{9,1},{2,4},{9,9}};
 
 		System.out.println("-------------------------------");
-		System.out.println(searchInSortedMatrix(matrix2,32));
+		MatrixMultiplication(matrix,matrix2);
 
     }
+
+    public static void MatrixMultiplication(int[][] A,int[][] B){
+
+    	int m,n,p,q;
+    	m = A.length;
+    	n = A[0].length;
+    	p = B.length;
+    	q = B[0].length;
+
+    	if (n!=p)
+    		return;
+
+    	int[][] C = new int[m][q];
+
+    	for (int i=0;i<m;i++){
+    		for (int j=0;j<q;j++){
+				C[i][j] = 0;
+				for (int k=0;k<n;k++){
+					C[i][j] += A[i][k] * B[k][j];
+				}
+			}
+		}
+    	printArray(C);
+
+	}
+
+
     //O(R + C) Time Complexity!
     public static boolean searchInSortedMatrix(int[][] matrix, int element){
 
