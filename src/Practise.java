@@ -5,16 +5,22 @@ import java.util.*;
 public class Practise {
 
     public static void main(String[] args) {
-    	int[][] matrix = new int[][]{{1,2,3},{4,5,6},{7,8,9}};
-		printArray(matrix);
-		System.out.println("--------------------------");
-		matrix =  rotateMatrixBy90(matrix);
-		matrix = rotateMatrixBy90(matrix);
-		matrix = rotateMatrixBy90(matrix);
-		printArray(matrix);
+
+    	JaggedArray(10);
 
     }
 
+    public static void JaggedArray(int n){
+    	int[][] jaggedArray = new int[n][];
+
+    	for (int i=0;i<n;i++){
+    		jaggedArray[i] = new int[i+1];
+    		for (int j=0;j<jaggedArray[i].length;j++)
+    			jaggedArray[i][j] = 0;
+		}
+
+    	printArray(jaggedArray);
+	}
 
     public static int[][] rotateMatrixBy90(int[][] matrix){
     	int n=matrix.length;
