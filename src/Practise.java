@@ -8,12 +8,26 @@ public class Practise {
 
     	int[][] matrix = new int[][]{{1,2,3},{4,5,6},{7,8,9}};
 
-    	printArray(matrix);
+    	int[][] matrix2 = new int[][]{{10,20,30,40},{15,25,35,45},{27,29,37,48},{32,33,39,50}};
+
 		System.out.println("-------------------------------");
-    	reverseMatrixTopToDown(matrix);
-    	printArray(matrix);
+		System.out.println(searchInSortedMatrix(matrix2,32));
 
     }
+    //O(R + C) Time Complexity!
+    public static boolean searchInSortedMatrix(int[][] matrix, int element){
+
+    	int n = matrix.length;
+
+    	int i= 0,j = n-1;
+
+    	while(i<n && j>=0){
+    		if (element == matrix[i][j]) return true;
+    		else  if(matrix[i][j] < element) i++;
+    		else j--;
+		}
+    	return false;
+	}
 
     public static void reverseMatrixTopToDown(int[][] matrix){
     	for (int i=0;i<matrix[0].length;i++){
