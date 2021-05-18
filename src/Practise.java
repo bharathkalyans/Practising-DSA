@@ -6,9 +6,33 @@ public class Practise {
 
     public static void main(String[] args) {
 
-    	subArrayWithSumZero(new int[]{1,4,13,-9993,-10,5},6);
+    	convertToSquareMatrix(new int[][]{{2,3},{4,6},{12,12}});
 
     }
+
+    public static void convertToSquareMatrix(int[]matrix[]){
+    	int m = matrix.length;
+    	int n = matrix[0].length;
+
+    	int p = Math.max(m, n);
+
+    	int[][] result = new int[p][p];
+
+    	for (int i = 0;i<p;i++)
+    		for (int j=0;j<p;j++)
+    			result[i][j] = 1;
+
+
+    	for(int i=0;i<m;i++){
+    		for (int j=0;j<n;j++){
+    			result[i][j] = matrix[i][j];
+			}
+		}
+
+    	printArray(result);
+
+
+	}
 
     public static void subArrayWithSumZero(int[] arr,int n){
 
