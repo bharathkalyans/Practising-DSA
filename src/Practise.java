@@ -6,11 +6,7 @@ public class Practise {
 
     public static void main(String[] args) {
 
-    	int[][] matrix = new int[][]{{1,2,3},{4,5,6}};
-    	int[][] matrix2 = new int[][]{{9,1},{2,4},{9,9}};
 
-		System.out.println("-------------------------------");
-		MatrixMultiplication(matrix,matrix2);
 
     }
 
