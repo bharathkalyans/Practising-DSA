@@ -6,10 +6,36 @@ public class Practise {
 
     public static void main(String[] args) {
 
-    	countPairsInAUnSortedArray(new int[]{1,5,7,1,6},5,6);
+    	subArrayWithSumZero(new int[]{1,4,13,-9993,-10,5},6);
 
     }
 
+    public static void subArrayWithSumZero(int[] arr,int n){
+
+    	int[] prefixArray = new int[n];
+    	int startIndex = 0,endIndex = 0;
+    	boolean flag = false;
+    	prefixArray[0] = arr[0];
+    	for (int i=1;i<n;i++){
+    		prefixArray[i] = arr[i]+prefixArray[i-1];
+		}
+
+    	HashMap<Integer,Integer> map = new HashMap<>();
+
+    	for (int i=0;i<n;i++){
+    		if (map.containsKey(prefixArray[i])){
+    			startIndex = map.get(prefixArray[i]);
+    			endIndex = i;
+    			flag = true;
+    			break;
+    		}else {
+				map.put(prefixArray[i],i);
+			}
+		}
+    	if (flag) System.out.println("The SubArray Containing '0' is from index " + (startIndex+1) +" to "+ endIndex+" !");
+		else System.out.println("No SubArray with Sum Zero!!");
+
+	}
 
     public static void countPairsInAUnSortedArray(int[] arr,int n,int k){
 
@@ -652,24 +678,23 @@ public class Practise {
 	}
 
 
-	//Kadane's Algorithm.
+	// Kadane's Algorithm.
     public static int maxSubArray(int[] nums,int n){
-//    	int res = nums[0];
-//
-//    	for(int i = 1;i < n;  i++ ){
-//			System.out.println("Curr Res is :: " + res);
-//    		res = Math.max(nums[i] + res,res);
-//		}
-//
-				//WRONG ANSWER!!!!!!!!! because I am changing the main variable which was supposed to
-//		hold my max sum.
-//    	return  res;
+/**
+ * int dp[] = new int[n];
+ * int max_sum = 0;
+ * dp[0] = Math.MAX(nums[0],0);
+ * for(int i=1;i< nums.length;i++){
+ *     dp[i] = Math.max(dp[i-1]+nums[i], nums[i]);
+ *     max_sum = Math.max(max_sum,dp[i]);
+ * }
+ * return max_sum;
+* */
 		int max=nums[0];
 
 		int curr_sum=max;
 
 		for(int i=1;i<nums.length;i++){
-
 			curr_sum=Math.max(nums[i],nums[i]+curr_sum);
 			max=Math.max(max,curr_sum);
 		}
