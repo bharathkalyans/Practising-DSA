@@ -6,8 +6,23 @@ public class Practise {
 
     public static void main(String[] args) {
 
+    	countPairsInAUnSortedArray(new int[]{1,5,7,1,6},5,6);
+
+    }
 
 
+    public static void countPairsInAUnSortedArray(int[] arr,int n,int k){
+
+    	HashSet<Integer> set = new HashSet<>();
+    	int count = 0;
+
+    	for (int x :arr){
+			if (set.contains(k-x)){
+				count++;
+			}
+			set.add(x);
+    	}
+		System.out.println("Count of Pairs :: " + count);
     }
 
     public static void MatrixMultiplication(int[][] A,int[][] B){
@@ -167,7 +182,7 @@ public class Practise {
 
 	}
 
-  	private static List<Integer> l = new ArrayList<>();
+  	private static final List<Integer> l = new ArrayList<>();
     public  static void permute(String str,String cur){
     	if (str.length() == 0){
 			System.out.println(cur+" ");
