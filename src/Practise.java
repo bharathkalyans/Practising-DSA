@@ -6,9 +6,37 @@ public class Practise {
 
     public static void main(String[] args) {
 
-		SubArrayWithGivenSum(new int[]{8,3,1,5,-6,6,2,2},4);
+    	int[] a =new int[]{1,1,3,1,4,5,-6,6,2,2,-2,2};
+
+		int x = LongestSubArrayWithGivenSum(a,a.length,4);
+
+		System.out.println(x);
 
     }
+
+	public static int LongestSubArrayWithGivenSum(int[] arr, int n, int k) {
+		HashMap<Integer, Integer> map = new HashMap<>();
+		int sum = 0, maxLen = 0;
+
+		for (int i = 0; i < n; i++) {
+
+			sum += arr[i];
+
+			if (sum == k)
+				maxLen = i + 1;
+
+			if (!map.containsKey(sum)) {
+				map.put(sum, i);
+			}
+
+			if (map.containsKey(sum - k)) {
+				if (maxLen < (i - map.get(sum - k)))
+					maxLen = i - map.get(sum - k);
+			}
+		}
+
+		return maxLen;
+	}
 
     public static void SubArrayWithGivenSum(int[] arr,int sum){
     	int n = arr.length;
