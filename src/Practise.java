@@ -6,9 +6,42 @@ public class Practise {
 
     public static void main(String[] args) {
 
-    	convertToSquareMatrix(new int[][]{{2,3},{4,6},{12,12}});
+		SubArrayWithGivenSum(new int[]{8,3,1,5,-6,6,2,2},4);
 
     }
+
+    public static void SubArrayWithGivenSum(int[] arr,int sum){
+    	int n = arr.length;
+
+    	HashMap<Integer,Integer> map = new HashMap<>();
+		int start = 0;
+		int end = -1;
+
+    	int pre_sum = 0;
+    	for (int i=0;i<n;i++){
+    		pre_sum += arr[i];
+
+    		if (pre_sum-sum == 0) {
+    			start = 0;
+    			end = i;
+    			break;
+			}
+
+    		if (map.containsKey(pre_sum - sum)){
+    			start = map.get(pre_sum-sum)+1;
+    			end = i;
+    			break;
+			}
+
+    		map.put(pre_sum,i);
+
+		}
+    	if (end !=-1){
+			System.out.println("Found from " +start+" to "+ end);
+		}else System.out.println("Not Found!!");
+
+	}
+
 
     public static void convertToSquareMatrix(int[]matrix[]){
     	int m = matrix.length;
