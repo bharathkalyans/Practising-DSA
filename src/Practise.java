@@ -12,36 +12,30 @@ public class Practise {
 
     }
 
-    public static void LongestConsecutiveSubSequence(int[] arr,int n){
-    	//Time Complexity O(n) and Space Complexity O(n)!
-		if (n == 0 )
-			System.out.println("No Elements Shit Head!");
+	public static int LongestConsecutiveSubSequence(int arr[], int n) {
+		HashSet<Integer> S = new HashSet<Integer>();
+		int ans = 0;
 
-		if (n == 1)
-			System.out.println(arr[0]);
+		for (int i = 0; i < n; ++i)
+			S.add(arr[i]);
 
-		int count = 1;
-		int max = Integer.MIN_VALUE;
+		for (int i = 0; i < n; ++i) {
+			// if current element is the starting
+			// element of a sequence
+			if (!S.contains(arr[i] - 1)) {
+				// Then check for next elements
+				// in the sequence
+				int j = arr[i];
+				while (S.contains(j))
+					j++;
 
-		HashSet<Integer> map = new HashSet<>();
-
-
-		for (int x:arr)map.add(x);
-
-		for (int i=0;i<n;i++){
-			if (!map.contains(arr[0]-1)){
-				int element = arr[i];
-				while(map.contains(element+1)){
-					count++;
-				}
-
-				if (max < element - arr[i])
-					max = element - arr[i];
+				// update  optimal length if this
+				// length is more
+				if (ans < j - arr[i])
+					ans = j - arr[i];
 			}
 		}
-
-		System.out.println("The Longest Sub Sequence is :: " + max);
-
+		return ans;
 	}
 
     public static void LongestConsecutiveSubSequence(int[] arr){
