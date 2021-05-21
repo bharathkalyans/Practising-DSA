@@ -6,10 +6,43 @@ public class Practise {
 
     public static void main(String[] args) {
 
-    	int[] a =new int[]{1, 9, 3, 10, 4, 20,5,6,7};
+    	int[] a =new int[]{1,3,5,7,12,101010};
 		LongestConsecutiveSubSequence(a);
+		LongestConsecutiveSubSequence(a,a.length);
 
     }
+
+    public static void LongestConsecutiveSubSequence(int[] arr,int n){
+    	//Time Complexity O(n) and Space Complexity O(n)!
+		if (n == 0 )
+			System.out.println("No Elements Shit Head!");
+
+		if (n == 1)
+			System.out.println(arr[0]);
+
+		int count = 1;
+		int max = Integer.MIN_VALUE;
+
+		HashSet<Integer> map = new HashSet<>();
+
+		map.add(arr[0]);
+
+		for (int i=1;i<n;i++){
+			int x = arr[i];
+			if(map.contains(x-1)){
+				count++;
+				map.add(arr[i]);
+			}else {
+				map.add(arr[i]);
+				max = Math.max(max,count);
+				count = 1;
+			}
+			max = Math.max(max,count);
+		}
+
+		System.out.println("The Longest Sub Sequence is :: " + max);
+
+	}
 
     public static void LongestConsecutiveSubSequence(int[] arr){
     	//Time Complexity is O(NlogN + N)!
@@ -29,8 +62,8 @@ public class Practise {
     			count++;
 			}
     		else {
-    			count = 1;
     			max = Math.max(max,count);
+				count = 1;
 			}
     		max = Math.max(max,count);
 		}
