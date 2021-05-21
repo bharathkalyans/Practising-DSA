@@ -6,11 +6,57 @@ public class Practise {
 
     public static void main(String[] args) {
 
-    	int[] a =new int[]{1,3,5,7,12,101010};
-		LongestConsecutiveSubSequence(a);
-		LongestConsecutiveSubSequence(a,a.length);
-
+    	int[] a =new int[]{10,20,20,10,30,40,10};
+    	DistinctElementsInWindow(a,4);
+		System.out.println();
+    	DistinctElementsInWindow(a,4,a.length);
     }
+
+    public static void DistinctElementsInWindow(int[] arr,int k,int n){
+    	HashMap<Integer,Integer> map = new HashMap<>();
+
+    	for (int  i=0;i<k;i++){
+			map.put(arr[i], map.getOrDefault(arr[i], 0)+1);
+		}
+		System.out.print(map.size()+" ");
+
+    	for (int j = k;j<n;j++){
+    		if (!map.containsKey(arr[j])){
+    			map.put(arr[j],1);
+			}
+
+    		int value = map.get(arr[j-k]);
+    		if (value == 1)
+    			map.remove(arr[j-k]);
+    		else map.put(arr[j-k],value-1);
+
+			System.out.print(map.size()+" ");
+		}
+
+
+
+	}
+
+    public static void DistinctElementsInWindow(int[] arr,int k){
+    	int n = arr.length;
+
+    	for (int i=0;i<n-k+1;i++){
+			int count = 0;
+			//Window of Size K
+			for (int j=0;j<k;j++){
+				boolean flag = false;
+    			 for (int p=0;p<j ;p++){
+    			 	if (arr[i+j] == arr[i+p]){
+    			 		flag = true;
+    			 		break;
+					}
+				 }
+    			 if (flag == false)count++;
+			}
+			System.out.print(count+" ");
+		}
+
+	}
 
 	public static int LongestConsecutiveSubSequence(int arr[], int n) {
 		HashSet<Integer> S = new HashSet<Integer>();
