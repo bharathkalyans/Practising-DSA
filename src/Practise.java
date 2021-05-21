@@ -6,35 +6,55 @@ public class Practise {
 
     public static void main(String[] args) {
 
-    	int[] a =new int[]{1,1,3,1,4,5,-6,6,2,2,-2,2};
-
-		int x = LongestSubArrayWithGivenSum(a,a.length,4);
-
-		System.out.println(x);
+    	int[] a =new int[]{1, 9, 3, 10, 4, 20,5,6,7};
+		LongestConsecutiveSubSequence(a);
 
     }
+
+    public static void LongestConsecutiveSubSequence(int[] arr){
+    	//Time Complexity is O(NlogN + N)!
+    	int n = arr.length;
+    	if (n == 0 )
+			System.out.println("No Elements Shit Head!");
+
+    	if (n == 1)
+			System.out.println(arr[0]);
+
+
+    	Arrays.sort(arr);
+    	int max = Integer.MIN_VALUE;
+    	int count = 1;
+    	for (int i=1;i<n;i++){
+    		if (arr[i-1]+1 == arr[i]){
+    			count++;
+			}
+    		else {
+    			count = 1;
+    			max = Math.max(max,count);
+			}
+    		max = Math.max(max,count);
+		}
+
+		System.out.println("The Longest Sub Sequence is :: "+ max);
+
+	}
 
 	public static int LongestSubArrayWithGivenSum(int[] arr, int n, int k) {
 		HashMap<Integer, Integer> map = new HashMap<>();
 		int sum = 0, maxLen = 0;
 
 		for (int i = 0; i < n; i++) {
-
 			sum += arr[i];
-
 			if (sum == k)
 				maxLen = i + 1;
-
 			if (!map.containsKey(sum)) {
 				map.put(sum, i);
 			}
-
 			if (map.containsKey(sum - k)) {
 				if (maxLen < (i - map.get(sum - k)))
 					maxLen = i - map.get(sum - k);
 			}
 		}
-
 		return maxLen;
 	}
 
