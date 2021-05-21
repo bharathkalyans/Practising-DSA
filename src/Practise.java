@@ -25,19 +25,19 @@ public class Practise {
 
 		HashSet<Integer> map = new HashSet<>();
 
-		map.add(arr[0]);
 
-		for (int i=1;i<n;i++){
-			int x = arr[i];
-			if(map.contains(x-1)){
-				count++;
-				map.add(arr[i]);
-			}else {
-				map.add(arr[i]);
-				max = Math.max(max,count);
-				count = 1;
+		for (int x:arr)map.add(x);
+
+		for (int i=0;i<n;i++){
+			if (!map.contains(arr[0]-1)){
+				int element = arr[i];
+				while(map.contains(element+1)){
+					count++;
+				}
+
+				if (max < element - arr[i])
+					max = element - arr[i];
 			}
-			max = Math.max(max,count);
 		}
 
 		System.out.println("The Longest Sub Sequence is :: " + max);
