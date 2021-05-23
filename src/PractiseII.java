@@ -4,11 +4,30 @@ public class PractiseII {
 
     public static void main(String[] args) {
 
-        String result = CountAndSay(5);
-        System.out.println(result);
+        printBinaryValues(10);
+
     }
 
+    //Overall Time Complexity would be O(N Log N)!
+    public static void printBinaryValues(int n){
+        //Outer loop Runs N times
+        for (int i=0;i<=n;i++){
+            //DecimalToBinary() is a LogN Function!
+            DecimalToBinary(i);
+        }
+    }
 
+    public static void DecimalToBinary(int number){
+        StringBuilder sb = new StringBuilder();
+
+        while(number!=0){
+            int rem = number%2;
+            sb.append(rem);
+            number /= 2;
+        }
+        System.out.println(sb.reverse().toString() + " ");
+
+    }
 
     public static String CountAndSay(int n){
         String output = "1";
