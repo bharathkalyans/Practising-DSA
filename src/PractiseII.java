@@ -1,10 +1,39 @@
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class PractiseII {
 
     public static void main(String[] args) {
 
         printBinaryValues(10);
+        System.out.println();
+        printBinaryValuesEfficient(10);
+
+    }
+
+    //Below is a Efficient Function with TC O(N)
+    public static void printBinaryValuesEfficient(int n){
+
+        if (n == 1){
+            System.out.println("1");
+            return;
+        }
+        Queue<String> queue = new LinkedList<>();
+        queue.add("1");
+
+        while (n!=0){
+
+            String s = queue.poll();
+            System.out.print(s+" ");
+
+            String rs = s+"0";
+            queue.add(rs);
+            String ls = s +"1";
+            queue.add(ls);
+            n--;
+
+        }
 
     }
 
@@ -25,7 +54,7 @@ public class PractiseII {
             sb.append(rem);
             number /= 2;
         }
-        System.out.println(sb.reverse().toString() + " ");
+        System.out.print(sb.reverse().toString() + " ");
 
     }
 
