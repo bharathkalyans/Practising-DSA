@@ -6,8 +6,35 @@ public class PractiseII {
 
     public static void main(String[] args) {
 
-        PermutationsOfAString("ABC","");
+        CombinationsOfAString("ABC");
 
+    }
+
+    public static void CombinationsOfAString(String str){
+
+        if (str.length() == 0){
+            System.out.println("");
+            return;
+        }
+
+        Queue<String> q = new LinkedList<>();
+        int n = str.length();
+        int i = 0;
+        q.add("");
+        while (i<n && !q.isEmpty()){
+            int queueSize = q.size();
+            for (int j=0;j<queueSize;j++){
+                String p = q.poll();
+                char character = str.charAt(i);
+                String notAdded = p +"";
+                String Added = p + character;
+                q.add(notAdded);
+                q.add(Added);
+
+            }
+            i++;
+        }
+        for (String s:q) System.out.println(s);
 
     }
 
