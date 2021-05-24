@@ -6,9 +6,23 @@ public class PractiseII {
 
     public static void main(String[] args) {
 
-        printBinaryValues(10);
-        System.out.println();
-        printBinaryValuesEfficient(10);
+        PermutationsOfAString("ABC","");
+
+
+    }
+
+    public static void PermutationsOfAString(String str, String curr){
+        if (str.length() == 0){
+            System.out.println(curr);
+            return;
+        }
+
+
+        for (int i=0;i<str.length();i++){
+            String newCurrString = curr +  str.charAt(i);
+            String remainingString = str.substring(0,i) + str.substring(i+1);
+            PermutationsOfAString(remainingString,newCurrString);
+        }
 
     }
 
