@@ -6,7 +6,32 @@ public class PractiseII {
 
     public static void main(String[] args) {
 
-        CombinationsOfAString("ABC");
+        CombinationsOfAString("ABCD");
+        System.out.println("----------------");
+        CombinationsOfAString("ABCD",new StringBuilder());
+
+
+    }
+
+
+    public static void CombinationsOfAString(String str,StringBuilder stringBuilder){
+        //O(1) SPACE TIME COMPLEXITY!
+        Combinations(str,stringBuilder,0);
+    }
+
+    public static void Combinations(String str,StringBuilder stringBuilder,int index){
+
+        int n = str.length();
+
+        for (int i=index;i<n;i++){
+
+            stringBuilder.append(str.charAt(i));
+            System.out.println(stringBuilder);
+            Combinations(str,stringBuilder,i+1);
+
+            stringBuilder.deleteCharAt(stringBuilder.length()-1);
+        }
+
 
     }
 
