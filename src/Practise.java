@@ -1004,3 +1004,4 @@ class Interval{
 		this.end = end;
 	}
 }
+

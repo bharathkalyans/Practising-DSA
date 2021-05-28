@@ -6,13 +6,44 @@ public class PractiseII {
 
     public static void main(String[] args) {
 
-        CombinationsOfAString("ABCD");
-        System.out.println("----------------");
-        CombinationsOfAString("ABCD",new StringBuilder());
+        Node head = new Node(1);
+        head.next = new Node(2);
+        head.next.next = new Node(3);
+        head.next.next.next = new Node(4);
+        head.next.next.next.next = new Node(5);
 
+        printList(head);
+        System.out.println(MiddleOfLinkedList(head).key);
 
     }
 
+
+    public static Node MiddleOfLinkedList(Node head){
+
+        if (head == null)
+            return null;
+
+        Node fast=head,slow=head;
+
+
+        while(fast!=null && fast.next!=null){
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        return slow;
+    }
+
+    public static void printList(Node head){
+        if (head ==null)
+            return;
+
+        while (head!=null){
+            System.out.print(head.key+" --> ");
+            head = head.next;
+        }
+        System.out.println();
+    }
 
     public static void CombinationsOfAString(String str,StringBuilder stringBuilder){
         //O(1) SPACE TIME COMPLEXITY!
@@ -173,4 +204,14 @@ public class PractiseII {
 
 
 
+}
+
+class Node{
+    int key;
+    Node next;
+
+    Node(int key){
+        this.key = key;
+        this.next=null;
+    }
 }
