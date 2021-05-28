@@ -12,13 +12,25 @@ public class PractiseII {
         head.next.next.next = new Node(4);
         head.next.next.next.next = new Node(5);
 
-        Node res= ReverseLinkedList(head);
+
+        printList(head);
+        Node res = ReverseLinkedList(head,null);
         printList(res);
-        System.out.println("Size is :: " + sizeOfLinkedList(res));
 
     }
 
+    //Recursive Solution!
+    public static Node ReverseLinkedList(Node curr,Node prev){
 
+        if (curr == null)   return prev;
+
+        Node next = curr.next;
+        curr.next = prev;
+
+        return ReverseLinkedList(next ,curr);
+
+    }
+    //Iterative Solution!
     public static Node ReverseLinkedList(Node node){
 
         Node prev = null;
