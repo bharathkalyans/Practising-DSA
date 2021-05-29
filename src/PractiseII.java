@@ -14,24 +14,57 @@ public class PractiseII {
 
 
         printList(head);
-        Node res = ReverseLinkedList(head,null);
+        Node res = ReverseLinkedListByK(head,2);
         printList(res);
+
 
     }
 
-    //Recursive Solution!
-    public static Node ReverseLinkedList(Node curr,Node prev){
 
-        if (curr == null)   return prev;
+
+    //Recursive Solution
+    public static Node ReverseLinkedListByK(Node head, int k) {
+
+        if (head == null)
+            return null;
+
+        Node curr = head;
+        Node prev = null;
+        Node next = null;
+
+        int count = 0;
+
+        while (count<k && curr!=null){
+            next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+            count++;
+        }
+
+        if (next!=null)
+            head.next = ReverseLinkedListByK(next,k);
+
+        return prev;
+
+    }
+
+
+
+    //Recursive Solution!
+    public static Node ReverseLinkedList(Node curr, Node prev) {
+
+        if (curr == null) return prev;
 
         Node next = curr.next;
         curr.next = prev;
 
-        return ReverseLinkedList(next ,curr);
+        return ReverseLinkedList(next, curr);
 
     }
+
     //Iterative Solution!
-    public static Node ReverseLinkedList(Node node){
+    public static Node ReverseLinkedList(Node node) {
 
         Node prev = null;
         Node current = node;
@@ -47,7 +80,7 @@ public class PractiseII {
 
     }
 
-    public static int sizeOfLinkedList(Node head){
+    public static int sizeOfLinkedList(Node head) {
         if (head == null)
             return 0;
         if (head.next == null)
@@ -56,7 +89,7 @@ public class PractiseII {
 
         int count = 0;
 
-        while (head!=null) {
+        while (head != null) {
             count++;
             head = head.next;
         }
@@ -64,15 +97,15 @@ public class PractiseII {
         return count;
     }
 
-    public static Node MiddleOfLinkedList(Node head){
+    public static Node MiddleOfLinkedList(Node head) {
 
         if (head == null)
             return null;
 
-        Node fast=head,slow=head;
+        Node fast = head, slow = head;
 
 
-        while(fast!=null && fast.next!=null){
+        while (fast != null && fast.next != null) {
             slow = slow.next;
             fast = fast.next.next;
         }
@@ -80,41 +113,41 @@ public class PractiseII {
         return slow;
     }
 
-    public static void printList(Node head){
-        if (head ==null)
+    public static void printList(Node head) {
+        if (head == null)
             return;
 
-        while (head!=null){
-            System.out.print(head.key+" --> ");
+        while (head != null) {
+            System.out.print(head.key + " --> ");
             head = head.next;
         }
         System.out.println();
     }
 
-    public static void CombinationsOfAString(String str,StringBuilder stringBuilder){
+    public static void CombinationsOfAString(String str, StringBuilder stringBuilder) {
         //O(1) SPACE TIME COMPLEXITY!
-        Combinations(str,stringBuilder,0);
+        Combinations(str, stringBuilder, 0);
     }
 
-    public static void Combinations(String str,StringBuilder stringBuilder,int index){
+    public static void Combinations(String str, StringBuilder stringBuilder, int index) {
 
         int n = str.length();
 
-        for (int i=index;i<n;i++){
+        for (int i = index; i < n; i++) {
 
             stringBuilder.append(str.charAt(i));
             System.out.println(stringBuilder);
-            Combinations(str,stringBuilder,i+1);
+            Combinations(str, stringBuilder, i + 1);
 
-            stringBuilder.deleteCharAt(stringBuilder.length()-1);
+            stringBuilder.deleteCharAt(stringBuilder.length() - 1);
         }
 
 
     }
 
-    public static void CombinationsOfAString(String str){
+    public static void CombinationsOfAString(String str) {
 
-        if (str.length() == 0){
+        if (str.length() == 0) {
             System.out.println("");
             return;
         }
@@ -123,12 +156,12 @@ public class PractiseII {
         int n = str.length();
         int i = 0;
         q.add("");
-        while (i<n && !q.isEmpty()){
+        while (i < n && !q.isEmpty()) {
             int queueSize = q.size();
-            for (int j=0;j<queueSize;j++){
+            for (int j = 0; j < queueSize; j++) {
                 String p = q.poll();
                 char character = str.charAt(i);
-                String notAdded = p +"";
+                String notAdded = p + "";
                 String Added = p + character;
                 q.add(notAdded);
                 q.add(Added);
@@ -136,43 +169,43 @@ public class PractiseII {
             }
             i++;
         }
-        for (String s:q) System.out.println(s);
+        for (String s : q) System.out.println(s);
 
     }
 
-    public static void PermutationsOfAString(String str, String curr){
-        if (str.length() == 0){
+    public static void PermutationsOfAString(String str, String curr) {
+        if (str.length() == 0) {
             System.out.println(curr);
             return;
         }
 
 
-        for (int i=0;i<str.length();i++){
-            String newCurrString = curr +  str.charAt(i);
-            String remainingString = str.substring(0,i) + str.substring(i+1);
-            PermutationsOfAString(remainingString,newCurrString);
+        for (int i = 0; i < str.length(); i++) {
+            String newCurrString = curr + str.charAt(i);
+            String remainingString = str.substring(0, i) + str.substring(i + 1);
+            PermutationsOfAString(remainingString, newCurrString);
         }
 
     }
 
     //Below is a Efficient Function with TC O(N)
-    public static void printBinaryValuesEfficient(int n){
+    public static void printBinaryValuesEfficient(int n) {
 
-        if (n == 1){
+        if (n == 1) {
             System.out.println("1");
             return;
         }
         Queue<String> queue = new LinkedList<>();
         queue.add("1");
 
-        while (n!=0){
+        while (n != 0) {
 
             String s = queue.poll();
-            System.out.print(s+" ");
+            System.out.print(s + " ");
 
-            String rs = s+"0";
+            String rs = s + "0";
             queue.add(rs);
-            String ls = s +"1";
+            String ls = s + "1";
             queue.add(ls);
             n--;
 
@@ -181,19 +214,19 @@ public class PractiseII {
     }
 
     //Overall Time Complexity would be O(N Log N)!
-    public static void printBinaryValues(int n){
+    public static void printBinaryValues(int n) {
         //Outer loop Runs N times
-        for (int i=0;i<=n;i++){
+        for (int i = 0; i <= n; i++) {
             //DecimalToBinary() is a LogN Function!
             DecimalToBinary(i);
         }
     }
 
-    public static void DecimalToBinary(int number){
+    public static void DecimalToBinary(int number) {
         StringBuilder sb = new StringBuilder();
 
-        while(number!=0){
-            int rem = number%2;
+        while (number != 0) {
+            int rem = number % 2;
             sb.append(rem);
             number /= 2;
         }
@@ -201,22 +234,23 @@ public class PractiseII {
 
     }
 
-    public static String CountAndSay(int n){
+    public static String CountAndSay(int n) {
         String output = "1";
 
-        for (int i=1;i<n;i++){
+        for (int i = 1; i < n; i++) {
             output = getOutputSay(output);
         }
         return output;
 
     }
-    public static String getOutputSay(String str){
+
+    public static String getOutputSay(String str) {
         char[] array = str.toCharArray();
         char lastElement = array[0];
         int count = 0;
-        StringBuilder buffer  = new StringBuilder();
+        StringBuilder buffer = new StringBuilder();
 
-        for (char c: array){
+        for (char c : array) {
             if (c == lastElement)
                 count++;
             else {
@@ -231,33 +265,32 @@ public class PractiseII {
 
     }
 
-    public static void frequencyOfCharacters(String str){
-       //Using a fixed size array rather than a HasMap makes it more Efficient!
+    public static void frequencyOfCharacters(String str) {
+        //Using a fixed size array rather than a HasMap makes it more Efficient!
         int[] freq = new int[128];
 
-        Arrays.fill(freq,0);
+        Arrays.fill(freq, 0);
 
-        for (int i=0;i<str.length();i++){
+        for (int i = 0; i < str.length(); i++) {
             freq[str.charAt(i)] += 1;
         }
 
-        for (int i=0;i<128;i++){
-            if (freq[i]>0){
-                System.out.println((char)(i) +" " + freq[i]);
+        for (int i = 0; i < 128; i++) {
+            if (freq[i] > 0) {
+                System.out.println((char) (i) + " " + freq[i]);
             }
         }
     }
 
 
-
 }
 
-class Node{
+class Node {
     int key;
     Node next;
 
-    Node(int key){
+    Node(int key) {
         this.key = key;
-        this.next=null;
+        this.next = null;
     }
 }
