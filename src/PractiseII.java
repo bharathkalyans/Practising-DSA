@@ -1,6 +1,7 @@
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Stack;
 
 public class PractiseII {
 
@@ -11,15 +12,15 @@ public class PractiseII {
         head.next.next = new Node(3);
         head.next.next.next = new Node(4);
         head.next.next.next.next = new Node(5);
+        head.next.next.next.next.next = new Node(6);
 
 
         printList(head);
-        Node res = ReverseLinkedListByK(head,2);
+        Node res = ReverseLinkedListByKUsingStack(head, 2);
         printList(res);
 
 
     }
-
 
 
     //Recursive Solution
@@ -34,7 +35,7 @@ public class PractiseII {
 
         int count = 0;
 
-        while (count<k && curr!=null){
+        while (count < k && curr != null) {
             next = curr.next;
             curr.next = prev;
             prev = curr;
@@ -42,14 +43,48 @@ public class PractiseII {
             count++;
         }
 
-        if (next!=null)
-            head.next = ReverseLinkedListByK(next,k);
+        if (next != null)
+            head.next = ReverseLinkedListByK(next, k);
 
         return prev;
 
     }
 
+    //Stack based Approach
+    public static Node ReverseLinkedListByKUsingStack(Node head, int k) {
+        if (head == null)
+            return null;
 
+        Stack<Node> stack = new Stack<>();
+
+        Node curr = head;
+        Node prev = null;
+        int count = 0;
+        while (curr != null) {
+
+            while (curr != null && count < k) {
+                stack.add(curr);
+                curr = curr.next;
+                count++;
+            }
+
+            while (stack.size() > 0) {
+                if (prev == null) {
+                    prev = stack.peek();
+                    head = prev;
+                    stack.pop();
+                } else {
+                    prev.next = stack.peek();
+                    prev = prev.next;
+                    stack.pop();
+                }
+            }
+            count = 0;
+
+        }
+        prev.next = null;
+        return head;
+    }
 
     //Recursive Solution!
     public static Node ReverseLinkedList(Node curr, Node prev) {
