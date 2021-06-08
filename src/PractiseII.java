@@ -12,7 +12,24 @@ public class PractiseII {
         head.next.next.next.next.next = new Node(6);
 
 
-        ValueOfX("12121 + 12 = X");
+        ValueOfX2("7+X=1011");
+    }
+
+    //This function is used when the input String doesn't contain any spaces between them.
+    public static void ValueOfX2(String str) {
+        String[] a = str.split("\\+|=");
+        int result = 0;
+
+        if (a[0].equals("X")) {
+            result = Integer.parseInt(a[2]) - Integer.parseInt(a[1]);
+        } else if (a[1].equals("X")) {
+            result = Integer.parseInt(a[2]) - Integer.parseInt(a[0]);
+        } else {
+            result = Integer.parseInt(a[0]) + Integer.parseInt(a[1]);
+        }
+
+        System.out.println();
+        System.out.println("Value of X is :: " + result);
 
     }
 
