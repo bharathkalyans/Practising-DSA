@@ -1,7 +1,4 @@
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Stack;
+import java.util.*;
 
 public class PractiseII {
 
@@ -15,20 +12,37 @@ public class PractiseII {
         head.next.next.next.next.next = new Node(6);
 
 
-        System.out.println(hasLoop(head));
-        System.out.println(hasLoopFloydCycleDetection(head));
+        ValueOfX("12121 + 12 = X");
 
     }
 
-    public static boolean hasLoopFloydCycleDetection(Node head){
+    //This function totally depends on the Input Formatting.
+    //If Inout is of Wrong Format this method will not work.
+    public static void ValueOfX(String string) {
+        int result = 0;
+
+        String[] a = string.split(" ");
+        for (String x : a) System.out.print(x + " ");
+        if (a[0].equals("X")) {
+            result = Integer.parseInt(a[4]) - Integer.parseInt(a[2]);
+        } else if (a[2].equals("X")) {
+            result = Integer.parseInt(a[4]) - Integer.parseInt(a[0]);
+        } else {
+            result = Integer.parseInt(a[0]) + Integer.parseInt(a[2]);
+        }
+        System.out.println();
+        System.out.println("Value of X is :: " + result);
+    }
+
+    public static boolean hasLoopFloydCycleDetection(Node head) {
         if (head == null || head.next == null)
             return false;
 
-        Node fast = head,slow = head;
+        Node fast = head, slow = head;
 
-        while (fast!=null && fast.next!=null){
+        while (fast != null && fast.next != null) {
 
-            slow  = slow.next;
+            slow = slow.next;
             fast = fast.next.next;
 
             if (slow == fast)
