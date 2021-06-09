@@ -12,7 +12,20 @@ public class PractiseII {
         head.next.next.next.next.next = new Node(6);
 
 
-        ValueOfX2("7+X=1011");
+        tables();
+    }
+
+    //Created a Simple Function to Display tables for Kids!!XD
+    public static void tables() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter times::");
+        long number = sc.nextLong();
+        for (long j = 0; j <= number; j++) {
+            for (long i = 0; i <= 10; i++) {
+                System.out.println(j + " X  " + i + " = " + (j * i));
+            }
+            System.out.println("***********");
+        }
     }
 
     //This function is used when the input String doesn't contain any spaces between them.
