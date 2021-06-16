@@ -11,8 +11,54 @@ public class PractiseII {
         head.next.next.next.next = new Node(5);
         head.next.next.next.next.next = new Node(6);
 
+        String message = EncryptMessage("open", "723");
+        System.out.println(message);
+        System.out.println(DecryptMessage(message, "723"));
+    }
 
-        tables();
+    public static String EncryptMessage(String message, String key) {
+        if (message.length() == 0 || key.length() == 0)
+            return "";
+
+        StringBuilder builder = new StringBuilder();
+        int i = 0, j = 0;
+        int messageLength = message.length();
+        int keyLength = key.length();
+
+        while (i < messageLength && j < keyLength) {
+            char character = message.charAt(i);
+            int repeat = key.charAt(j) - '0';
+            for (int k = 0; k < repeat; k++) {
+                builder.append(character);
+            }
+            i++;
+            j++;
+        }
+        if (i != messageLength) {
+            builder.append(message.substring(i));
+        }
+
+        return builder.toString();
+    }
+
+    public static String DecryptMessage(String encryptedMessage, String key) {
+        if (encryptedMessage.length() == 0 || key.length() == 0)
+            return "";
+
+        StringBuilder builder = new StringBuilder();
+        int i = 0, j = 0;
+        int messageLength = encryptedMessage.length();
+        int keyLength = key.length();
+
+        while (j < keyLength) {
+            char mainChar = encryptedMessage.charAt(i);
+            builder.append(mainChar);
+            i = i + key.charAt(j) - '0';
+            j++;
+        }
+
+        builder.append(encryptedMessage.substring(i));
+        return builder.toString();
     }
 
     //Created a Simple Function to Display tables for Kids!!XD
