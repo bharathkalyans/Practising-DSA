@@ -11,9 +11,28 @@ public class PractiseII {
         head.next.next.next.next = new Node(5);
         head.next.next.next.next.next = new Node(6);
 
-        String message = EncryptMessage("open", "723");
-        System.out.println(message);
-        System.out.println(DecryptMessage(message, "723"));
+        System.out.println(sumOfDigitsUntilSingleDigit(1098));
+
+    }
+
+    public static int sumOfDigitsUntilSingleDigit(int number) {
+        if (number < 10) {
+            return number;
+        }
+        return sumOfDigitsUntilSingleDigit(sumOfDigits(number));
+    }
+
+    public static int sumOfDigits(int number) {
+        int sum = 0;
+        int temp = number;
+
+        while (temp != 0) {
+            int digit = temp % 10;
+            sum += digit;
+            temp = temp / 10;
+        }
+        System.out.println("sum :: " + sum);
+        return sum;
     }
 
     public static String EncryptMessage(String message, String key) {
