@@ -4,15 +4,40 @@ public class PractiseII {
 
     public static void main(String[] args) {
 
-        Node head = new Node(1);
+        /*Node head = new Node(1);
         head.next = new Node(2);
         head.next.next = new Node(3);
         head.next.next.next = new Node(4);
         head.next.next.next.next = new Node(5);
-        head.next.next.next.next.next = new Node(6);
+        head.next.next.next.next.next = new Node(6);*/
 
-        System.out.println(sumOfDigitsUntilSingleDigit(1098));
+        stockSpan(new int[]{100,30,56,110,2,45,56,67,78,89});
 
+    }
+
+    public static void stockSpan(int[] stockPrice) {
+        Stack<Integer> stack = new Stack<>();
+        stack.push(0);
+        System.out.println("1");
+
+        for (int i = 1; i < stockPrice.length; i++) {
+            while (!stack.isEmpty() && stockPrice[stack.peek()] < stockPrice[i])
+                stack.pop();
+            int stock = stack.isEmpty() ? 1 : i - stack.peek();
+            System.out.println(stock);
+            stack.push(i);
+
+        }
+
+    }
+
+    public static boolean isPrime(int n) {
+        for (int i = 2; i < Math.sqrt(n); i++) {
+            if (n % i == 0) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public static int sumOfDigitsUntilSingleDigit(int number) {
