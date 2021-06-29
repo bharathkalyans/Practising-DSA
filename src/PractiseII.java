@@ -11,7 +11,23 @@ public class PractiseII {
         head.next.next.next.next = new Node(5);
         head.next.next.next.next.next = new Node(6);*/
 
-        stockSpan(new int[]{100,30,56,110,2,45,56,67,78,89});
+        System.out.println(removeAllAdjacentInStrings("bharaarahth"));
+    }
+
+    public static String removeAllAdjacentInStrings(String string) {
+        if (string.length() == 0 || string.length() == 1)
+            return string;
+
+        StringBuilder sb = new StringBuilder();
+        for (char c : string.toCharArray()) {
+            int size = sb.length();
+            if (size > 0 && sb.charAt(size - 1) == c) {
+                sb.deleteCharAt(size - 1);
+            } else
+                sb.append(c);
+        }
+
+        return sb.toString();
 
     }
 
