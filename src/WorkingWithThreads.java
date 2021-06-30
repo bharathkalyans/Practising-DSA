@@ -8,7 +8,7 @@ public class WorkingWithThreads {
     public void printOddNumber() {
         synchronized (this) {
             while (counter < N) {
-                while (counter % 2 == 1) {
+                while (counter % 2 == 0) {
                     try {
                         wait();
                     } catch (
@@ -28,7 +28,7 @@ public class WorkingWithThreads {
     public void printEvenNumber() {
         synchronized (this) {
             while (counter < N) {
-                while (counter % 2 == 0) {
+                while (counter % 2 == 1) {
                     try {
                         wait();
                     } catch (
