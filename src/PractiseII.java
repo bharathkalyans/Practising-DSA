@@ -14,8 +14,32 @@ public class PractiseII {
         int[] a = new int[]{15, 10, 18, 12, 4, 6, 2, 8};
         previousGreaterElement(a, a.length);
         nextGreaterElement(a, a.length);
+        nextSmallerElement(a, a.length);
     }
 
+
+    public static void nextSmallerElement(int[] a, int n) {
+
+        int[] nextSmaller = new int[n];
+        Stack<Integer> stack = new Stack<>();
+        nextSmaller[n - 1] = -1;
+        stack.push(a[n - 1]);
+
+        for (int i = n - 2; i >= 0; i--) {
+            while (!stack.isEmpty() && a[i] < stack.peek())
+                stack.pop();
+
+            int ele = stack.isEmpty() ? -1 : stack.peek();
+            nextSmaller[i] = ele;
+            stack.push(a[i]);
+
+        }
+
+        for (int x : nextSmaller)
+            System.out.print(x + " ");
+
+        System.out.println();
+    }
 
     public static void nextGreaterElement(int[] a, int n) {
 
@@ -26,7 +50,7 @@ public class PractiseII {
         stack.push(a[n - 1]);
 
         for (int i = n - 2; i >= 0; i--) {
-            while (!stack.isEmpty() && a[i]>stack.peek())
+            while (!stack.isEmpty() && a[i] > stack.peek())
                 stack.pop();
 
             int ele = stack.isEmpty() ? -1 : stack.peek();
@@ -39,6 +63,7 @@ public class PractiseII {
             System.out.print(x + " ");
 
 
+        System.out.println();
     }
 
     public static void previousGreaterElement(int[] a, int n) {
@@ -59,6 +84,7 @@ public class PractiseII {
         for (int x : prevArray)
             System.out.print(x + " ");
 
+        System.out.println();
     }
 
     public static String removeAllAdjacentInStrings(String string) {
