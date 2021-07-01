@@ -11,11 +11,35 @@ public class PractiseII {
         head.next.next.next.next = new Node(5);
         head.next.next.next.next.next = new Node(6);*/
 
-        int[] a = new int[]{15,10,18,12,4,6,2,8};
-        previousGreaterElement(a,a.length);
+        int[] a = new int[]{15, 10, 18, 12, 4, 6, 2, 8};
+        previousGreaterElement(a, a.length);
+        nextGreaterElement(a, a.length);
     }
 
 
+    public static void nextGreaterElement(int[] a, int n) {
+
+        int nextArray[] = new int[n];
+
+        Stack<Integer> stack = new Stack<>();
+        nextArray[n - 1] = -1;
+        stack.push(a[n - 1]);
+
+        for (int i = n - 2; i >= 0; i--) {
+            while (!stack.isEmpty() && a[i]>stack.peek())
+                stack.pop();
+
+            int ele = stack.isEmpty() ? -1 : stack.peek();
+            nextArray[i] = ele;
+            stack.push(a[i]);
+        }
+
+
+        for (int x : nextArray)
+            System.out.print(x + " ");
+
+
+    }
 
     public static void previousGreaterElement(int[] a, int n) {
 
@@ -24,16 +48,16 @@ public class PractiseII {
         prevArray[0] = -1;
         stack.push(a[0]);
         for (int i = 1; i < n; i++) {
-            while (!stack.isEmpty() && a[i]>stack.peek())
+            while (!stack.isEmpty() && a[i] > stack.peek())
                 stack.pop();
 
-            int ele = stack.isEmpty() ? -1: stack.peek();
+            int ele = stack.isEmpty() ? -1 : stack.peek();
             prevArray[i] = ele;
             stack.push(a[i]);
         }
 
-        for (int x: prevArray)
-            System.out.print(x+" ");
+        for (int x : prevArray)
+            System.out.print(x + " ");
 
     }
 
