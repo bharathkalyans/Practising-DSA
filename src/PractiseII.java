@@ -11,7 +11,30 @@ public class PractiseII {
         head.next.next.next.next = new Node(5);
         head.next.next.next.next.next = new Node(6);*/
 
-        System.out.println(removeAllAdjacentInStrings("bharaarahth"));
+        int[] a = new int[]{15,10,18,12,4,6,2,8};
+        previousGreaterElement(a,a.length);
+    }
+
+
+
+    public static void previousGreaterElement(int[] a, int n) {
+
+        int[] prevArray = new int[n];
+        Stack<Integer> stack = new Stack<>();
+        prevArray[0] = -1;
+        stack.push(a[0]);
+        for (int i = 1; i < n; i++) {
+            while (!stack.isEmpty() && a[i]>stack.peek())
+                stack.pop();
+
+            int ele = stack.isEmpty() ? -1: stack.peek();
+            prevArray[i] = ele;
+            stack.push(a[i]);
+        }
+
+        for (int x: prevArray)
+            System.out.print(x+" ");
+
     }
 
     public static String removeAllAdjacentInStrings(String string) {
