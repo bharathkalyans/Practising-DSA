@@ -11,7 +11,9 @@ public class PractiseII {
         head.next.next.next.next = new Node(5);
         head.next.next.next.next.next = new Node(6);*/
 
-        reverseStringUsingStack("Bharath Kalyan");
+        int[] a = new int[]{6, 2, 5, 4, 1, 5, 6};
+        nextSmallerElement(a, a.length);
+        previousSmallerElement(a, a.length);
     }
 
     public static void reverseStringUsingStack(String string) {
@@ -52,7 +54,7 @@ public class PractiseII {
 
     public static void nextGreaterElement(int[] a, int n) {
 
-        int nextArray[] = new int[n];
+        int[] nextArray = new int[n];
 
         Stack<Integer> stack = new Stack<>();
         nextArray[n - 1] = -1;
@@ -69,6 +71,28 @@ public class PractiseII {
 
 
         for (int x : nextArray)
+            System.out.print(x + " ");
+
+
+        System.out.println();
+    }
+
+    public static void previousSmallerElement(int[] a, int n) {
+        Stack<Integer> stack = new Stack<>();
+        stack.push(a[0]);
+        int[] prevArray = new int[n];
+        prevArray[0] = -1;
+        for (int i = 1; i < n; i++) {
+            while (!stack.isEmpty() && a[i] < stack.peek())
+                stack.pop();
+
+            int ele = stack.isEmpty() ? -1 : stack.peek();
+            prevArray[i] = ele;
+            stack.push(a[i]);
+
+        }
+
+        for (int x : prevArray)
             System.out.print(x + " ");
 
 
@@ -590,12 +614,3 @@ public class PractiseII {
 
 }
 
-class Node {
-    int key;
-    Node next;
-
-    Node(int key) {
-        this.key = key;
-        this.next = null;
-    }
-}
