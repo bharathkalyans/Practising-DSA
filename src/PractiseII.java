@@ -11,10 +11,7 @@ public class PractiseII {
         head.next.next.next.next = new Node(5);
         head.next.next.next.next.next = new Node(6);*/
 
-        int[] a = new int[]{15, 10, 18, 12, 4, 6, 2, 8};
-        previousGreaterElement(a, a.length);
-        nextGreaterElement(a, a.length);
-        nextSmallerElement(a, a.length);
+
     }
 
 
