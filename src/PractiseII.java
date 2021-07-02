@@ -11,9 +11,21 @@ public class PractiseII {
         head.next.next.next.next = new Node(5);
         head.next.next.next.next.next = new Node(6);*/
 
-
+        reverseStringUsingStack("Bharath Kalyan");
     }
 
+    public static void reverseStringUsingStack(String string) {
+
+        Stack<Character> stack = new Stack<>();
+        for (char x : string.toCharArray()) {
+            stack.push(x);
+        }
+        StringBuilder sb = new StringBuilder();
+        while (!stack.isEmpty()) {
+            sb.append(stack.pop());
+        }
+        System.out.println(sb.toString());
+    }
 
     public static void nextSmallerElement(int[] a, int n) {
 
