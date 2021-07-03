@@ -11,8 +11,25 @@ public class PractiseII {
         head.next.next.next.next = new Node(5);
         head.next.next.next.next.next = new Node(6);*/
 
+        Stack<Integer> s = new Stack<>();
+        Stack<Integer> s2 = new Stack<>();
+        s.push(1);
+        s.push(2);
+        s.push(3);
+        s.push(3872);
+        s.push(120);
+        cloneStack(s,s2);
+        System.out.println(s2.pop());
+        System.out.println(s2.toString());
+    }
 
-        mergeTwoSortedArrays(new int[]{1,5,9,10,15},new int[]{-1,2,3,8,13,100101010,1010101});
+    public static void cloneStack(Stack<Integer> s,Stack<Integer> s2){
+        if (s.isEmpty())
+            return;
+        int p = s.pop();
+        cloneStack(s,s2);
+        s.push(p);
+        s2.push(p);
     }
 
     public static void mergeTwoSortedArrays(int[] A, int[] B) {
