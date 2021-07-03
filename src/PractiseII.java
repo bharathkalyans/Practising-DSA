@@ -11,9 +11,31 @@ public class PractiseII {
         head.next.next.next.next = new Node(5);
         head.next.next.next.next.next = new Node(6);*/
 
-        int[] a = new int[]{6, 2, 5, 4, 1, 5, 6};
-        nextSmallerElement(a, a.length);
-        previousSmallerElement(a, a.length);
+
+        mergeTwoSortedArrays(new int[]{1,5,9,10,15},new int[]{-1,2,3,8,13,100101010,1010101});
+    }
+
+    public static void mergeTwoSortedArrays(int[] A, int[] B) {
+        int m = A.length;
+        int n = B.length;
+
+        int i = 0;
+        while (i < m && (A[m - 1] > B[0])) {
+            if (A[i] > B[0]) {
+                int temp = A[i];
+                A[i] = B[0];
+                B[0] = temp;
+                System.out.println("Swapped :: " + B[0]);
+                Arrays.sort(B);
+            }
+            i++;
+        }
+
+        for (int x : A) System.out.print(x + " ");
+        System.out.println();
+        for (int x : B) System.out.print(x + " ");
+
+
     }
 
     public static void reverseStringUsingStack(String string) {
