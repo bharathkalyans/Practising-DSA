@@ -11,23 +11,74 @@ public class PractiseII {
         head.next.next.next.next = new Node(5);
         head.next.next.next.next.next = new Node(6);*/
 
-        Stack<Integer> s = new Stack<>();
-        Stack<Integer> s2 = new Stack<>();
-        s.push(1);
-        s.push(2);
-        s.push(3);
-        s.push(3872);
-        s.push(120);
-        cloneStack(s,s2);
-        System.out.println(s2.pop());
-        System.out.println(s2.toString());
+        int[] a = {2, 3, 1, 2, 3, 3};
+        int[] arr = {2, 4, 1, 5, 3, 5, 1, 3};
+        int m = 2;
+        System.out.println(minimumDistinctElements(arr, 2));
+
     }
 
-    public static void cloneStack(Stack<Integer> s,Stack<Integer> s2){
+    //You can remove m elements
+    public static int minimumDistinctElements(int[] a, int m) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+//        TreeMap<Integer, Integer> map = new TreeMap<>();
+        int n = a.length;
+        int count = 0;
+        int size = 0;
+
+        //Created a Map!
+        for (int j : a) {
+            if (map.containsKey(j)) {
+                map.put(j, map.get(j) + 1);
+            } else {
+                map.put(j, 1);
+                size++;
+            }
+        }
+
+        //Sort the Map!
+        map = sortByValue(map);
+        System.out.println(map);
+
+        for (Map.Entry<Integer, Integer> mp : map.entrySet()) {
+            if (mp.getValue() <= m) {
+                m = m - mp.getValue();
+                count++;
+            } else {
+                return size - count;
+            }
+        }
+        return size - count;
+    }
+
+    //Sorting HashMap by Value not by Key!!
+    public static HashMap<Integer, Integer> sortByValue(HashMap<Integer, Integer> hm) {
+        List<Map.Entry<Integer, Integer>> list =
+                new LinkedList<>(hm.entrySet());
+
+        // Sort the list
+        Collections.sort(list, new Comparator<>() {
+            public int compare(Map.Entry<Integer, Integer> o1,
+                               Map.Entry<Integer, Integer> o2) {
+                return (o1.getValue()).compareTo(o2.getValue());
+            }
+        });
+
+        //Collections.sort(list, Comparator.comparing(Map.Entry::getValue));
+
+        // put data from sorted list to hashmap
+        HashMap<Integer, Integer> temp = new LinkedHashMap<>();
+        for (Map.Entry<Integer, Integer> aa : list) {
+            temp.put(aa.getKey(), aa.getValue());
+        }
+        return temp;
+    }
+
+    public static void cloneStack(Stack<Integer> s, Stack<Integer> s2) {
         if (s.isEmpty())
             return;
         int p = s.pop();
-        cloneStack(s,s2);
+        cloneStack(s, s2);
         s.push(p);
         s2.push(p);
     }
