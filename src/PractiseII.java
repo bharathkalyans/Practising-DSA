@@ -11,10 +11,28 @@ public class PractiseII {
         head.next.next.next.next = new Node(5);
         head.next.next.next.next.next = new Node(6);*/
 
-        int[] a = {2, 3, 1, 2, 3, 3};
-        int[] arr = {2, 4, 1, 5, 3, 5, 1, 3};
-        int m = 2;
-        System.out.println(minimumDistinctElements(arr, 2));
+        SieveEratosthenesMethod(50);
+    }
+
+    public static void SieveEratosthenesMethod(int m) {
+
+        boolean[] isPrime = new boolean[m];
+        Arrays.fill(isPrime, true);
+
+        for (int i = 2; i * i < m; i++) {
+            if (isPrime[i]) {
+//                for (int j = i * i; j < m; j = j + i) It works with both + and * !! 🤯
+                for (int j = i + i; j < m; j = j + i) {
+                    isPrime[j] = false;
+                    System.out.println("Marked :: " + j);
+                }
+            }
+        }
+
+        for (int i = 2; i < m; i++) {
+            if (isPrime[i])
+                System.out.print(i + " ");
+        }
 
     }
 
