@@ -12,11 +12,32 @@ public class PractiseIII {
         q.add(4);
         q.add(5);
 //        ReverseAQueue(q);
-        ReverseAQueueRecursion(q);
-        System.out.println(q.toString());
+//        ReverseAQueueRecursion(q);
+//        System.out.println(q.toString());
+
+        ReverseQueueByK(q,3);
     }
 
-    public static void ReverseAQueueRecursion(Queue<Integer> q){
+    public static void ReverseQueueByK(Queue<Integer> q, int K){
+        if (K>q.size())
+            return;
+        Queue<Integer> t = new LinkedList<>();
+        int count = K;
+        while (count>0){
+            t.add(q.remove());
+            count--;
+        }
+        t = ReverseAQueue(t);
+        System.out.println(t.toString());
+        while (!q.isEmpty()){
+            t.add(q.remove());
+        }
+
+        System.out.println(t.toString());
+
+    }
+
+    public static void ReverseAQueueRecursion(Queue<Integer> q) {
         if (q.size() == 1)
             return;
         int x = q.remove();
@@ -24,19 +45,20 @@ public class PractiseIII {
         q.add(x);
     }
 
-    public static void ReverseAQueue(Queue<Integer> q) {
+    public static Queue<Integer> ReverseAQueue(Queue<Integer> q) {
         int count = q.size();
         if (count == 0 || count == 1)
-            return;
+            return q;
 
         Stack<Integer> s = new Stack<>();
-        while (!q.isEmpty()){
+        while (!q.isEmpty()) {
             s.push(q.remove());
         }
         while (!s.isEmpty())
             q.add(s.pop());
 
-        System.out.println(q.toString());
+//        System.out.println(q.toString());
+        return q;
     }
 
     public static void RotateAQueueByX(Queue<Integer> q, int X) {
