@@ -11,7 +11,17 @@ public class PractiseIII {
         q.add(3);
         q.add(4);
         q.add(5);
-        ReverseAQueue(q);
+//        ReverseAQueue(q);
+        ReverseAQueueRecursion(q);
+        System.out.println(q.toString());
+    }
+
+    public static void ReverseAQueueRecursion(Queue<Integer> q){
+        if (q.size() == 1)
+            return;
+        int x = q.remove();
+        ReverseAQueueRecursion(q);
+        q.add(x);
     }
 
     public static void ReverseAQueue(Queue<Integer> q) {
