@@ -16,11 +16,12 @@ public class PractiseIII {
         System.out.println(q.toString());*/
 
 //        ReverseQueueByK(q, 3);
-        String s = "abcd";
-        PossibleSet(s.toCharArray(),2,"");
+        String s = "123456789";
+//        PossibleSet(s.toCharArray(),4,"1");
+        PossibleSetOfKLength(s.toCharArray(),7,"",s.length());
     }
 
-    //Short Answer!
+    //Short Answer! will not pass All TEST CASES!!!
     public static void PossibleSet(char[] a, int k, String str) {
         if (str.length() == k) {
             System.out.println(str);
