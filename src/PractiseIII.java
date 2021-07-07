@@ -1,24 +1,31 @@
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Stack;
+import java.util.*;
 
 public class PractiseIII {
 
     public static void main(String[] args) {
-        Queue<Integer> q = new LinkedList<>();
-        q.add(1);
-        q.add(2);
-        q.add(3);
-        q.add(4);
-        q.add(5);
-/*        ReverseAQueue(q);
-        ReverseAQueueRecursion(q);
-        System.out.println(q.toString());*/
+        int[] a = new int[]{8, 5, 10, 7, 9, 4, 15, 12, 90, 13};
+        MaxInWindowSizeOfK(a, 4);
+    }
 
-//        ReverseQueueByK(q, 3);
-        String s = "123456789";
-//        PossibleSet(s.toCharArray(),4,"1");
-        PossibleSetOfKLength(s.toCharArray(),7,"",s.length());
+    public static void MaxInWindowSizeOfK(int[] A, int k) {
+
+        PriorityQueue<Integer> q = new PriorityQueue<>(k, Collections.reverseOrder());
+        int i = 0;
+        for (; i < k; i++) {
+            q.add(A[i]);
+        }
+
+        System.out.println(q.peek());
+        q.remove(A[0]);
+
+        for (; i < A.length; i++) {
+            q.add(A[i]);
+            System.out.println(q.peek());
+            q.remove(A[i - k + 1]);
+        }
+
+        System.out.println();
+
     }
 
     //Short Answer! will not pass All TEST CASES!!!
@@ -32,6 +39,7 @@ public class PractiseIII {
             PossibleSet(a, k, newString);
         }
     }
+
     public static void PossibleSetOfKLength(char[] a, int k, String str, int n) {
         if (k == 0) {
             System.out.println(str);
