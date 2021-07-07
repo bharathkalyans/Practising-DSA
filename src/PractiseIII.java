@@ -11,25 +11,49 @@ public class PractiseIII {
         q.add(3);
         q.add(4);
         q.add(5);
-//        ReverseAQueue(q);
-//        ReverseAQueueRecursion(q);
-//        System.out.println(q.toString());
+/*        ReverseAQueue(q);
+        ReverseAQueueRecursion(q);
+        System.out.println(q.toString());*/
 
-        ReverseQueueByK(q,3);
+//        ReverseQueueByK(q, 3);
+        String s = "abcd";
+        PossibleSet(s.toCharArray(),2,"");
     }
 
-    public static void ReverseQueueByK(Queue<Integer> q, int K){
-        if (K>q.size())
+    //Short Answer!
+    public static void PossibleSet(char[] a, int k, String str) {
+        if (str.length() == k) {
+            System.out.println(str);
+            return;
+        }
+        for (int i = 0; i < a.length; i++) {
+            String newString = str + a[i];
+            PossibleSet(a, k, newString);
+        }
+    }
+    public static void PossibleSetOfKLength(char[] a, int k, String str, int n) {
+        if (k == 0) {
+            System.out.println(str);
+            return;
+        }
+        for (int i = 0; i < n; i++) {
+            String newString = str + a[i];
+            PossibleSetOfKLength(a, k - 1, newString, n);
+        }
+    }
+
+    public static void ReverseQueueByK(Queue<Integer> q, int K) {
+        if (K > q.size())
             return;
         Queue<Integer> t = new LinkedList<>();
         int count = K;
-        while (count>0){
+        while (count > 0) {
             t.add(q.remove());
             count--;
         }
         t = ReverseAQueue(t);
         System.out.println(t.toString());
-        while (!q.isEmpty()){
+        while (!q.isEmpty()) {
             t.add(q.remove());
         }
 
