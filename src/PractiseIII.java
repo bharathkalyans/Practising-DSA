@@ -4,10 +4,52 @@ public class PractiseIII {
 
     public static void main(String[] args) {
 
-        System.out.println(LookAndSaySequence(5));
+        int[] A = new int[]{16,16,16};
+        System.out.println(MinStepsToGetDesiredArray(A));
 
     }
 
+    public static int MinStepsToGetDesiredArray(int[] A) {
+        int count = 0, n = A.length;
+
+        while (true) {
+            int zeroes = 0;
+            int even = 0;
+
+            //If Odd Numbers are found then Subtract with 1!
+            for (int i = 0; i < n; i++) {
+                if (A[i] % 2 == 1) {
+                    A[i] = A[i] - 1;
+                    count++;
+                }
+            }
+
+            //If all are Zeroes then return Count!
+            for (int i = 0; i < n; i++) {
+                if (A[i] == 0) {
+                    zeroes++;
+                }
+            }
+            if (zeroes == n) {
+                return count;
+            }
+
+            //If all are even numbers!
+            for (int i = 0; i < n; i++) {
+                if (A[i] % 2 == 0) {
+                    even++;
+                }
+            }
+
+            if (even == n) {
+                for (int i = 0; i < n; i++) {
+                    A[i] = A[i] / 2;
+                }
+                count++;
+            }
+        }
+
+    }
 
     public static String LookAndSaySequence(int n) {
         String c = "1";
