@@ -3,8 +3,41 @@ import java.util.*;
 public class PractiseIII {
 
     public static void main(String[] args) {
-        int[] a = new int[]{8, 5, 10, 7, 9, 4, 15, 12, 90, 13};
-        MaxInWindowSizeOfK(a, 4);
+
+        System.out.println(LookAndSaySequence(5));
+
+    }
+
+
+    public static String LookAndSaySequence(int n) {
+        String c = "1";
+        for (int i = 1; i < n; i++) {
+            c = getLookAndSaySequence(c);
+            System.out.println(c);
+        }
+
+        return c;
+    }
+
+    public static String getLookAndSaySequence(String str) {
+
+        char[] array = str.toCharArray();
+        char lastElement = array[0];
+        int count = 0;
+        StringBuilder buffer = new StringBuilder();
+
+        for (char c : array) {
+            if (c == lastElement)
+                count++;
+            else {
+                buffer.append(count).append(lastElement);
+                count = 1;
+                lastElement = c;
+            }
+        }
+
+        buffer.append(count).append(lastElement);
+        return buffer.toString();
     }
 
     public static void MaxInWindowSizeOfK(int[] A, int k) {
