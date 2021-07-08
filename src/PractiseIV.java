@@ -28,10 +28,50 @@ public class PractiseIV {
         root.right.right.right.left = new Node(10);
         root.right.right.right.right = new Node(11);
 
-        System.out.println(GetMaxOfTree(root));
+
+        System.out.println("Left View  ");
+        LeftViewOfTree(root);
+        System.out.println("Right View  ");
+        RightViewOfTree(root);
+    }
+
+    static int MAX_LEVEL_RIGHT = -1;
+
+    public static void RightViewOfTree(Node root) {
+        RightViewOfTree(root, 0);
+        System.out.println();
+    }
+
+    private static void RightViewOfTree(Node root, int level) {
+        if (root == null) return;
+
+        if (level > MAX_LEVEL_RIGHT) {
+            System.out.print(root.value + " ");
+            MAX_LEVEL_RIGHT = level;
+        }
+        RightViewOfTree(root.right, level + 1);
+        RightViewOfTree(root.left, level + 1);
 
     }
 
+    static int MAX_LEVEL_LEFT = -1;
+
+    public static void LeftViewOfTree(Node root) {
+        LeftViewOfTree(root, 0);
+        System.out.println();
+    }
+
+    private static void LeftViewOfTree(Node root, int level) {
+        if (root == null) return;
+
+        if (level > MAX_LEVEL_LEFT) {
+            System.out.print(root.value + " ");
+            MAX_LEVEL_LEFT = level;
+        }
+        LeftViewOfTree(root.left, level + 1);
+        LeftViewOfTree(root.right, level + 1);
+
+    }
 
     public static int GetMaxOfTree(Node root) {
         if (root == null)
