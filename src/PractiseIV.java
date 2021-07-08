@@ -28,8 +28,19 @@ public class PractiseIV {
         root.right.right.right.left = new Node(10);
         root.right.right.right.right = new Node(11);
 
+        System.out.println(GetMaxOfTree(root));
 
-        PrintNodesAtDistanceK(root, 4);
+    }
+
+
+    public static int GetMaxOfTree(Node root) {
+        if (root == null)
+            return Integer.MIN_VALUE;
+
+        return Math.max(root.value,
+                Math.max(GetMaxOfTree(root.left),
+                        GetMaxOfTree(root.right))
+        );
     }
 
     public static void PrintNodesAtDistanceK(Node root, int k) {
