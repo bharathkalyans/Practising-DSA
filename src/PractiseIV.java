@@ -12,6 +12,7 @@ class Node {
     }
 }
 
+//This Class will contain mostly Tree Questions!
 public class PractiseIV {
 
     public static void main(String[] args) {
@@ -22,8 +23,20 @@ public class PractiseIV {
         root.left.right = new Node(5);
         root.right.left = new Node(6);
         root.right.right = new Node(7);
+        root.right.right.right = new Node(8);
 
-        BreadthFirstSearch(root);
+        System.out.println(HeightOfTree(root));
+
+    }
+
+    public static int HeightOfTree(Node root) {
+        if (root == null)
+            return 0;
+
+        return (Math.max(
+                HeightOfTree(root.left),
+                HeightOfTree(root.right)
+        ) + 1);
     }
 
     public static void BreadthFirstSearch(Node root) {
