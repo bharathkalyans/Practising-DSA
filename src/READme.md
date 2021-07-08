@@ -1,19 +1,19 @@
 
-# 👋🏽 Hi, I'm Bharath 👨🏽‍💻
+[comment]: <> (# 👋🏽 Hi, I'm Bharath 👨🏽‍💻)
 
 
-## I am a CS UnderGrad @CIT, Gubbi!
+[comment]: <> (## I am a CS UnderGrad @CIT, Gubbi!)
 
-- ### 🌱 I’m currently learning Android Development.
+[comment]: <> (- ### 🌱 I’m currently learning Android Development.)
 
 
-## Social Profiles:
+[comment]: <> (## Social Profiles:)
 
->[LinkedIn](https://www.linkedin/in/bharathkalyans/)
+[comment]: <> (>[LinkedIn]&#40;https://www.linkedin/in/bharathkalyans/&#41;)
 
->[LeetCode](https://leetcode.com/bharathkalyans/)
+[comment]: <> (>[LeetCode]&#40;https://leetcode.com/bharathkalyans/&#41;)
 
->[Geeks for Geeks](https://auth.geeksforgeeks.org/user/bharathkalyans/profile)
+[comment]: <> (>[Geeks for Geeks]&#40;https://auth.geeksforgeeks.org/user/bharathkalyans/profile&#41;)
 
 
 

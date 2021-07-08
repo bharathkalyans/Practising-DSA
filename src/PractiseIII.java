@@ -4,10 +4,6 @@ public class PractiseIII {
 
     public static void main(String[] args) {
 
-        int[] A = new int[]{10, 8, 15, 7, 12, 4, 17};
-        MaxInWindowSizeOfK(A, 3);
-
-
     }
 
     public static int MinStepsToGetDesiredArray(int[] A) {

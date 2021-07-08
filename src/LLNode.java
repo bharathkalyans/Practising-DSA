@@ -1,8 +1,8 @@
-class Node {
+class LLNode {
     int key;
-    Node next;
+    LLNode next;
 
-    Node(int key) {
+    LLNode(int key) {
         this.key = key;
         this.next = null;
     }

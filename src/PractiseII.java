@@ -384,11 +384,11 @@ public class PractiseII {
         System.out.println("Value of X is :: " + result);
     }
 
-    public static boolean hasLoopFloydCycleDetection(Node head) {
+    public static boolean hasLoopFloydCycleDetection(LLNode head) {
         if (head == null || head.next == null)
             return false;
 
-        Node fast = head, slow = head;
+        LLNode fast = head, slow = head;
 
         while (fast != null && fast.next != null) {
 
@@ -403,12 +403,12 @@ public class PractiseII {
 
     }
 
-    public static boolean hasLoop(Node root) {
+    public static boolean hasLoop(LLNode root) {
         //Richard Brent Algorithm : :
         //He claims that this algorithm is 20 -34 % faster than Floyd Cycle detection Algorithm.
         if (root == null) return false;
 
-        Node slow = root, fast = root;
+        LLNode slow = root, fast = root;
         int taken = 0, limit = 2;
 
         while (fast.next != null) {
@@ -426,14 +426,14 @@ public class PractiseII {
     }
 
     //Recursive Solution
-    public static Node ReverseLinkedListByK(Node head, int k) {
+    public static LLNode ReverseLinkedListByK(LLNode head, int k) {
 
         if (head == null)
             return null;
 
-        Node curr = head;
-        Node prev = null;
-        Node next = null;
+        LLNode curr = head;
+        LLNode prev = null;
+        LLNode next = null;
 
         int count = 0;
 
@@ -453,14 +453,14 @@ public class PractiseII {
     }
 
     //Stack based Approach
-    public static Node ReverseLinkedListByKUsingStack(Node head, int k) {
+    public static LLNode ReverseLinkedListByKUsingStack(LLNode head, int k) {
         if (head == null)
             return null;
 
-        Stack<Node> stack = new Stack<>();
+        Stack<LLNode> stack = new Stack<>();
 
-        Node curr = head;
-        Node prev = null;
+        LLNode curr = head;
+        LLNode prev = null;
         int count = 0;
         while (curr != null) {
 
@@ -489,11 +489,11 @@ public class PractiseII {
     }
 
     //Recursive Solution!
-    public static Node ReverseLinkedList(Node curr, Node prev) {
+    public static LLNode ReverseLinkedList(LLNode curr, LLNode prev) {
 
         if (curr == null) return prev;
 
-        Node next = curr.next;
+        LLNode next = curr.next;
         curr.next = prev;
 
         return ReverseLinkedList(next, curr);
@@ -501,23 +501,23 @@ public class PractiseII {
     }
 
     //Iterative Solution!
-    public static Node ReverseLinkedList(Node node) {
+    public static LLNode ReverseLinkedList(LLNode LLNode) {
 
-        Node prev = null;
-        Node current = node;
-        Node next = null;
+        LLNode prev = null;
+        LLNode current = LLNode;
+        LLNode next = null;
         while (current != null) {
             next = current.next;
             current.next = prev;
             prev = current;
             current = next;
         }
-        node = prev;
-        return node;
+        LLNode = prev;
+        return LLNode;
 
     }
 
-    public static int sizeOfLinkedList(Node head) {
+    public static int sizeOfLinkedList(LLNode head) {
         if (head == null)
             return 0;
         if (head.next == null)
@@ -534,12 +534,12 @@ public class PractiseII {
         return count;
     }
 
-    public static Node MiddleOfLinkedList(Node head) {
+    public static LLNode MiddleOfLinkedList(LLNode head) {
 
         if (head == null)
             return null;
 
-        Node fast = head, slow = head;
+        LLNode fast = head, slow = head;
 
 
         while (fast != null && fast.next != null) {
@@ -550,7 +550,7 @@ public class PractiseII {
         return slow;
     }
 
-    public static void printList(Node head) {
+    public static void printList(LLNode head) {
         if (head == null)
             return;
 
