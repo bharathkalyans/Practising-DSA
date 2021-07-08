@@ -1,3 +1,6 @@
+import java.util.LinkedList;
+import java.util.Queue;
+
 class Node {
     int value;
     Node left;
@@ -20,9 +23,30 @@ public class PractiseIV {
         root.right.left = new Node(6);
         root.right.right = new Node(7);
 
-        InorderTraversal(root);
+        BreadthFirstSearch(root);
     }
 
+    public static void BreadthFirstSearch(Node root) {
+        if (root == null)
+            return;
+
+        Queue<Node> q = new LinkedList<>();
+        q.add(root);
+
+        while (!q.isEmpty()) {
+            Node t = q.poll();
+            System.out.println(t.value);
+
+            if (t.left != null)
+                q.add(t.left);
+
+            if (t.right != null)
+                q.add(t.right);
+        }
+
+        System.out.println(q.toString());
+
+    }
 
     private static void InorderTraversal(Node root) {
         if (root != null) {
