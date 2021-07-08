@@ -4,8 +4,9 @@ public class PractiseIII {
 
     public static void main(String[] args) {
 
-        int[] A = new int[]{16,16,16};
-        System.out.println(MinStepsToGetDesiredArray(A));
+        int[] A = new int[]{10, 8, 15, 7, 12, 4, 17};
+        MaxInWindowSizeOfK(A, 3);
+
 
     }
 
@@ -82,6 +83,36 @@ public class PractiseIII {
         return buffer.toString();
     }
 
+    //Time Complexity is O(N) and Space Complexity is O(K)!
+    public static void MaxInWindowOfSizeK(int[] A, int k) {
+        if (A.length == 0 || A.length == 1)
+            return;
+
+        Deque<Integer> dq = new LinkedList<>();
+        int i = 0;
+        int n = A.length;
+        for (; i < k; i++) {
+            while (!dq.isEmpty() && A[i] > A[dq.peekLast()])
+                dq.removeLast();
+
+            dq.addLast(i);
+        }
+
+        for (; i < n; i++) {
+            System.out.println(dq.peek());
+            while (!dq.isEmpty() && dq.peek() < i - k)
+                dq.removeFirst();
+
+            while (!dq.isEmpty() && A[i] > A[dq.peekLast()])
+                dq.removeLast();
+
+            dq.addLast(i);
+        }
+
+
+    }
+
+    //Time Complexity is O(NLogN) and Space Complexity is O(K)!
     public static void MaxInWindowSizeOfK(int[] A, int k) {
 
         PriorityQueue<Integer> q = new PriorityQueue<>(k, Collections.reverseOrder());
