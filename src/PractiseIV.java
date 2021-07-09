@@ -1,5 +1,6 @@
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Stack;
 
 class Node {
     int value;
@@ -12,7 +13,7 @@ class Node {
     }
 }
 
-//This Class will contain mostly Tree Questions!
+//This Class will mostly contain Tree Questions!
 public class PractiseIV {
 
     public static void main(String[] args) {
@@ -29,10 +30,31 @@ public class PractiseIV {
         root.right.right.right.right = new Node(11);
 
 
-        System.out.println("Left View  ");
-        LeftViewOfTree(root);
-        System.out.println("Right View  ");
-        RightViewOfTree(root);
+        InorderTraversalUsingStack(root);
+        System.out.println();
+        InorderTraversal(root);
+
+    }
+
+
+    public static void InorderTraversalUsingStack(Node root) {
+
+        Stack<Node> stack = new Stack<>();
+        Node curr = root;
+        while (curr != null || stack.size() > 0) {
+
+            while (curr != null) {
+                stack.push(curr);
+                curr = curr.left;
+            }
+            curr = stack.pop();
+
+            System.out.print(curr.value+" ");
+
+            curr = curr.right;
+
+        }
+
     }
 
     static int MAX_LEVEL_RIGHT = -1;
