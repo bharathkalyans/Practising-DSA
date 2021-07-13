@@ -29,10 +29,55 @@ public class PractiseIV {
         root.right.right.right.left = new Node(10);
         root.right.right.right.right = new Node(11);
 
-
-        System.out.println(MaximumWidthOfBinaryTree(root));
+        Node h = ConvertBinaryTreeToDLL(root);
+        printList(h);
+        PrintDLBT(h);
     }
 
+    private static Node prev = null;
+
+    public static Node ConvertBinaryTreeToDLL(Node root) {
+
+        if (root == null)
+            return null;
+
+        /*--------------------------------------------------*/
+        Node head = ConvertBinaryTreeToDLL(root.left);
+
+        /*--------------------------------------------------*/
+        if (prev == null) {
+            head = root;
+        } else {
+            root.left = prev;
+            prev.right = root;
+        }
+        prev = root;
+
+        /*--------------------------------------------------*/
+        ConvertBinaryTreeToDLL(root.right);
+
+        return head;
+    }
+
+
+    public static void printList(Node node) {
+        while (node != null) {
+            System.out.print(node.value + " ");
+            node = node.right;
+        }
+    }
+
+    public static void PrintDLBT(Node root) {
+        //Binary Tree Converted to DLL.
+        if (root == null)
+            return;
+
+        Node temp = root;
+        while (temp != null) {
+            System.out.println(temp.value);
+            temp = temp.right;
+        }
+    }
 
     public static int MaximumWidthOfBinaryTree(Node root) {
         if (root == null)
