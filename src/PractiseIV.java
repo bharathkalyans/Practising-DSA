@@ -30,13 +30,50 @@ public class PractiseIV {
         root.right.right.right.right = new Node(11);
 
 
-        InorderTraversalUsingStack(root);
-        System.out.println();
-        InorderTraversal(root);
-
+        System.out.println(MaximumWidthOfBinaryTree(root));
     }
 
 
+    public static int MaximumWidthOfBinaryTree(Node root) {
+        if (root == null)
+            return 0;
+
+        int maxWidth = 0;
+        Queue<Node> q = new LinkedList<>();
+        q.add(root);
+
+        while (!q.isEmpty()) {
+            int count = q.size();
+            maxWidth = Math.max(maxWidth, count);
+
+            while (count-- > 0) {
+                Node t = q.remove();
+
+                if (t.left != null)
+                    q.add(t.left);
+
+                if (t.right != null)
+                    q.add(t.right);
+            }
+        }
+
+        return maxWidth;
+    }
+
+    /*//O(n^2) Time Complexity!
+    public static int MaximumWidthOfABinaryTree(Node root) {
+        if (root == null)
+            return 0;
+
+        int lh = HeightOfTree(root.left);
+        int rh = HeightOfTree(root.right);
+
+        return (Math.max((lh + rh + 1),
+                Math.max(MaximumWidthOfABinaryTree(root.left),
+                        MaximumWidthOfABinaryTree(root.right))));
+
+    }
+*/
     public static void InorderTraversalUsingStack(Node root) {
 
         Stack<Node> stack = new Stack<>();
@@ -49,7 +86,7 @@ public class PractiseIV {
             }
             curr = stack.pop();
 
-            System.out.print(curr.value+" ");
+            System.out.print(curr.value + " ");
 
             curr = curr.right;
 
