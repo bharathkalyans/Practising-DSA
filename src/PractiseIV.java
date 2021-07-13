@@ -1,6 +1,4 @@
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Stack;
+import java.util.*;
 
 class Node {
     int value;
@@ -29,10 +27,33 @@ public class PractiseIV {
         root.right.right.right.left = new Node(10);
         root.right.right.right.right = new Node(11);
 
-        Node h = ConvertBinaryTreeToDLL(root);
-        printList(h);
-        PrintDLBT(h);
+
+        System.out.println(isIsomorphic("baa", "foo"));
+
     }
+
+    public static boolean isIsomorphic(String s, String t) {
+        return transformString(s).equals(transformString(t));
+    }
+
+    private static String transformString(String s) {
+        Map<Character, Integer> indexMapping = new HashMap<>();
+        StringBuilder builder = new StringBuilder();
+
+        for (int i = 0; i < s.length(); ++i) {
+            char c1 = s.charAt(i);
+
+            if (!indexMapping.containsKey(c1)) {
+                indexMapping.put(c1, i);
+            }
+
+            builder.append(indexMapping.get(c1));
+        }
+        System.out.println(" builder :: "+builder.toString());
+        return builder.toString();
+    }
+
+
 
     private static Node prev = null;
 
