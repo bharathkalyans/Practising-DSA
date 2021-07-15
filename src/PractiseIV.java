@@ -27,33 +27,45 @@ public class PractiseIV {
         root.right.right.right.left = new Node(10);
         root.right.right.right.right = new Node(11);
 
-
-        System.out.println(isIsomorphic("baa", "foo"));
+        SpiralTraversalOfTree(root);
 
     }
 
-    public static boolean isIsomorphic(String s, String t) {
-        return transformString(s).equals(transformString(t));
-    }
 
-    private static String transformString(String s) {
-        Map<Character, Integer> indexMapping = new HashMap<>();
-        StringBuilder builder = new StringBuilder();
+    //Using a Stack to Push the elements when a flag is set to True! and POP them at ending!
+    public static void SpiralTraversalOfTree(Node root) {
+        if (root == null) return;
 
-        for (int i = 0; i < s.length(); ++i) {
-            char c1 = s.charAt(i);
+        Queue<Node> q = new LinkedList<>();
+        Stack<Integer> s = new Stack<>();
+        q.add(root);
+        boolean reverse = false;
+        while (!q.isEmpty()) {
 
-            if (!indexMapping.containsKey(c1)) {
-                indexMapping.put(c1, i);
+            int size = q.size();
+            for (int i = 0; i < size; i++) {
+                Node curr = q.poll();
+                if (reverse)
+                    s.push(curr.value);
+                else System.out.print(curr.value + " ");
+
+                if (curr.left != null)
+                    q.add(curr.left);
+                if (curr.right != null)
+                    q.add(curr.right);
+
             }
 
-            builder.append(indexMapping.get(c1));
+            if (reverse) {
+                while (!s.isEmpty())
+                    System.out.print(s.pop() + " ");
+            }
+
+            System.out.println();
+            reverse = !reverse;
         }
-        System.out.println(" builder :: "+builder.toString());
-        return builder.toString();
+
     }
-
-
 
     private static Node prev = null;
 
@@ -79,7 +91,6 @@ public class PractiseIV {
 
         return head;
     }
-
 
     public static void printList(Node node) {
         while (node != null) {
@@ -126,20 +137,6 @@ public class PractiseIV {
         return maxWidth;
     }
 
-    /*//O(n^2) Time Complexity!
-    public static int MaximumWidthOfABinaryTree(Node root) {
-        if (root == null)
-            return 0;
-
-        int lh = HeightOfTree(root.left);
-        int rh = HeightOfTree(root.right);
-
-        return (Math.max((lh + rh + 1),
-                Math.max(MaximumWidthOfABinaryTree(root.left),
-                        MaximumWidthOfABinaryTree(root.right))));
-
-    }
-*/
     public static void InorderTraversalUsingStack(Node root) {
 
         Stack<Node> stack = new Stack<>();
@@ -259,6 +256,28 @@ public class PractiseIV {
             InorderTraversal(root.right);
         }
     }
+
+    public static boolean isIsomorphic(String s, String t) {
+        return transformString(s).equals(transformString(t));
+    }
+
+    private static String transformString(String s) {
+        Map<Character, Integer> indexMapping = new HashMap<>();
+        StringBuilder builder = new StringBuilder();
+
+        for (int i = 0; i < s.length(); ++i) {
+            char c1 = s.charAt(i);
+
+            if (!indexMapping.containsKey(c1)) {
+                indexMapping.put(c1, i);
+            }
+
+            builder.append(indexMapping.get(c1));
+        }
+        System.out.println(" builder :: " + builder.toString());
+        return builder.toString();
+    }
+
 
 }
 
