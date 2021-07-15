@@ -27,10 +27,66 @@ public class PractiseIV {
         root.right.right.right.left = new Node(10);
         root.right.right.right.right = new Node(11);
 
-        SpiralTraversalOfTree(root);
+        PrintBorderOfBinaryTree(root);
 
     }
 
+
+    public static void PrintBorderOfBinaryTree(Node root) {
+        if (root == null)
+            return;
+
+        System.out.print(root.value+" ");
+
+        PrintLeftSideOfBinaryTree(root.left);
+
+        //As root node is not included we have to call this function with both left and right Nodes.
+        PrintLeafNodes(root.left);
+        PrintLeafNodes(root.right);
+
+        PrintRightSideOfBinaryTree(root.right);
+    }
+
+    private static void PrintRightSideOfBinaryTree(Node root) {
+
+        if (root == null)
+            return;
+        if (root.right != null) {
+            PrintRightSideOfBinaryTree(root.right);
+            System.out.print(root.value + " ");
+        } else if (root.left != null) {
+            PrintRightSideOfBinaryTree(root.left);
+            System.out.print(root.value + " ");
+        }
+    }
+
+    private static void PrintLeafNodes(Node root) {
+        if (root == null)
+            return;
+
+        PrintLeafNodes(root.left);
+
+        if (root.left == null && root.right == null)
+            System.out.print(root.value + " ");
+
+        PrintLeafNodes(root.right);
+
+    }
+
+    private static void PrintLeftSideOfBinaryTree(Node root) {
+
+        if (root == null)
+            return;
+        if (root.left != null) {
+            System.out.print(root.value + " ");
+            PrintLeftSideOfBinaryTree(root.left);
+        } else if (root.right != null) {
+            System.out.print(root.value + " ");
+            PrintLeftSideOfBinaryTree(root.right);
+        }
+
+
+    }
 
     //Using a Stack to Push the elements when a flag is set to True! and POP them at ending!
     public static void SpiralTraversalOfTree(Node root) {
