@@ -27,9 +27,60 @@ public class PractiseIV {
         root.right.right.right.left = new Node(10);
         root.right.right.right.right = new Node(11);
 
-        SpiralTraversalOfBinaryTree(root);
+
+        /*ArrayList<Node> list = new ArrayList<>();
+        FindPathOfANode(root, list, 11);
+        for (Node x : list)
+            System.out.print(x.value + "  ");*/
+
+        HeightOfBTree(root);
+        System.out.println("Diameter :  " + DIAMETER);
+
     }
 
+
+    public static boolean FindPathOfANode(Node root, ArrayList<Node> list, int ele) {
+
+        if (root == null)
+            return false;
+        list.add(root);
+
+        if (root.value == ele)
+            return true;
+
+        if (FindPathOfANode(root.left, list, ele) || FindPathOfANode(root.right, list, ele))
+            return true;
+
+        list.remove(list.size() - 1);
+
+        return false;
+    }
+
+
+    private static int DIAMETER = 0;
+
+    //This function is exclusively used to get Diameter of the Tree!
+    public static int HeightOfBTree(Node root) {
+        if (root == null)
+            return 0;
+
+        int lh = HeightOfBTree(root.left);
+        int rh = HeightOfBTree(root.right);
+
+        DIAMETER = Math.max(DIAMETER, 1 + lh + rh);
+
+        return Math.max(lh, rh) + 1;
+    }
+
+    //Naive Solution!
+    public static int DiameterOfBinaryTree(Node root) {
+        if (root == null)
+            return 0;
+
+        return (Math.max(1 + HeightOfTree(root.left) + HeightOfTree(root.right),
+                Math.max(DiameterOfBinaryTree(root.left), DiameterOfBinaryTree(root.right))));
+
+    }
 
     public static void PrintBorderOfBinaryTree(Node root) {
         if (root == null)
