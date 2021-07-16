@@ -28,16 +28,35 @@ public class PractiseIV {
         root.right.right.right.right = new Node(11);
 
 
-        /*ArrayList<Node> list = new ArrayList<>();
-        FindPathOfANode(root, list, 11);
-        for (Node x : list)
-            System.out.print(x.value + "  ");*/
-
-        HeightOfBTree(root);
-        System.out.println("Diameter :  " + DIAMETER);
+        System.out.println(LCA(root, 6, 11).value);
 
     }
 
+    //Least Common Ancestor!
+    public static Node LCA(Node root, int ele1, int ele2) {
+        ArrayList<Node> list = new ArrayList<>();
+        ArrayList<Node> list2 = new ArrayList<>();
+
+
+        if (!FindPathOfANode(root, list, ele1) || !FindPathOfANode(root, list2, ele2))
+            return null;
+
+        /*for (Node x : list)
+            System.out.print(x.value + "  ");
+        System.out.println();
+        for (Node x : list2)
+            System.out.print(x.value + "  ");*/
+
+
+        for (int i = 0; i < list.size() - 1 && i < list2.size() - 1; i++) {
+            if (list.get(i + 1) != list2.get(i + 1))
+                return list.get(i);
+        }
+
+
+        System.out.println();
+        return list.get(list.size() - 1);
+    }
 
     public static boolean FindPathOfANode(Node root, ArrayList<Node> list, int ele) {
 
