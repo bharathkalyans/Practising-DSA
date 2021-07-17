@@ -27,8 +27,48 @@ public class PractiseIV {
         root.right.right.right.left = new Node(10);
         root.right.right.right.right = new Node(11);
 
+        ArrayList<Node> list = new ArrayList<Node>();
+        SerializeBTree(root, list);
 
-        System.out.println(LCA(root, 6, 11).value);
+        for (Node x : list)
+            System.out.print(x.value + " ");
+
+        System.out.println();
+        System.out.println("After Deserializing :: ");
+        Node DS = DeSerializeBTree(list);
+        InorderTraversal(DS);
+
+    }
+
+    static Node EMPTY = new Node(-1);
+
+    public static void SerializeBTree(Node root, ArrayList<Node> list) {
+        if (root == null) {
+            list.add(EMPTY);
+            return;
+        }
+        list.add(root);
+        SerializeBTree(root.left, list);
+        SerializeBTree(root.right, list);
+    }
+
+    static int INDEX = 0;
+
+    public static Node DeSerializeBTree(ArrayList<Node> list) {
+        if (list.size() == INDEX)
+            return null;
+
+        Node val = list.get(INDEX);
+        INDEX++;
+
+        if (val.value == -1)
+            return null;
+
+        Node root = new Node(val.value);
+        root.left = DeSerializeBTree(list);
+        root.right = DeSerializeBTree(list);
+
+        return root;
 
     }
 
@@ -320,7 +360,7 @@ public class PractiseIV {
 
     }
 
-    static int MAX_LEVEL_RIGHT = -1;
+    private static int MAX_LEVEL_RIGHT = -1;
 
     public static void RightViewOfTree(Node root) {
         RightViewOfTree(root, 0);
@@ -339,7 +379,7 @@ public class PractiseIV {
 
     }
 
-    static int MAX_LEVEL_LEFT = -1;
+    private static int MAX_LEVEL_LEFT = -1;
 
     public static void LeftViewOfTree(Node root) {
         LeftViewOfTree(root, 0);

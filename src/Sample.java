@@ -2,12 +2,14 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+
+
+
+
 public  class Sample{
 
-
     public static void main(String[] args) {
-        new Sample().majorityElement(new int[]{3,2,3});
-        new Sample().maj(new int[]{5,5,5,1,2,3,4,5,5});
+
     }
 
     public  int majorityElement(int[] arr){
