@@ -7,15 +7,35 @@ public class PractiseV {
         InsertIntoBST(root, 12);
         InsertIntoBST(root, 4);
         InsertIntoBST(root, 13);
+        InsertIntoBST(root, 7);
+        InsertIntoBST(root, 11);
+        InsertIntoBST(root, 100);
 
-        InorderTraversal(root);
-        System.out.println();
-        DeleteInBST(root, 13);
-        DeleteInBST(root, 10);
-        InorderTraversal(root);
-        System.out.println();
+        System.out.println(GetMinInBST(root));
+        System.out.println(GetMaxInBST(root));
 
+    }
 
+    public static Integer GetMaxInBST(Node root) {
+        if (root == null || root.right == null)
+            return Integer.MAX_VALUE;
+
+        Node curr = root.right;
+        while (curr.right != null)
+            curr = curr.right;
+
+        return curr.value;
+    }
+
+    public static Integer GetMinInBST(Node root) {
+        if (root == null || root.left == null)
+            return Integer.MIN_VALUE;
+
+        Node curr = root.left;
+        while (curr.left != null)
+            curr = curr.left;
+
+        return curr.value;
     }
 
     public static Node DeleteInBST(Node root, int key) {
