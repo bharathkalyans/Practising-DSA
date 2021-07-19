@@ -11,6 +11,7 @@ class Node {
     }
 }
 
+
 //This Class will mostly contain Tree Questions!
 public class PractiseIV {
 
@@ -27,16 +28,6 @@ public class PractiseIV {
         root.right.right.right.left = new Node(10);
         root.right.right.right.right = new Node(11);
 
-        ArrayList<Node> list = new ArrayList<Node>();
-        SerializeBTree(root, list);
-
-        for (Node x : list)
-            System.out.print(x.value + " ");
-
-        System.out.println();
-        System.out.println("After Deserializing :: ");
-        Node DS = DeSerializeBTree(list);
-        InorderTraversal(DS);
 
     }
 
