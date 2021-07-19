@@ -119,12 +119,12 @@ public class PractiseIV {
     private static int DIAMETER = 0;
 
     //This function is exclusively used to get Diameter of the Tree!
-    public static int HeightOfBTree(Node root) {
+    public static int DiameterOfBTreeUsingHeightOfBTree(Node root) {
         if (root == null)
             return 0;
 
-        int lh = HeightOfBTree(root.left);
-        int rh = HeightOfBTree(root.right);
+        int lh = DiameterOfBTreeUsingHeightOfBTree(root.left);
+        int rh = DiameterOfBTreeUsingHeightOfBTree(root.right);
 
         DIAMETER = Math.max(DIAMETER, 1 + lh + rh);
 
