@@ -1,6 +1,7 @@
 
 public class PractiseV {
 
+    //This Class will contain mostly BST Problems!
     public static void main(String[] args) {
         Node root = new Node(10);
         InsertIntoBST(root, 5);
@@ -11,9 +12,40 @@ public class PractiseV {
         InsertIntoBST(root, 11);
         InsertIntoBST(root, 100);
 
-        System.out.println(GetMinInBST(root));
-        System.out.println(GetMaxInBST(root));
 
+
+    }
+
+
+    public static int FloorOfBSTIterative(Node root, int Key) {
+
+        Node res = null;
+
+        while (root != null) {
+            if (root.value == Key)
+                return root.value;
+            else if (root.value > Key) {
+                root = root.left;
+            } else {
+                res = root;
+                root = root.right;
+            }
+        }
+
+        assert res != null;
+        return res.value;
+    }
+
+    public static int MIN_VALUE = Integer.MIN_VALUE;
+
+    // Inefficient and recursive!
+    public static void FloorOfBST(Node root, int Key) {
+        if (root != null) {
+            FloorOfBST(root.left, Key);
+            if (root.value <= Key)
+                MIN_VALUE = Math.max(MIN_VALUE, root.value);
+            FloorOfBST(root.right, Key);
+        }
     }
 
     public static Integer GetMaxInBST(Node root) {
