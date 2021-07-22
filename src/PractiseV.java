@@ -12,10 +12,28 @@ public class PractiseV {
         InsertIntoBST(root, 11);
         InsertIntoBST(root, 100);
 
-
+        System.out.println(CeilOfBSTIterative(root, 6));
 
     }
 
+
+    public static int CeilOfBSTIterative(Node root, int Key) {
+        Node res = null;
+
+        while (root != null) {
+
+            if (root.value == Key)
+                return root.value;
+            else if (root.value < Key)
+                root = root.right;
+            else {
+                res = root;
+                root = root.left;
+            }
+
+        }
+        return res.value;
+    }
 
     public static int FloorOfBSTIterative(Node root, int Key) {
 
