@@ -1,4 +1,3 @@
-
 public class PractiseV {
 
     //This Class will contain mostly BST Problems!
@@ -12,10 +11,16 @@ public class PractiseV {
         InsertIntoBST(root, 11);
         InsertIntoBST(root, 100);
 
-        System.out.println(CeilOfBSTIterative(root, 6));
+        System.out.println(powerOfTwo(30));
 
     }
 
+
+    public static long powerOfTwo(int n) {
+        if (n == 1)
+            return 2;
+        return powerOfTwo(n - 1) * 2;
+    }
 
     public static int CeilOfBSTIterative(Node root, int Key) {
         Node res = null;
@@ -105,7 +110,6 @@ public class PractiseV {
                 Node src = getSourceNode(root);
                 System.out.println("Source is :: " + src.value);
                 root.value = src.value;
-
                 root.right = DeleteInBST(root.right, src.value);
             }
 
