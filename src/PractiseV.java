@@ -1,3 +1,5 @@
+import java.util.TreeSet;
+
 public class PractiseV {
 
     //This Class will contain mostly BST Problems!
@@ -11,8 +13,50 @@ public class PractiseV {
         InsertIntoBST(root, 11);
         InsertIntoBST(root, 100);
 
-        GenerateAllCompositeNumbers(1025);
+        System.out.println(GetNthUglyNumber(150));
+    }
 
+
+
+    public static long GetnthUglyNumber(int n) {
+
+        TreeSet<Long> t = new TreeSet<>();
+
+        //Fist Ugly Number
+        t.add(1L);
+        int i = 1;
+        // when i==n we have the nth ugly number
+        while (i < n) {
+            // remove the ith ugly number and add back its
+            // multiples of 2,3 and 5 back to the set
+            long temp = t.pollFirst();
+            t.add(temp * 2);
+            t.add(temp * 3);
+            t.add(temp * 5);
+            i++;
+            // the first element of set is always the ith
+            // ugly number
+        }
+
+        return t.pollFirst();
+    }
+
+
+    //Naive Approach!
+    public static int GetNthUglyNumber(int n) {
+
+        int t = 0;
+        int UGLY_NUMBER = 1;
+        int nthUgly = 0;
+        while (nthUgly != n) {
+            if (isUglyNumber(t)) {
+                UGLY_NUMBER = t;
+                nthUgly++;
+            }
+            t++;
+        }
+
+        return UGLY_NUMBER;
     }
 
     public static boolean isUglyNumber(int n) {
