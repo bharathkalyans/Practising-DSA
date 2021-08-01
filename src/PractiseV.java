@@ -11,10 +11,46 @@ public class PractiseV {
         InsertIntoBST(root, 11);
         InsertIntoBST(root, 100);
 
-        System.out.println(powerOfTwo(30));
+        GenerateAllCompositeNumbers(1025);
 
     }
 
+    public static boolean isUglyNumber(int n) {
+        if (n == 1)
+            return true;
+
+        if (n == 0) return false;
+
+        while (n % 2 == 0) n /= 2;
+        while (n % 3 == 0) n /= 3;
+        while (n % 5 == 0) n /= 5;
+
+        return n == 1;
+    }
+
+    public static void GenerateAllCompositeNumbers(int N) {
+
+        if (N == 1) {
+            System.out.println("1");
+            return;
+        }
+
+        while (N % 2 == 0) {
+            System.out.print("2" + " ");
+            N /= 2;
+        }
+
+        for (int i = 3; i * i < N; i += 2) {
+            if (N % i == 0) {
+                System.out.print(i + " ");
+                N = N / i;
+            }
+        }
+
+        if (N > 2)
+            System.out.print(N);
+
+    }
 
     public static long powerOfTwo(int n) {
         if (n == 1)

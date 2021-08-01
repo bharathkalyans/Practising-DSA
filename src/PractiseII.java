@@ -11,7 +11,7 @@ public class PractiseII {
         head.next.next.next.next = new Node(5);
         head.next.next.next.next.next = new Node(6);*/
 
-        SieveEratosthenesMethod(50);
+        SieveEratosthenesMethod(100);
     }
 
     public static void SieveEratosthenesMethod(int m) {
