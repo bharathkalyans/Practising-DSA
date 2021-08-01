@@ -29,7 +29,28 @@ public class PractiseIV {
         root.right.right.right.right = new Node(11);
 
 
+        HasSumInPath(root, 30, 0);
+
     }
+
+    public static boolean HasSumInPath(Node root, int target, int sum) {
+        if (root == null) return false;
+
+        if (root != null) {
+            sum += root.value;
+            if (target == sum) {
+                System.out.println("Found!!");
+                return true;
+            }
+
+            if (HasSumInPath(root.left, target, sum)
+                    || HasSumInPath(root.right, target, sum))
+                return true;
+            else return false;
+        }
+        return false;
+    }
+
 
     static Node EMPTY = new Node(-1);
 

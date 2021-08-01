@@ -13,7 +13,10 @@ public class PractiseV {
         InsertIntoBST(root, 11);
         InsertIntoBST(root, 100);
 
-        System.out.println(GetNthUglyNumber(150));
+
+
+
+
     }
 
 
@@ -40,7 +43,6 @@ public class PractiseV {
 
         return t.pollFirst();
     }
-
 
     //Naive Approach!
     public static int GetNthUglyNumber(int n) {
