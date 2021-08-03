@@ -1,3 +1,4 @@
+import java.math.BigInteger;
 import java.util.TreeSet;
 
 public class PractiseV {
@@ -13,13 +14,20 @@ public class PractiseV {
         InsertIntoBST(root, 11);
         InsertIntoBST(root, 100);
 
-
-
-
+        System.out.println(LastDigit(2, 10));
 
     }
 
+    public static char LastDigit(int x, int y) {
+        BigInteger b = new BigInteger(String.valueOf(BigInteger.valueOf(x)));
 
+        while (y-- > 1) {
+            b = b.multiply(BigInteger.valueOf(x));
+        }
+
+        String answer = b.toString();
+        return answer.charAt(answer.length() - 1);
+    }
 
     public static long GetnthUglyNumber(int n) {
 
@@ -246,3 +254,4 @@ public class PractiseV {
 
 
 }
+
