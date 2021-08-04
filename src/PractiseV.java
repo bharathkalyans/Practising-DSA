@@ -1,4 +1,8 @@
+
 import java.math.BigInteger;
+import java.util.HashMap;
+import java.util.PriorityQueue;
+import java.util.Queue;
 import java.util.TreeSet;
 
 public class PractiseV {
@@ -14,7 +18,41 @@ public class PractiseV {
         InsertIntoBST(root, 11);
         InsertIntoBST(root, 100);
 
-        System.out.println(LastDigit(2, 10));
+        int[] A = new int[]{4, 1, -1, 2, -1, 2, 3};
+        int k = 2;
+        TopKFrequentElements(A, k);
+    }
+
+    public static void TopKFrequentElements(int[] A, int K) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+
+        //Frequency Table!
+        for (int x : A) {
+            if (!map.containsKey(x)) {
+                map.put(x, 1);
+            } else {
+                map.put(x, map.get(x) + 1);
+            }
+        }
+        System.out.println("Map :: " + map);
+
+
+        Queue<Integer> pq = new PriorityQueue<>((a, b) -> map.get(a) - map.get(b));
+
+        for (int n : map.keySet()) {
+            pq.add(n);
+            for (int x:pq) System.out.print(x+" ");
+            if (pq.size() > K) pq.poll();
+            System.out.println();
+        }
+
+
+        int[] top = new int[K];
+        for (int i = K - 1; i >= 0; --i) {
+            top[i] = pq.poll();
+        }
+
+        for (int x : top) System.out.println(x);
 
     }
 
@@ -255,3 +293,20 @@ public class PractiseV {
 
 }
 
+class Pair {
+    Integer one;
+    Integer two;
+
+    Pair(Integer a, Integer b) {
+        this.one = a;
+        this.two = b;
+    }
+
+    public Integer getOne() {
+        return one;
+    }
+
+    public Integer getTwo() {
+        return two;
+    }
+}
