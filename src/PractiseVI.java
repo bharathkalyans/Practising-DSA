@@ -22,9 +22,26 @@ public class PractiseVI {
         AddEdge(graph, 2, 4);
         AddEdge(graph, 5, 5);
 
-        BFSOfGraph(graph, 6, 1);
-        System.out.println("------");
-        BFSOFDISCONNECTEDGRAPH(graph, 6);
+        PrintGraph(graph);
+        DepthFirstSearchOfGraph(graph, 6, 2);
+    }
+
+    public static void DepthFirstSearchOfGraph(ArrayList<ArrayList<Integer>> adj, int v, int source) {
+
+        Boolean[] visited = new Boolean[v];
+        Arrays.fill(visited, false);
+        DFSRecursive(adj, visited, v, source);
+    }
+
+    private static void DFSRecursive(ArrayList<ArrayList<Integer>> adj, Boolean[] visited, int v, int source) {
+        System.out.print(source + " ");
+        visited[source] = true;
+
+        for (int f : adj.get(source)) {
+            if (!visited[f])
+                DFSRecursive(adj, visited, v, f);
+        }
+
     }
 
     public static void PrintGraph(ArrayList<ArrayList<Integer>> adj) {
