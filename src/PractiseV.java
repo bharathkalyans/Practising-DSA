@@ -1,9 +1,6 @@
 
 import java.math.BigInteger;
-import java.util.HashMap;
-import java.util.PriorityQueue;
-import java.util.Queue;
-import java.util.TreeSet;
+import java.util.*;
 
 public class PractiseV {
 
@@ -37,11 +34,10 @@ public class PractiseV {
         System.out.println("Map :: " + map);
 
 
-        Queue<Integer> pq = new PriorityQueue<>((a, b) -> map.get(a) - map.get(b));
+        Queue<Integer> pq = new PriorityQueue<>(Comparator.comparingInt(map::get));
 
         for (int n : map.keySet()) {
             pq.add(n);
-            for (int x:pq) System.out.print(x+" ");
             if (pq.size() > K) pq.poll();
             System.out.println();
         }
