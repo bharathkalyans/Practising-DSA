@@ -22,8 +22,44 @@ public class PractiseVI {
         AddEdge(graph, 2, 4);
         AddEdge(graph, 5, 5);
 
-        PrintGraph(graph);
-        DepthFirstSearchOfGraph(graph, 6, 2);
+
+        System.out.println(IsBiPartite(graph,V));
+
+    }
+
+    public static boolean IsBiPartite(ArrayList<ArrayList<Integer>> adj, int v) {
+
+        int[] color = new int[v + 1];
+        Arrays.fill(color, -1);
+
+        for (int i = 0; i < v; i++) {
+            if (checkBipartite(adj, color, i))
+                return false;
+        }
+
+        return true;
+    }
+
+    private static boolean checkBipartite(ArrayList<ArrayList<Integer>> adj, int[] color, int i) {
+
+        Queue<Integer> q = new LinkedList<>();
+        q.add(i);
+        color[i] = 1;
+
+        while (!q.isEmpty()) {
+            int value = q.poll();
+            for (int x : adj.get(value)) {
+                if (color[x] == -1) {
+                    color[x] = 1 - color[value];
+                    q.add(x);
+                } else {
+                    if (color[x] == color[value])
+                        return false;
+                }
+            }
+        }
+
+        return true;
     }
 
     public static void DepthFirstSearchOfGraph(ArrayList<ArrayList<Integer>> adj, int v, int source) {
