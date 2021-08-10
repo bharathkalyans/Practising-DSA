@@ -23,8 +23,28 @@ public class PractiseVI {
         AddEdge(graph, 5, 5);
 
 
-        System.out.println(IsBiPartite(graph,V));
+    }
 
+
+    public static boolean HasACycleInDirectedGraph(ArrayList<ArrayList<Integer>> adj, int v, Boolean[] visited, Boolean[] recursiveStack, int i) {
+        visited[i] = true;
+        recursiveStack[i] = true;
+
+        for (int x : adj.get(i)) {
+            if (!visited[x]) {
+                if (HasACycleInDirectedGraph(adj, v, visited, recursiveStack, x))
+                    return true;
+            }
+            else{
+                //I will be entering this block of Code if the Node is visited!
+                //So all I need is to check the recursive Stack!
+                return recursiveStack[x];
+            }
+
+        }
+
+        recursiveStack[i] = false;
+        return false;
     }
 
     public static boolean IsBiPartite(ArrayList<ArrayList<Integer>> adj, int v) {
