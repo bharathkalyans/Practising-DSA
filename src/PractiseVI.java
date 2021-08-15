@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 //Graphs Problems!!
 public class PractiseVI {
@@ -22,9 +19,35 @@ public class PractiseVI {
         AddEdge(graph, 2, 4);
         AddEdge(graph, 5, 5);
 
+        TopologicalSortDriver(graph, V);
 
     }
 
+    public static void TopologicalSortDriver(ArrayList<ArrayList<Integer>> adj, int v) {
+        Boolean[] visited = new Boolean[v];
+        Arrays.fill(visited, false);
+        Stack<Integer> stack = new Stack<>();
+        for (int i = 0; i < v; i++) {
+            if (!visited[i]) {
+                TopologicalSortDFS(adj, visited, stack, i);
+            }
+        }
+
+        while (!stack.isEmpty()) System.out.print(stack.pop() + " ");
+    }
+
+    private static void TopologicalSortDFS(ArrayList<ArrayList<Integer>> adj, Boolean[] visited, Stack<Integer> stack, int i) {
+        visited[i] = true;
+
+        for (int x : adj.get(i)) {
+            if (!visited[x]) {
+                TopologicalSortDFS(adj, visited, stack, x);
+            }
+        }
+
+
+        stack.push(i);
+    }
 
     public static boolean HasACycleInDirectedGraph(ArrayList<ArrayList<Integer>> adj, int v, Boolean[] visited, Boolean[] recursiveStack, int i) {
         visited[i] = true;
@@ -34,8 +57,7 @@ public class PractiseVI {
             if (!visited[x]) {
                 if (HasACycleInDirectedGraph(adj, v, visited, recursiveStack, x))
                     return true;
-            }
-            else{
+            } else {
                 //I will be entering this block of Code if the Node is visited!
                 //So all I need is to check the recursive Stack!
                 return recursiveStack[x];
