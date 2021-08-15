@@ -20,8 +20,49 @@ public class PractiseVI {
         AddEdge(graph, 5, 5);
 
         TopologicalSortDriver(graph, V);
+        System.out.println("-------");
+        TopologicalSortBFS(graph,V);
 
     }
+
+    //Kahn's Algorithm
+    public static void TopologicalSortBFS(ArrayList<ArrayList<Integer>> adj, int v) {
+
+        int[] toposort = new int[v];
+        Queue<Integer> q = new LinkedList<>();
+
+        //Finding InDegree ::
+        int[] indegree = new int[v];
+
+        for (int i = 0; i < v; i++) {
+            for (int x : adj.get(i)) {
+                indegree[x]++;
+            }
+        }
+
+        for (int i = 0; i < v; i++)
+            if (indegree[i] == 0)
+                q.add(i);
+
+        int index = 0;
+        while (!q.isEmpty()) {
+            int ele = q.poll();
+
+//            System.out.println("Polled : " + ele);
+
+            toposort[index++] = ele;
+
+            for (int x : adj.get(ele)) {
+                indegree[x]--;
+                if (indegree[x] == 0)
+                    q.add(x);
+            }
+        }
+
+        for (int x : toposort) System.out.print(x + " ");
+
+    }
+
 
     public static void TopologicalSortDriver(ArrayList<ArrayList<Integer>> adj, int v) {
         Boolean[] visited = new Boolean[v];
