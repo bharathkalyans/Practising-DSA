@@ -19,19 +19,63 @@ public class PractiseVI {
         AddEdge(graph, 2, 4);
         AddEdge(graph, 5, 5);
 
-        GetMaximumNumberFromArray(new String[]{"9","54", "546", "548", "60"});
+
+    }
+
+    public static void ShortestPathUsingTopoLogicalSort(ArrayList<ArrayList<Integer>> adj, int src, int v) {
+        Boolean[] visited = new Boolean[v];
+        Stack<Integer> s = new Stack<>();
+        int[] distance = new int[v];
+
+        TopoSort(adj, s, src, visited);
+        //Now your stack has The Topological Sort.
+
+        //Marking it with INFINITY.
+        Arrays.fill(distance, Integer.MAX_VALUE);
+
+        distance[src] = 0;
+
+        //Have to use Pair!
+        /*
+        Class pair{
+            int vertice;
+            int weight;
+            pair(int v,int weight){
+                vertice = v;
+                weight = weight;
+            }
+        }
+        * */
+        int weight = 0;
+
+        while (!s.isEmpty()) {
+            int node = s.pop();
+
+            if (distance[node] != Integer.MAX_VALUE) {
+                for (int x : adj.get(node)) {
+                    if (distance[x] > distance[node] + weight)
+                        distance[x] = distance[node] + weight;
+                }
+            }
+        }
+
+        for (int x : distance) System.out.println(x + " from  source : " + src);
 
     }
 
     //Get The Highest Number from an Array
     public static void GetMaximumNumberFromArray(String[] arr) {
 
-        Arrays.sort(arr, (X, Y) -> {
+        Arrays.sort(arr, new Comparator<String>() {
 
-            String XY = X + Y;
-            String YX = Y + X;
-            System.out.println(XY.compareTo(YX));
-            return XY.compareTo(YX) > 0 ? -1 : 1;
+            @Override
+            public int compare(String X, String Y) {
+
+                String XY = X + Y;
+                String YX = Y + X;
+
+                return XY.compareTo(YX) > 0 ? -1 : 1;
+            }
         });
 
         for (String x : arr)
@@ -65,7 +109,7 @@ public class PractiseVI {
         return array;
     }
 
-    public void TopoSort(ArrayList<ArrayList<Integer>> adj, Stack<Integer> stack, int i, Boolean[] visited) {
+    public static void TopoSort(ArrayList<ArrayList<Integer>> adj, Stack<Integer> stack, int i, Boolean[] visited) {
         visited[i] = true;
 
         for (int x : adj.get(i)) {
