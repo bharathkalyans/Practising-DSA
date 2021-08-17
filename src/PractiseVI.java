@@ -19,10 +19,106 @@ public class PractiseVI {
         AddEdge(graph, 2, 4);
         AddEdge(graph, 5, 5);
 
-        TopologicalSortDriver(graph, V);
-        System.out.println("-------");
-        TopologicalSortBFS(graph,V);
+        GetMaximumNumberFromArray(new String[]{"9","54", "546", "548", "60"});
 
+    }
+
+    //Get The Highest Number from an Array
+    public static void GetMaximumNumberFromArray(String[] arr) {
+
+        Arrays.sort(arr, (X, Y) -> {
+
+            String XY = X + Y;
+            String YX = Y + X;
+            System.out.println(XY.compareTo(YX));
+            return XY.compareTo(YX) > 0 ? -1 : 1;
+        });
+
+        for (String x : arr)
+            System.out.print(x);
+
+        System.out.println();
+    }
+
+    public int[] findOrder(int numCourses, int[][] prerequisites) {
+        //Convert 2D to Adjacent List
+        ArrayList<ArrayList<Integer>> adj = new ArrayList<>();
+
+        for (int i = 0; i < numCourses; i++)
+            adj.add(new ArrayList<>());
+
+        for (int i = 0; i < prerequisites.length; i++) {
+            int secondCourse = prerequisites[i][1];
+            int firstCourse = prerequisites[i][0];
+            adj.get(secondCourse).add(firstCourse);
+        }
+
+        Stack<Integer> stack = new Stack<>();
+        int[] array = new int[stack.size()];
+
+        int index = 0;
+        while (!stack.isEmpty()) {
+            array[index++] = stack.pop();
+
+        }
+
+        return array;
+    }
+
+    public void TopoSort(ArrayList<ArrayList<Integer>> adj, Stack<Integer> stack, int i, Boolean[] visited) {
+        visited[i] = true;
+
+        for (int x : adj.get(i)) {
+            if (!visited[x])
+                TopoSort(adj, stack, x, visited);
+        }
+        stack.push(i);
+    }
+
+
+    public int[] FO(int numCourses, int[][] prerequisites) {
+
+        //Convert 2D to Adjacent List
+        ArrayList<ArrayList<Integer>> adj = new ArrayList<>();
+
+        for (int i = 0; i < numCourses; i++)
+            adj.add(new ArrayList<>());
+
+        for (int i = 0; i < prerequisites.length; i++) {
+            int secondCourse = prerequisites[i][1];
+            int firstCourse = prerequisites[i][0];
+            adj.get(secondCourse).add(firstCourse);
+        }
+
+
+        //Used for BFS(Kahn's Algorithm)
+        Queue<Integer> q = new LinkedList<>();
+        Stack<Integer> stack = new Stack<>();
+
+
+        //InDegree
+        int[] InDegree = new int[numCourses];
+        for (int i = 0; i < adj.size(); i++)
+            for (int x : adj.get(i))
+                InDegree[x]++;
+
+
+        for (int i = 0; i < InDegree.length; i++)
+            if (InDegree[i] == 0)
+                q.add(i);
+
+
+        while (!q.isEmpty()) {
+            int element = q.poll();
+
+            for (int x : adj.get(element)) {
+                InDegree[x]--;
+                if (InDegree[x] == 0)
+                    q.add(x);
+            }
+        }
+
+        return new int[]{};
     }
 
     //Kahn's Algorithm
@@ -62,7 +158,6 @@ public class PractiseVI {
         for (int x : toposort) System.out.print(x + " ");
 
     }
-
 
     public static void TopologicalSortDriver(ArrayList<ArrayList<Integer>> adj, int v) {
         Boolean[] visited = new Boolean[v];
