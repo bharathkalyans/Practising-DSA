@@ -23,6 +23,9 @@ public class PractiseVI {
 
     }
 
+
+
+
     public static void DijkstrasAlgorithm(ArrayList<ArrayList<node>> adj, int src, int v) {
 
         int[] distance = new int[v];
@@ -39,7 +42,7 @@ public class PractiseVI {
             for (node x : adj.get(t.vertice)) {
                 if (distance[x.vertice] > distance[t.vertice] + x.weight) {
                     distance[x.vertice] = distance[t.vertice] + x.weight;
-                    pq.add(new node(distance[x.weight], x.vertice));
+                    pq.add(new node(distance[x.vertice], x.vertice));
                 }
             }
         }
