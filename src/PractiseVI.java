@@ -20,11 +20,49 @@ public class PractiseVI {
         AddEdge(graph, 5, 5);
 
 
-
     }
 
 
+    //Minimum Spanning Tree
+    public static void PrimsAlgorithm(ArrayList<ArrayList<node>> adj, int v) {
 
+        int[] key = new int[v];
+        boolean[] mstSet = new boolean[v];
+        int[] parent = new int[v];
+
+        Arrays.fill(key, Integer.MAX_VALUE);
+        Arrays.fill(mstSet, false);
+        Arrays.fill(parent, -1);
+
+        //Starting with '0' as Source Node.
+        key[0] = 0;
+
+
+        for (int i = 0; i < v - 1; i++) {
+            int mini = Integer.MAX_VALUE, u = 0;
+
+            //Finding Min Element in the Key Array!
+            for (int c = 0; c < v; c++) {
+                if (!mstSet[c] && key[c] < mini) {
+                    mini = key[c];
+                    u = c; // Keeping track of the Index to Traverse their adjacents
+                }
+            }
+
+            //Marking that node as visited or added to MST!
+            mstSet[u] = true;
+
+            for (node x : adj.get(u)) {
+                if (!mstSet[x.vertice] && x.weight < key[x.vertice]) {
+                    parent[x.vertice] = u;
+                    key[x.vertice] = x.weight;
+                }
+            }
+        }
+
+        for (int i = 1; i < v; i++) System.out.println(parent[i] + " - " + i);
+
+    }
 
     public static void DijkstrasAlgorithm(ArrayList<ArrayList<node>> adj, int src, int v) {
 
@@ -46,7 +84,7 @@ public class PractiseVI {
                 }
             }
         }
-        for (int x : distance) System.out.println("Distance from Source " + src +" to other vertices is :" + x);
+        for (int x : distance) System.out.println("Distance from Source " + src + " to other vertices is :" + x);
     }
 
     public static void ShortestPathUsingTopoLogicalSort(ArrayList<ArrayList<Integer>> adj, int src, int v) {
