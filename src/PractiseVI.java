@@ -20,6 +20,30 @@ public class PractiseVI {
         AddEdge(graph, 5, 5);
 
 
+
+    }
+
+    public static void DijkstrasAlgorithm(ArrayList<ArrayList<node>> adj, int src, int v) {
+
+        int[] distance = new int[v];
+        Arrays.fill(distance, Integer.MAX_VALUE);
+
+        PriorityQueue<node> pq = new PriorityQueue<>(v, new node());
+
+        pq.add(new node(0, src));
+        distance[src] = 0;
+
+        while (!pq.isEmpty()) {
+            node t = pq.poll();
+
+            for (node x : adj.get(t.vertice)) {
+                if (distance[x.vertice] > distance[t.vertice] + x.weight) {
+                    distance[x.vertice] = distance[t.vertice] + x.weight;
+                    pq.add(new node(distance[x.weight], x.vertice));
+                }
+            }
+        }
+        for (int x : distance) System.out.println("Distance from Source " + src +" to other vertices is :" + x);
     }
 
     public static void ShortestPathUsingTopoLogicalSort(ArrayList<ArrayList<Integer>> adj, int src, int v) {
@@ -372,4 +396,23 @@ public class PractiseVI {
         System.out.println();
     }
 
+}
+
+class node implements Comparator<node> {
+    int weight, vertice;
+
+    node() {
+    }
+
+    node(int d, int v) {
+        this.weight = d;
+        this.vertice = v;
+    }
+
+    @Override
+    public int compare(node o1, node o2) {
+        if (o1.weight < o2.weight) return -1;
+        if (o1.weight > o2.weight) return 1;
+        return 0;
+    }
 }
