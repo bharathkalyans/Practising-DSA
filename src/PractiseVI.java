@@ -38,6 +38,7 @@ public class PractiseVI {
         key[0] = 0;
 
 
+        //Only a Total of V-1 Edges are allowed else it will make a cycle!
         for (int i = 0; i < v - 1; i++) {
             int mini = Integer.MAX_VALUE, u = 0;
 
