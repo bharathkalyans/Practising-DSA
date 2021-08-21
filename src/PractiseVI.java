@@ -20,8 +20,69 @@ public class PractiseVI {
         AddEdge(graph, 5, 5);
 
 
+        int n1 = 5;
+        int city1[][] = {{0, 1, 1, 100, 0, 0},
+                {1, 0, 1, 0, 0, 0},
+                {1, 1, 0, 0, 0, 0},
+                {100, 0, 0, 0, 2, 2},
+                {0, 0, 0, 2, 0, 2},
+                {0, 0, 0, 2, 2, 0}};
+        int x = minCost(city1);
+        System.out.println(x);
+
     }
 
+
+    //Minimum Cost to connect all Cities
+    public static int minCost(int[][] graph) {
+        int V = graph.length;
+        int[] parent = new int[V];
+        int[] key = new int[V];
+        boolean[] mstSet = new boolean[V];
+        Arrays.fill(parent, -1);
+        Arrays.fill(key, Integer.MAX_VALUE);
+        Arrays.fill(mstSet, false);
+
+        int minimum_cost = 0;
+
+        parent[0] = -1;
+        key[0] = 0;
+
+        for (int i = 0; i < V - 1; i++) {
+            //Get Min Value from Key Array!
+            int u = getMinValue(V, key, mstSet);
+
+            mstSet[u] = true;
+
+            for (int j = 0; j < V; j++) {
+                if (graph[i][j] != 0 && !mstSet[j] && graph[i][j] < key[j]) {
+                    parent[j] = u;
+                    key[j] = graph[i][j];
+                }
+            }
+
+        }
+
+        for (int i = 1; i < V; i++) {
+            minimum_cost += graph[parent[i]][i];
+        }
+
+
+        return minimum_cost;
+    }
+
+    public static int getMinValue(int v, int[] key, boolean[] mstSet) {
+        int mini_value = Integer.MAX_VALUE;
+        int min_index = -1;
+
+        for (int i = 0; i < v; i++) {
+            if (!mstSet[i] && key[i] < mini_value) {
+                mini_value = key[i];
+                min_index = i;
+            }
+        }
+        return min_index;
+    }
 
     //Minimum Spanning Tree
     public static void PrimsAlgorithm(ArrayList<ArrayList<node>> adj, int v) {
