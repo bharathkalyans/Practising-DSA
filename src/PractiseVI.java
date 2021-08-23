@@ -33,7 +33,52 @@ public class PractiseVI {
     }
 
 
+
+
+    public static void BridgesInAGraph(ArrayList<ArrayList<Integer>> adj, int v) {
+        Boolean[] visited = new Boolean[v];
+        int[] timeOfInsertion = new int[v];
+        int[] lowTime = new int[v];
+
+        Arrays.fill(visited, false);
+
+
+        int timer = 0;
+
+        for (int i = 0; i < v; i++) {
+            if (!visited[i])
+                BridgesInAGraphUtil(i, adj, visited, timeOfInsertion, lowTime, -1, timer);
+        }
+
+    }
+
+    private static void BridgesInAGraphUtil(int node, ArrayList<ArrayList<Integer>> adj, Boolean[] visited, int[] timeOfInsertion, int[] lowTime, int parent, int timer) {
+        visited[node] = true;
+
+        lowTime[node] = timeOfInsertion[node] = timer++;
+
+        for (int adjacentNode : adj.get(node)) {
+
+            if (adjacentNode == parent) continue;
+
+            if (!visited[adjacentNode]) {
+                //DFS Call!
+                BridgesInAGraphUtil(adjacentNode, adj, visited, timeOfInsertion, lowTime, node, timer);
+                lowTime[node] = Math.min(lowTime[adjacentNode], lowTime[node]);
+
+                if (lowTime[adjacentNode] > timeOfInsertion[node]) {
+                    System.out.println("Bridge b/w " + node + "" + adjacentNode);
+                }
+            } else {
+                lowTime[node] = Math.min(lowTime[node], timeOfInsertion[adjacentNode]);
+            }
+        }
+
+
+    }
+
     //Minimum Cost to connect all Cities
+
     public static int minCost(int[][] graph) {
         int V = graph.length;
         int[] parent = new int[V];
