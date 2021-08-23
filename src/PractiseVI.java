@@ -19,21 +19,35 @@ public class PractiseVI {
         AddEdge(graph, 2, 4);
         AddEdge(graph, 5, 5);
 
-
-        int n1 = 5;
-        int city1[][] = {{0, 1, 1, 100, 0, 0},
-                {1, 0, 1, 0, 0, 0},
-                {1, 1, 0, 0, 0, 0},
-                {100, 0, 0, 0, 2, 2},
-                {0, 0, 0, 2, 0, 2},
-                {0, 0, 0, 2, 2, 0}};
-        int x = minCost(city1);
-        System.out.println(x);
+        gen("1?0?");
 
     }
 
 
+    public static void gen(String str) {
+        ArrayList<String> al = new ArrayList<String>();
+        StringGenerate(str.toCharArray(), 0, al);
+        for (String x : al) System.out.println(x);
+    }
 
+    public static void StringGenerate(char[] str, int i, ArrayList<String> al) {
+        if (i == str.length ) {
+            al.add(String.valueOf(str));
+            return;
+        }
+
+        if (str[i] == '?') {
+            str[i] = '0';
+            StringGenerate(str, i + 1, al);
+
+            str[i] = '1';
+            StringGenerate(str, i + 1, al);
+            //Important Step (Back Tracking)!!!!!!!!
+            str[i]='?';
+        } else
+            StringGenerate(str, i + 1, al);
+
+    }
 
     public static void BridgesInAGraph(ArrayList<ArrayList<Integer>> adj, int v) {
         Boolean[] visited = new Boolean[v];
@@ -41,7 +55,6 @@ public class PractiseVI {
         int[] lowTime = new int[v];
 
         Arrays.fill(visited, false);
-
 
         int timer = 0;
 
