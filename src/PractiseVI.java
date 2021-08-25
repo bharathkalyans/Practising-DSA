@@ -19,10 +19,53 @@ public class PractiseVI {
         AddEdge(graph, 2, 4);
         AddEdge(graph, 5, 5);
 
-        gen("1?0?");
+        ArticulationPointDriver(graph, V);
+    }
+
+
+    public static void ArticulationPointDriver(ArrayList<ArrayList<Integer>> adj, int v) {
+
+        boolean[] visited = new boolean[v];
+        int[] timeOfInsertion = new int[v];
+        int[] lowTime = new int[v];
+
+        boolean[] isArticulationPoint = new boolean[v];
+        int timer = 0;
+        for (int i = 0; i < v; i++) {
+            if (!visited[i])
+                ArticulationPoint(i, -1, adj, visited, timeOfInsertion, lowTime, timer, isArticulationPoint);
+
+        }
+
+        for (int i = 0; i < v; i++)
+            if (isArticulationPoint[i]) System.out.println(i + " is an Articulation Point!");
 
     }
 
+    private static void ArticulationPoint(int node, int parent, ArrayList<ArrayList<Integer>> adj, boolean[] visited, int[] timeOfInsertion, int[] lowTime, int timer, boolean[] isArticulationPoint) {
+        visited[node] = true;
+        timeOfInsertion[node] = lowTime[node] = timer++;
+        int child = 0;
+        for (int x : adj.get(node)) {
+            if (x == parent) continue;
+
+            if (!visited[x]) {
+                ArticulationPoint(x, node, adj, visited, timeOfInsertion, lowTime, timer, isArticulationPoint);
+                lowTime[node] = Math.min(lowTime[node], lowTime[x]);
+
+                if (lowTime[x] >= lowTime[node] && parent != -1)
+                    isArticulationPoint[node] = true;
+
+                //Child is Used if a node has more than 2 not connected adjacents!
+                //In that case the node will become a Articulation Point if child>1;
+                child++;
+            } else {
+                lowTime[node] = Math.min(lowTime[node], timeOfInsertion[x]);
+            }
+        }
+        //Little Confused Here, should we take parent == -1??🧐
+        if (parent != -1 && child > 1) isArticulationPoint[node] = true;
+    }
 
     public static void gen(String str) {
         ArrayList<String> al = new ArrayList<String>();
@@ -31,7 +74,7 @@ public class PractiseVI {
     }
 
     public static void StringGenerate(char[] str, int i, ArrayList<String> al) {
-        if (i == str.length ) {
+        if (i == str.length) {
             al.add(String.valueOf(str));
             return;
         }
@@ -39,11 +82,10 @@ public class PractiseVI {
         if (str[i] == '?') {
             str[i] = '0';
             StringGenerate(str, i + 1, al);
-
             str[i] = '1';
             StringGenerate(str, i + 1, al);
             //Important Step (Back Tracking)!!!!!!!!
-            str[i]='?';
+            str[i] = '?';
         } else
             StringGenerate(str, i + 1, al);
 
@@ -67,7 +109,6 @@ public class PractiseVI {
 
     private static void BridgesInAGraphUtil(int node, ArrayList<ArrayList<Integer>> adj, Boolean[] visited, int[] timeOfInsertion, int[] lowTime, int parent, int timer) {
         visited[node] = true;
-
         lowTime[node] = timeOfInsertion[node] = timer++;
 
         for (int adjacentNode : adj.get(node)) {
