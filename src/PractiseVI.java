@@ -292,16 +292,12 @@ public class PractiseVI {
     //Get The Highest Number from an Array
     public static void GetMaximumNumberFromArray(String[] arr) {
 
-        Arrays.sort(arr, new Comparator<String>() {
+        Arrays.sort(arr, (X, Y) -> {
 
-            @Override
-            public int compare(String X, String Y) {
+            String XY = X + Y;
+            String YX = Y + X;
 
-                String XY = X + Y;
-                String YX = Y + X;
-
-                return XY.compareTo(YX) > 0 ? -1 : 1;
-            }
+            return XY.compareTo(YX) > 0 ? -1 : 1;
         });
 
         for (String x : arr)
