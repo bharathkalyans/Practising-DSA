@@ -5,10 +5,14 @@ public class PractiseVII {
 
 
     public static void main(String[] args) {
-        int[] arr = new int[]{ 101, 758, 315, 730, 472,
+        int[] arr = new int[]{101, 758, 315, 730, 472,
                 619, 460, 479};
 
-        System.out.println(MinimumSwapsToSortArray(arr));
+
+        String x = Integer.toBinaryString(8);
+        int c = Integer.parseInt(x,2);
+        System.out.println(x + " :: - > answer :: " + c);
+
     }
 
     public static int MinimumSwapsToSortArray(int[] arr) {
@@ -22,7 +26,7 @@ public class PractiseVII {
             map.put(arr[i], i);
 
         for (int i = 0; i < arr.length; i++) {
-            if (arr[i]!= temp[i]) {
+            if (arr[i] != temp[i]) {
 
                 swaps++;
 
