@@ -19,9 +19,47 @@ public class PractiseVI {
         AddEdge(graph, 2, 4);
         AddEdge(graph, 5, 5);
 
-        ArticulationPointDriver(graph, V);
+        KosaRajuAlgorithm(graph, V);
+
     }
 
+
+    public static void KosaRajuAlgorithm(ArrayList<ArrayList<Integer>> adj, int v) {
+
+        Boolean[] visited = new Boolean[v];
+        Arrays.fill(visited, false);
+        Stack<Integer> stack = new Stack();
+
+        //Get the Topo Sort!
+        for (int i = 0; i < v; i++)
+            if (!visited[i])
+                TopologicalSortDFS(adj, visited, stack, i);
+
+
+        //Transpose of the Adjacency List!
+        ArrayList<ArrayList<Integer>> transpose = new ArrayList<>();
+        for (int i = 0; i < v; i++)
+            transpose.add(new ArrayList<>());
+
+        //Get the Transpose!
+        for (int i = 0; i < v; i++) {
+            visited[i] = false;
+            for (Integer x : adj.get(i))
+                transpose.get(x).add(i);
+        }
+
+        //Use Stack Elements and do a DFS!!
+        while (!stack.isEmpty()) {
+            int node = stack.pop();
+
+            if (!visited[node]) {
+                System.out.print("Strongly Connected Components are :: ");
+                DFSRecursive(transpose, visited, v, node);
+                System.out.println();
+            }
+        }
+
+    }
 
     public static void ArticulationPointDriver(ArrayList<ArrayList<Integer>> adj, int v) {
 
