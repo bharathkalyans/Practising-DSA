@@ -4,12 +4,53 @@ import java.util.HashMap;
 public class PractiseVII {
 
 
+    //Greedy Problems! Mostly!!!
     public static void main(String[] args) {
         int[] arr = new int[]{101, 758, 315, 730, 472,
                 619, 460, 479};
 
-        System.out.println(hasSquareIntegers(8));
+        int[] brr = new int[]{5, 5, 10, 20, 5, 5, 5, 5, 5, 5, 5, 5, 5, 10, 5, 5, 20, 5, 20, 5};
+        System.out.println(lemonadeChange(brr));
+    }
 
+
+    //Lemonade Change Problem LeetCode!!
+    //https://leetcode.com/problems/lemonade-change/
+    public static boolean lemonadeChange(int[] bills) {
+
+        int dollar_5_bill = 0;
+        int dollar_10_bill = 0;
+        int dollar_20_bill = 0;
+
+        for (int i = 0; i < bills.length; i++) {
+            int amount = bills[i];
+
+            if (amount == 5) {
+                dollar_5_bill++;
+                continue;
+            } else if (amount == 10) {
+                dollar_10_bill++;
+                amount -= 5;
+                if (dollar_5_bill > 0) {
+                    dollar_5_bill--;
+                    continue;
+                } else return false;
+
+            } else {
+                amount -= 5;
+                dollar_20_bill++;
+                if (dollar_10_bill > 0 && dollar_5_bill > 0) {
+                    dollar_10_bill--;
+                    dollar_5_bill--;
+
+                }else if(dollar_5_bill > 3){
+                    dollar_5_bill -= 3;
+                } else return false;
+
+
+            }
+        }
+        return true;
     }
 
     public static boolean hasSquareIntegers(int c) {
