@@ -8,11 +8,25 @@ public class PractiseVII {
         int[] arr = new int[]{101, 758, 315, 730, 472,
                 619, 460, 479};
 
+        System.out.println(hasSquareIntegers(8));
 
-        String x = Integer.toBinaryString(8);
-        int c = Integer.parseInt(x,2);
-        System.out.println(x + " :: - > answer :: " + c);
+    }
 
+    public static boolean hasSquareIntegers(int c) {
+
+        if (c < 0) return false;
+
+        if (c == 1) return true;
+        int size = c / 2 + 1;
+
+        int low = 0, high = (int) Math.sqrt(c);
+        while (low <= high) {
+            if (Math.pow(low, 2) + Math.pow(high, 2) == c) return true;
+            else if (Math.pow(low, 2) + Math.pow(high, 2) > c) high--;
+            else low++;
+        }
+
+        return false;
     }
 
     public static int MinimumSwapsToSortArray(int[] arr) {

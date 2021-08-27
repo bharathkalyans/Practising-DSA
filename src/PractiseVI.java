@@ -19,7 +19,6 @@ public class PractiseVI {
         AddEdge(graph, 2, 4);
         AddEdge(graph, 5, 5);
 
-        KosaRajuAlgorithm(graph, V);
 
     }
 
