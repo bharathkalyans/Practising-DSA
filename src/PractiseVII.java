@@ -1,7 +1,5 @@
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.HashMap;
-import java.util.PriorityQueue;
 
 public class PractiseVII {
 
@@ -12,52 +10,49 @@ public class PractiseVII {
 
 
         int B[][] = new int[][]{{1, 1}, {1, 2}, {1, 3}, {1, 4}, {1, 5}, {1, 6}, {1, 7}};
+        int[][] C =new int[][]{{1,100000}};
 
-        maxEvents(B);
+        System.out.println(maxEvents(C));
 
     }
 
 
-    //Maximum Events we can Attend!! in a Day 🙄, But LeetCode Question is Twisted! 🤥.
+    //Maximum Events we can Attend!! in a Day 🙄, But LeetCode Question is Twisted! 🤥. After some digging understood the goddamn question 😂
+    //Still giving TLE for this Approach, have to use Min Heap I guess🥲
     //https://leetcode.com/problems/maximum-number-of-events-that-can-be-attended/
     public static int maxEvents(int[][] events) {
 
-        if (events == null || events[0].length == 0) return 0;
+       /* if (events == null || events.length == 0) return 0;
 
-        if (events[0].length == 1)
-            return 1;
+        if (events.length == 1)
+            return 1;*/
+        // Sorting the Array! Greedy Approach!
+        Arrays.sort(events, (o1, o2) -> {
+            if (o1[1] != o2[1])
+                return o1[1] - o2[1];
+            return o1[0] - o2[0];
+        });
 
-        PriorityQueue<Integer> pq = new PriorityQueue<>();
-        for (int i=1;i<100000;i++)
-            pq.add(i);
+        //Is that day is added to the meeting or not!
+        boolean[] isAdded = new boolean[events[events.length - 1][1] + 1];
 
-        Arrays.sort(events, (a, b) -> a[1] != b[1]? a[1] - b[1]: a[0] - b[0]);
+        int max_meetings = 0;
 
-
-        for (int[] a : events) {
-            for (int x : a)
-                System.out.print(x + " ");
-
-            System.out.println();
+        int index = 0;
+        while (index < events.length) {
+            for (int i = events[index][0]; i <= events[index][1]; i++) {
+                if (!isAdded[i]) {
+                    isAdded[i] = true;
+                    max_meetings++;
+                    break;
+                }
+            }
+            index++;
         }
 
-        int max_meeting = 1;
-        int previous_meeting = 0;
+        return max_meetings;
 
-        for (int i = 1; i < events.length; i++) {
 
-            if (events[i][0] == events[previous_meeting][0] && events[i][1] == events[previous_meeting][1]) {
-                max_meeting++;
-                continue;
-            }
-
-            if (events[i][0] >= events[previous_meeting][1]) {
-                max_meeting++;
-                previous_meeting = i;
-            }
-        }
-
-        return max_meeting;
     }
 
     //Lemonade Change Problem LeetCode!!
