@@ -23,6 +23,40 @@ public class PractiseVI {
     }
 
 
+    public static void BellManFordAlgorithm(ArrayList<weightNode> adj, int v, int src) {
+
+        int[] distance = new int[v];
+        Arrays.fill(distance, Integer.MAX_VALUE);
+        distance[src] = 0;
+
+
+        //Relaxing N-1 times!!
+        for (int i = 0; i < v - 1; i++) {
+            for (weightNode x : adj) {
+                if (distance[x.vertice2] + x.weight < distance[x.vertice])
+                    distance[x.vertice] = distance[x.vertice2] + x.weight;
+            }
+        }
+
+        int fl = 0;
+        //Relax one more time to find out whether Negative Cycle is present or not!
+
+        for (weightNode x : adj) {
+            if (distance[x.vertice2] + x.weight < distance[x.vertice]) {
+                fl = 1;
+                System.out.println("Negative Cycle's are Present! ");
+                break;
+            }
+        }
+
+        if (fl == 0) {
+            for (int i = 0; i < v; i++)
+                System.out.println(i + " " + distance[i]);
+        }
+
+
+    }
+
     public static void KosaRajuAlgorithm(ArrayList<ArrayList<Integer>> adj, int v) {
 
         Boolean[] visited = new Boolean[v];
@@ -649,5 +683,18 @@ class node implements Comparator<node> {
         if (o1.weight < o2.weight) return -1;
         if (o1.weight > o2.weight) return 1;
         return 0;
+    }
+}
+
+class weightNode {
+    int weight, vertice, vertice2;
+
+    weightNode() {
+    }
+
+    weightNode(int w, int v, int v2) {
+        this.weight = w;
+        this.vertice = v;
+        this.vertice2 = v2;
     }
 }
