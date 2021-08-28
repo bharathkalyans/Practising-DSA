@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 
 public class PractiseVII {
@@ -10,9 +12,46 @@ public class PractiseVII {
 
 
         int B[][] = new int[][]{{1, 1}, {1, 2}, {1, 3}, {1, 4}, {1, 5}, {1, 6}, {1, 7}};
-        int[][] C =new int[][]{{1,100000}};
+        int[][] C = new int[][]{{1, 100000}};
 
         System.out.println(maxEvents(C));
+
+
+
+    }
+
+    public static double FractionalKnapSack(ArrayList<Item> arr, int weight) {
+
+        double max_value = 0.0;
+        Collections.sort(arr, (o1, o2) -> (o1.value * o2.weight) - (o2.value * o1.weight));
+        for (int i = 0; i < arr.size(); i++) {
+            if (weight - arr.get(i).weight >= 0) {
+                max_value += arr.get(i).value;
+                weight -= arr.get(i).weight;
+            } else {
+                max_value += arr.get(i).value * (double) (weight / arr.get(i).weight);
+                break;
+            }
+        }
+        return max_value;
+    }
+
+    //0-1 Knapsack Problem
+    //Recursive Solution!
+    public static int KnapSack01(int index, int[] weight, int[] value, int W, int n) {
+
+        if (W == 0 || index >= n) return 0;
+
+        if (weight[index] <= W) {
+            //Will take the weight!!
+            int left = value[index] + KnapSack01(index + 1, weight, value, W - weight[index], n);
+            //Will not take the weight!
+            int right = KnapSack01(index + 1, weight, value, W, n);
+
+            return Math.max(left, right);
+        } else {
+            return KnapSack01(index + 1, weight, value, W, n);
+        }
 
     }
 
@@ -22,10 +61,10 @@ public class PractiseVII {
     //https://leetcode.com/problems/maximum-number-of-events-that-can-be-attended/
     public static int maxEvents(int[][] events) {
 
-       /* if (events == null || events.length == 0) return 0;
+        if (events == null || events.length == 0) return 0;
 
         if (events.length == 1)
-            return 1;*/
+            return 1;
         // Sorting the Array! Greedy Approach!
         Arrays.sort(events, (o1, o2) -> {
             if (o1[1] != o2[1])
@@ -140,4 +179,16 @@ public class PractiseVII {
         arr[j] = temp;
     }
 
+}
+
+class Item {
+    int value, weight;
+
+    Item() {
+    }
+
+    Item(int v, int w) {
+        this.value = v;
+        this.weight = v;
+    }
 }
