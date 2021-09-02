@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
+import java.util.*;
 
 public class PractiseVII {
 
@@ -14,10 +11,27 @@ public class PractiseVII {
         int B[][] = new int[][]{{1, 1}, {1, 2}, {1, 3}, {1, 4}, {1, 5}, {1, 6}, {1, 7}};
         int[][] C = new int[][]{{1, 100000}};
 
-        System.out.println(maxEvents(C));
 
 
+    }
 
+    public int jobScheduling(int[] startTime, int[] endTime, int[] profit) {
+        int n = startTime.length;
+
+        ArrayList<Triple> al = new ArrayList<>();
+
+        for (int i = 0; i < n; i++) {
+            al.add(new Triple(startTime[i], endTime[i], profit[i]));
+        }
+
+
+        Collections.sort(al, new Comparator<Triple>() {
+            @Override
+            public int compare(Triple o1, Triple o2) {
+                return o1.profit - o2.profit;
+            }
+        });
+        return 1;
     }
 
     public static double FractionalKnapSack(ArrayList<Item> arr, int weight) {
@@ -191,4 +205,20 @@ class Item {
         this.value = v;
         this.weight = v;
     }
+}
+
+
+class Triple {
+
+    int start_time, end_time, profit;
+
+    Triple() {
+    }
+
+    Triple(int s, int e, int pro) {
+        this.start_time = s;
+        this.end_time = e;
+        this.profit = pro;
+    }
+
 }

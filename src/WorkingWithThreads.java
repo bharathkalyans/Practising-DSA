@@ -11,8 +11,7 @@ public class WorkingWithThreads {
                 while (counter % 2 == 0) {
                     try {
                         wait();
-                    } catch (
-                            InterruptedException e) {
+                    } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                 }
@@ -31,8 +30,7 @@ public class WorkingWithThreads {
                 while (counter % 2 == 1) {
                     try {
                         wait();
-                    } catch (
-                            InterruptedException e) {
+                    } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                 }
@@ -48,7 +46,6 @@ public class WorkingWithThreads {
 
         WorkingWithThreads object = new WorkingWithThreads();
         N = 50;
-
 
 
         Thread Thread1 = new Thread() {
