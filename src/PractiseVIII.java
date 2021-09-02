@@ -4,10 +4,61 @@ public class PractiseVIII {
     //Mostly BackTracking!
     public static void main(String[] args) {
 
-        Permutations("ABC", 0, 2);
-        Permutations("ABC","");
-        CombinationsW("ABC", "");
+        int maze[][] = {
+                {1, 0, 1, 1, 1},
+                {1, 1, 1, 0, 1},
+                {0, 0, 0, 0, 1},
+                {0, 0, 0, 1, 1},
+                {0, 0, 0, 0, 1}};
 
+        RatInMaze(maze);
+
+    }
+
+    public static void RatInMaze(int[][] Maze) {
+        int R = Maze.length;
+        int C = Maze[0].length;
+
+        int[][] solution = new int[R][C];
+
+        for (int i = 0; i < R; i++)
+            for (int j = 0; j < C; j++)
+                solution[i][j] = 0;
+
+
+        if (RatInAMazeProblem(Maze, solution, 0, 0, R, C)) {
+            System.out.println("Print Solution Array!!");
+            for (int i = 0; i < R; i++) {
+                for (int j = 0; j < C; j++) {
+                    System.out.print(solution[i][j] + " ");
+                }
+                System.out.println();
+            }
+
+        } else
+            System.out.println("No Solution!!");
+
+    }
+
+    public static boolean RatInAMazeProblem(int[][] maze, int[][] solution, int i, int j, int R, int C) {
+        //This condition itself is a isSafe() function!! 😀
+        if (i >= 0 && j >= 0 && i < R && j < C && maze[i][j] != 0 && solution[i][j] != 1) {
+            solution[i][j] = 1;
+            if (i == R - 1 && j == C - 1)
+                return true;
+
+            if (RatInAMazeProblem(maze, solution, i, j + 1, R, C))
+                return true;
+            if (RatInAMazeProblem(maze, solution, i + 1, j, R, C))
+                return true;
+            if (RatInAMazeProblem(maze, solution, i, j - 1, R, C))
+                return true;
+            if (RatInAMazeProblem(maze, solution, i - 1, j, R, C))
+                return true;
+
+            solution[i][j] = 0;
+            return false;
+        } else return false;
     }
 
     public static void Permutations(String str, int l, int r) {
