@@ -1,11 +1,70 @@
+import java.util.Arrays;
+
 public class PractiseVIII {
 
 
     //Mostly BackTracking!
     public static void main(String[] args) {
 
-        KnightTourProblem();
+        NQueenProblemDriver(4);
 
+    }
+
+
+    public static void NQueenProblemDriver(int n) {
+        int N = n;
+
+        int[][] solution = new int[N][N];
+        for (int[] a : solution)
+            Arrays.fill(a, 0);
+
+
+        if (!NQueenProblem(solution, N, 0)) {
+            System.out.println("Not Possible!!");
+        }
+        printMatrix(solution);
+
+    }
+
+    public static boolean NQueenProblem(int[][] matrix, int N, int col) {
+        if (col >= N) {
+            return true;
+        }
+
+        //Traversing all the row!!
+        for (int i = 0; i < N; i++) {
+            if (isSafeForNQueen(matrix, i, col, N)) {
+                matrix[i][col] = 1;
+                if (NQueenProblem(matrix, N, col + 1)) {
+                    return true;
+                }
+                matrix[i][col] = 0;
+            }
+        }
+        return false;
+    }
+
+    private static boolean isSafeForNQueen(int[][] board, int row, int col, int N) {
+
+        //As we are fixing Queens in a Column there is no need to check right side of the matrix!!
+        int i, j;
+        /* Check this row on left side */
+        for (i = 0; i < col; i++)
+            if (board[row][i] == 1)
+                return false;
+
+        /* Check upper diagonal on left side */
+        for (i = row, j = col; i >= 0 && j >= 0; i--, j--)
+            if (board[i][j] == 1)
+                return false;
+
+        /* Check lower diagonal on left side */
+        for (i = row, j = col; j >= 0 && i < N; i++, j--)
+            if (board[i][j] == 1)
+                return false;
+
+
+        return true;
     }
 
     public static void KnightTourProblem() {
@@ -26,20 +85,19 @@ public class PractiseVIII {
 
         if (!KnightTourProblemSolver(solution, 0, 0, N, 1, xMove, yMove)) {
             System.out.println("Not Possible");
-            for (int i = 0; i < N; i++) {
-                for (int j = 0; j < N; j++) {
-                    System.out.print(solution[i][j] + " ");
-                }
-                System.out.println();
-            }
         } else {
             //Printing the Result!!
-            for (int i = 0; i < N; i++) {
-                for (int j = 0; j < N; j++) {
-                    System.out.print(solution[i][j] + " ");
-                }
-                System.out.println();
+            printMatrix(solution);
+        }
+    }
+
+    private static void printMatrix(int[][] solution) {
+        int n = solution.length;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                System.out.print(solution[i][j] + " ");
             }
+            System.out.println();
         }
     }
 
@@ -47,6 +105,7 @@ public class PractiseVIII {
         return (x >= 0 && x < N && y >= 0 && y < N && sol[x][y] == -1);
     }
 
+    //Time Complexity is 8^(n^2).
     private static boolean KnightTourProblemSolver(int[][] solution, int i, int j, int n, int index, int[] xMove, int[] yMove) {
 
         int next_x_move, next_y_move;
