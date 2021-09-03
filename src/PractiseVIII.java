@@ -6,10 +6,26 @@ public class PractiseVIII {
     //Mostly BackTracking!
     public static void main(String[] args) {
 
-        NQueenProblemDriver(4);
+        NQueenProblemDriver(5);
 
     }
 
+
+    public static void PrintAllNQueenSolutions(int[][] matrix, int N, int col) {
+        if (col >= N) {
+            printMatrix(matrix);
+            System.out.println("--------");
+        }
+
+        //Traversing all the row!!
+        for (int i = 0; i < N; i++) {
+            if (isSafeForNQueen(matrix, i, col, N)) {
+                matrix[i][col] = 1;
+                PrintAllNQueenSolutions(matrix, N, col + 1);
+                matrix[i][col] = 0;
+            }
+        }
+    }
 
     public static void NQueenProblemDriver(int n) {
         int N = n;
@@ -19,10 +35,12 @@ public class PractiseVIII {
             Arrays.fill(a, 0);
 
 
-        if (!NQueenProblem(solution, N, 0)) {
-            System.out.println("Not Possible!!");
-        }
-        printMatrix(solution);
+//        if (!NQueenProblem(solution, N, 0)) {
+//            System.out.println("Not Possible!!");
+//        }
+//        printMatrix(solution);
+
+        PrintAllNQueenSolutions(solution,N,0);
 
     }
 
