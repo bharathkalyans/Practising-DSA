@@ -6,10 +6,148 @@ public class PractiseVIII {
     //Mostly BackTracking!
     public static void main(String[] args) {
 
-        NQueenProblemDriver(5);
+
+        //Sudoku Board!
+        int[][] board = new int[][]{
+                {3, 0, 6, 5, 0, 8, 4, 0, 0},
+                {5, 2, 0, 0, 0, 0, 0, 0, 0},
+                {0, 8, 7, 0, 0, 0, 0, 3, 1},
+                {0, 0, 3, 0, 1, 0, 0, 8, 0},
+                {9, 0, 0, 8, 6, 3, 0, 0, 5},
+                {0, 5, 0, 0, 9, 0, 6, 0, 0},
+                {1, 3, 0, 0, 0, 0, 2, 5, 0},
+                {0, 0, 0, 0, 0, 0, 0, 7, 4},
+                {0, 0, 5, 2, 0, 6, 3, 0, 0}
+        };
+
+        /**
+         * 3 1 6 5 7 8 4 9 2
+         * 5 2 9 1 3 4 7 6 8
+         * 4 8 7 6 2 9 5 3 1
+         * 2 6 3 4 1 5 9 8 7
+         * 9 7 4 8 6 3 1 2 5
+         * 8 5 1 7 9 2 6 4 3
+         * 1 3 8 9 4 7 2 5 6
+         * 6 9 2 3 5 1 8 7 4
+         * 7 4 5 2 8 6 3 1 9
+         * */
+
+//        if (SudokuSolver(board, 0, 0, board.length))
+//            printMatrix(board);
+//        else System.out.println("No Solution!");
+
+        if (SudokuSolver(board, board.length))
+            printMatrix(board);
+        else System.out.println("No Solution!");
 
     }
 
+
+    public static boolean SudokuSolver(int[][] board, int length) {
+
+        int row = -1;
+        int col = -1;
+        boolean isEmpty = true;
+
+        for (int i = 0; i < length; i++) {
+            for (int j = 0; j < length; j++) {
+                if (board[i][j] == 0) {
+                    row = i;
+                    col = j;
+
+                    // We still have some remaining
+                    // missing values in Sudoku
+                    isEmpty = false;
+                    break;
+                }
+            }
+
+            if (!isEmpty) {
+                break;
+            }
+        }
+
+        // No empty space left
+        if (isEmpty) {
+            return true;
+        }
+
+
+        for (int number = 1; number <= length; number++) {
+            if (isSafeForSudoku(board, row, col, number)) {
+                board[row][col] = number;
+
+                if (SudokuSolver(board, length))
+                    return true;
+                board[row][col] = 0;
+
+            }
+        }
+
+
+        return false;
+
+    }
+
+    // Not a BackTracking Solution!! Time Complexity is O(9^(N*N))!! --> same for BackTracking!
+    public static boolean SudokuSolver(int[][] matrix, int row, int col, int N) {
+
+        if (row == N - 1 && col == N)
+            return true;
+
+
+        if (col == N) {
+            col = 0;
+            row++;
+        }
+
+        if (matrix[row][col] != 0)
+            return SudokuSolver(matrix, row, col + 1, N);
+
+        //number -> (1-9)
+        for (int number = 1; number <= N; number++) {
+            if (isSafeForSudoku(matrix, row, col, number)) {
+                matrix[row][col] = number;
+
+                if (SudokuSolver(matrix, row, col + 1, N))
+                    return true;
+
+                matrix[row][col] = 0;
+            }
+        }
+
+        return false;
+    }
+
+    public static boolean isSafeForSudoku(int[][] matrix, int row, int column, int number) {
+
+        //Searching in Row!!
+        for (int i = 0; i < matrix.length; i++)
+            if (matrix[row][i] == number)
+                return false;
+
+
+        //Searching in Column!!
+        for (int i = 0; i < matrix.length; i++)
+            if (matrix[i][column] == number)
+                return false;
+
+
+        //Searching in the Sub Grid!
+
+        int sqrt = (int) Math.sqrt(matrix.length); // sqrt = 3;In most of the cases!
+        int columnStart = column - column % sqrt;
+        int rowStart = row - row % sqrt;
+
+
+        for (int i = 0; i < sqrt; i++)
+            for (int j = 0; j < sqrt; j++)
+                if (matrix[i + rowStart][j + columnStart] == number)
+                    return false;
+
+
+        return true;
+    }
 
     public static void PrintAllNQueenSolutions(int[][] matrix, int N, int col) {
         if (col >= N) {
@@ -40,7 +178,7 @@ public class PractiseVIII {
 //        }
 //        printMatrix(solution);
 
-        PrintAllNQueenSolutions(solution,N,0);
+        PrintAllNQueenSolutions(solution, N, 0);
 
     }
 
