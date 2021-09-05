@@ -20,28 +20,68 @@ public class PractiseVIII {
                 {0, 0, 5, 2, 0, 6, 3, 0, 0}
         };
 
-        /**
-         * 3 1 6 5 7 8 4 9 2
-         * 5 2 9 1 3 4 7 6 8
-         * 4 8 7 6 2 9 5 3 1
-         * 2 6 3 4 1 5 9 8 7
-         * 9 7 4 8 6 3 1 2 5
-         * 8 5 1 7 9 2 6 4 3
-         * 1 3 8 9 4 7 2 5 6
-         * 6 9 2 3 5 1 8 7 4
-         * 7 4 5 2 8 6 3 1 9
-         * */
 
-//        if (SudokuSolver(board, 0, 0, board.length))
-//            printMatrix(board);
-//        else System.out.println("No Solution!");
-
-        if (SudokuSolver(board, board.length))
-            printMatrix(board);
-        else System.out.println("No Solution!");
 
     }
 
+
+    /**
+     * [["5","3",".",".","7",".",".",".","."]
+     * ,["6",".",".","1","9","5",".",".","."]
+     * ,[".","9","8",".",".",".",".","6","."]
+     * ,["8",".",".",".","6",".",".",".","3"]
+     * ,["4",".",".","8",".","3",".",".","1"]
+     * ,["7",".",".",".","2",".",".",".","6"]
+     * ,[".","6",".",".",".",".","2","8","."]
+     * ,[".",".",".","4","1","9",".",".","5"]
+     * ,[".",".",".",".","8",".",".","7","9"]]
+     */
+
+    //https://leetcode.com/problems/valid-sudoku/submissions/
+    //isValidSudoku LeetCode Problem!! Nice but was missing simple logic!! near comparing i and j and returning false!! always!
+    public static boolean isValidSudoku(char[][] board) {
+        if (board == null || board.length == 0)
+            return true;
+
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board.length; j++) {
+                if (board[i][j] != '.') {
+                    if (!isSafeForSudoku(board, i, j, board[i][j]))
+                        return false;
+                }
+            }
+
+        }
+        return true;
+    }
+
+    public static boolean isSafeForSudoku(char[][] matrix, int row, int column, char number) {
+
+        //Searching in Row!!
+        for (int i = 0; i < matrix.length; i++)
+            if (matrix[row][i] == number)
+                return false;
+
+
+        //Searching in Column!!
+        for (int i = 0; i < matrix.length; i++)
+            if (matrix[i][column] == number)
+                return false;
+
+
+        //Searching in the Sub Grid!
+
+        int x = row - row % 3, y = column - column % 3;
+        for (int i = x; i < x + 3; i++) {
+            for (int j = y; j < y + 3; j++) {
+                if (matrix[i][j] == number && !(i == row && j == column))
+                    return false;
+            }
+        }
+
+
+        return true;
+    }
 
     public static boolean SudokuSolver(int[][] board, int length) {
 
