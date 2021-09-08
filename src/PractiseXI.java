@@ -7,22 +7,33 @@ public class PractiseXI {
     public static void main(String[] args) {
 
 
-        int[] w = new int[]{1, 3, 4, 5};
-        int[] v = new int[]{1, 4, 5, 7};
-        int W = 7;
+        int[] w = new int[]{1, 2, 3};
+        int[] v = new int[]{4, 5, 1};
+        int W = 4;
 
         System.out.println("Weight :: " + KnapSack01Problem(w, v, W, w.length));
     }
 
 
+    static int[][] dp = new int[1001][1001];
+
+    public static int KnapSack01(int W, int wt[], int val[], int n) {
+        for (int[] row : dp)
+            Arrays.fill(row, -1);
+
+        return KnapSack01Problem(wt, val, W, n);
+    }
+
     //Recursive Approach
     public static int KnapSack01Problem(int[] weight, int[] value, int W, int n) {
         if (n == 0 || W == 0) return 0;
 
-        if (weight[n - 1] > W)
-            return KnapSack01Problem(weight, value, W, n - 1);
+        if(dp[n][W]!= -1) return dp[n][W];
 
-        return Math.max(value[n - 1] + KnapSack01Problem(weight, value, W - weight[n - 1], n - 1), KnapSack01Problem(weight, value, W, n - 1));
+        if (weight[n - 1] > W)
+            return dp[n][W] = KnapSack01Problem(weight, value, W, n - 1);
+
+        return dp[n][W] =  Math.max(value[n - 1] + KnapSack01Problem(weight, value, W - weight[n - 1], n - 1), KnapSack01Problem(weight, value, W, n - 1));
     }
 
     public static void SubSequenceOfAString(String str, StringBuilder sb, int index) {
