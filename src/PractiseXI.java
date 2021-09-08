@@ -24,16 +24,41 @@ public class PractiseXI {
         return KnapSack01Problem(wt, val, W, n);
     }
 
+    public static int KnapSack01BottomUpApproach(int[] weight, int[] value, int W, int n) {
+
+        int[][] dp = new int[n + 1][W + 1];
+
+        // Recursive --> Memoization and then Bottom Up Approach!
+
+        for (int i = 0; i < n + 1; i++)
+            for (int j = 0; j < W + 1; j++)
+                if (i == 0 || j == 0)
+                    dp[i][j] = 0;
+
+
+        for (int i = 1; i < n + 1; i++)
+            for (int j = 1; j < W + 1; j++) {
+                if (weight[i - 1] <= j) {
+                    //Assume here i is n and j is W!
+                    dp[i][j] = Math.max(value[i - 1] + dp[i - 1][j - weight[i - 1]], dp[i - 1][j]);
+                } else {
+                    dp[i][j] = dp[n - 1][j];
+                }
+            }
+
+        return dp[n][W];
+    }
+
     //Recursive Approach
     public static int KnapSack01Problem(int[] weight, int[] value, int W, int n) {
         if (n == 0 || W == 0) return 0;
 
-        if(dp[n][W]!= -1) return dp[n][W];
+        if (dp[n][W] != -1) return dp[n][W];
 
         if (weight[n - 1] > W)
             return dp[n][W] = KnapSack01Problem(weight, value, W, n - 1);
 
-        return dp[n][W] =  Math.max(value[n - 1] + KnapSack01Problem(weight, value, W - weight[n - 1], n - 1), KnapSack01Problem(weight, value, W, n - 1));
+        return dp[n][W] = Math.max(value[n - 1] + KnapSack01Problem(weight, value, W - weight[n - 1], n - 1), KnapSack01Problem(weight, value, W, n - 1));
     }
 
     public static void SubSequenceOfAString(String str, StringBuilder sb, int index) {
