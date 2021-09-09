@@ -11,9 +11,22 @@ public class PractiseXI {
         int[] v = new int[]{4, 5, 1};
         int W = 4;
 
-        System.out.println("Weight :: " + KnapSack01Problem(w, v, W, w.length));
+        int[] subset = new int[]{2, 3, 5, 7, 81, 10};
+        System.out.println(SubSetSum(subset, 11, subset.length));
+
     }
 
+
+    public static boolean SubSetSum(int[] arr, int sum, int n) {
+        if (n == 0)
+            return false;
+        if (sum == 0) return true;
+
+        if (arr[n - 1] > sum)
+            return SubSetSum(arr, sum, n - 1);
+
+        return SubSetSum(arr, sum - arr[n - 1], n - 1) || SubSetSum(arr, sum, n - 1);
+    }
 
     static int[][] dp = new int[1001][1001];
 
