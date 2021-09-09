@@ -11,12 +11,58 @@ public class PractiseXI {
         int[] v = new int[]{4, 5, 1};
         int W = 4;
 
-        int[] subset = new int[]{2, 3, 5, 7, 81, 10};
-        System.out.println(SubSetSum(subset, 11, subset.length));
+        int[] subset = new int[]{1, 2, 3, 4, 5, 56};
 
+        System.out.println(SubSetSumDPTopDownApproach(subset, 1212, subset.length));
     }
 
 
+    // Best Approach for SubSet Sum Problem!
+    public static boolean SubSetSumDPTopDownApproach(int[] arr, int sum, int n) {
+        boolean[][] dp = new boolean[n + 1][sum + 1];
+
+
+        //Initialization!
+        for (int i = 0; i < n + 1; i++)
+            for (int j = 0; j < sum + 1; j++) {
+                if (i == 0) dp[i][j] = false;
+                if (j == 0) dp[i][j] = true;
+
+            }
+
+        //This value will override the false!
+        dp[0][0] = true;
+
+        for (int i = 1; i < n + 1; i++) {
+            for (int j = 1; j < sum + 1; j++) {
+                if (arr[i - 1] > j)
+                    dp[i][j] = dp[i - 1][j];
+                else {
+                    dp[i][j] = dp[i - 1][j - arr[i - 1]] || dp[i - 1][j];
+                }
+            }
+        }
+
+        return dp[n][sum];
+    }
+
+
+    //Memoization!!
+    public static boolean SubSetSumDP(int[] arr, int sum, int n, boolean[][] dp) {
+        if (n == 0)
+            return false;
+        if (sum == 0)
+            return dp[n][sum] = true;
+
+        if (arr[n - 1] > sum)
+            return dp[n][sum] = SubSetSumDP(arr, sum, n - 1, dp);
+
+        return dp[n][sum] = SubSetSumDP(arr, sum - arr[n - 1], n - 1, dp) || SubSetSumDP(arr, sum, n - 1, dp);
+
+    }
+
+    //https://practice.geeksforgeeks.org/problems/subset-sum-problem-1611555638/1/?category[]=Dynamic%20Programming&category[]=Dynamic%20Programming&page=4&query=category[]Dynamic%20Programmingpage4category[]Dynamic%20Programming
+    // Recursive Approach!
     public static boolean SubSetSum(int[] arr, int sum, int n) {
         if (n == 0)
             return false;
