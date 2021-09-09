@@ -11,11 +11,24 @@ public class PractiseXI {
         int[] v = new int[]{4, 5, 1};
         int W = 4;
 
-        int[] subset = new int[]{1, 2, 3, 4, 5, 56};
+        int[] subset = new int[]{1, 5, 11, 5};
+        System.out.println(EqualSumPartition(subset, subset.length));
 
-        System.out.println(SubSetSumDPTopDownApproach(subset, 1212, subset.length));
+
     }
 
+    //https://practice.geeksforgeeks.org/problems/subset-sum-problem2014/1
+    public static boolean EqualSumPartition(int[] arr, int n) {
+
+        int sum = 0;
+        for (int x : arr) sum += x;
+
+        if (sum % 2 != 0) return false;
+
+//        return SubSetSum(arr, sum / 2, arr.length);
+        return SubSetSumDPTopDownApproach(arr, sum / 2, arr.length);
+
+    }
 
     // Best Approach for SubSet Sum Problem!
     public static boolean SubSetSumDPTopDownApproach(int[] arr, int sum, int n) {
