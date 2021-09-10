@@ -15,7 +15,11 @@ public class PractiseXI {
         System.out.println(EqualSumPartition(subset, subset.length));
 
 
+
     }
+
+
+
 
     //https://practice.geeksforgeeks.org/problems/subset-sum-problem2014/1
     public static boolean EqualSumPartition(int[] arr, int n) {
