@@ -11,15 +11,62 @@ public class PractiseXI {
         int[] v = new int[]{4, 5, 1};
         int W = 4;
 
-        int[] subset = new int[]{1, 5, 11, 5};
-        System.out.println(EqualSumPartition(subset, subset.length));
+        int[] subset = new int[]{1, 2, 3, 3};
+        int sum = 6;
 
-
+        System.out.println(CountSubSetsWithGivenSum(subset, sum, subset.length));
+        System.out.println(CountSubSetsWithGivenSum(subset, sum));
 
     }
 
+    //https://practice.geeksforgeeks.org/problems/perfect-sum-problem5633/1
+    //Bottom Up Approach
+    public static int CountSubSetsWithGivenSum(int[] arr, int sum) {
+        int n = arr.length;
+        int[][] dp = new int[n + 1][sum + 1];
+
+        for (int i = 0; i < n + 1; i++) {
+            for (int j = 0; j < sum + 1; j++) {
+                if (i == 0) dp[i][j] = 0;
+                if (j == 0) dp[i][j] = 1;
+            }
+        }
+
+        dp[0][0] = 1;
+
+        /*for (int i = 0; i < n + 1; i++) {
+            for (int j = 0; j < sum + 1; j++) {
+                System.out.print(dp[i][j] + " ");
+            }
+            System.out.println();
+        }*/
 
 
+        for (int i = 1; i < n + 1; i++) {
+            for (int j = 1; j < sum + 1; j++) {
+                if (arr[i - 1] > j) dp[i][j] = dp[i - 1][j];
+                else {
+                    dp[i][j] = dp[i - 1][j - arr[i - 1]] + dp[i - 1][j];
+                }
+            }
+        }
+
+        return dp[n][sum];
+    }
+
+    //Recursive Approach!!
+    public static int CountSubSetsWithGivenSum(int[] arr, int sum, int n) {
+
+        if (n == 0) return 0;
+        if (sum == 0) return 1;
+
+        if (arr[n - 1] > sum)
+            return CountSubSetsWithGivenSum(arr, sum, n - 1);
+
+        return CountSubSetsWithGivenSum(arr, sum - arr[n - 1], n - 1) + CountSubSetsWithGivenSum(arr, sum, n - 1);
+
+
+    }
 
     //https://practice.geeksforgeeks.org/problems/subset-sum-problem2014/1
     public static boolean EqualSumPartition(int[] arr, int n) {
