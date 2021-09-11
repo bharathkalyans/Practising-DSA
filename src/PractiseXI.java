@@ -12,12 +12,73 @@ public class PractiseXI {
         int[] v = new int[]{4, 5, 1};
         int W = 4;
 
-        int[] subset = new int[]{5, 6, 6, 5, 7, 4, 7, 6};
-        int result = MinimumSubSetDifference(subset, subset.length);
-        System.out.println(result);
+        int[] subset = new int[]{1, 1, 2, 3};
+        System.out.println(CountSubSetWithGivenDifference(subset, 1));
 
     }
 
+
+    //Have to use Some Simple Math Concepts to Tackle this Question!
+    public static int CountSubSetWithGivenDifference(int[] arr, int diff) {
+        int sum = 0;
+        for (int x : arr) sum += x;
+        int n = arr.length;
+
+        //Best Approach is Below::
+        /* SubSet(1) + SubSet(2) = sum
+           SubSet(1) - SubSet(2) = diff (Asking in the Question!)
+           ------------------------------
+           2 * SubSet(1) = sum + diff (Simple Cancellation!)
+
+           SubSet(1) = (sum + diff)/2 = value_sum
+           Therefore All you need to do is to find no. of subsets with value_sum!!
+        * */
+
+        int value_sum = (sum + diff) / 2;
+
+        int[][] dp = new int[n + 1][value_sum + 1];
+
+
+        /**
+         * if (n == 0) return 0;
+         *         if (sum == 0) return 1;
+         *
+         *         if (arr[n - 1] > sum)
+         *             return CountSubSetsWithGivenSum(arr, sum, n - 1);
+         *
+         *         return CountSubSetsWithGivenSum(arr, sum - arr[n - 1], n - 1) + CountSubSetsWithGivenSum(arr, sum, n - 1);*/
+
+
+        for (int i = 0; i < n + 1; i++)
+            for (int j = 0; j < value_sum + 1; j++) {
+                if (i == 0) dp[i][j] = 0;
+                if (j == 0) dp[i][j] = 1;
+            }
+
+        dp[0][0] = 1;
+
+
+        for (int i = 1; i < n + 1; i++) {
+            for (int j = 1; j < value_sum + 1; j++) {
+                if (arr[i - 1] > j) dp[i][j] = dp[i - 1][j];
+                else dp[i][j] = dp[i - 1][j - arr[i - 1]] + dp[i - 1][j];
+            }
+        }
+
+
+        return dp[n][value_sum];
+//        return CountSubSetsWithGivenDifference(arr, n, diff, sum, 0);
+    }
+
+    //Recursive Code! Same as in Minimum Difference in SubSet!
+    public static int CountSubSetsWithGivenDifference(int[] arr, int n, int diff, int total_sum, int sumCalculated) {
+        if (n == 0)
+            if ((total_sum - sumCalculated) - sumCalculated == diff) return 1;
+            else return 0;
+
+        return CountSubSetsWithGivenDifference(arr, n - 1, diff, total_sum, sumCalculated)
+                + CountSubSetsWithGivenDifference(arr, n - 1, diff, total_sum, sumCalculated + arr[n - 1]);
+    }
 
     //https://practice.geeksforgeeks.org/problems/minimum-sum-partition/0
     //Bottom Up Approach! Using Sub Set Problem!
