@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class PractiseXI {
@@ -11,11 +12,67 @@ public class PractiseXI {
         int[] v = new int[]{4, 5, 1};
         int W = 4;
 
-        int[] subset = new int[]{1, 2, 3, 3};
-        int sum = 6;
+        int[] subset = new int[]{5, 6, 6, 5, 7, 4, 7, 6};
+        int result = MinimumSubSetDifference(subset, subset.length);
+        System.out.println(result);
 
-        System.out.println(CountSubSetsWithGivenSum(subset, sum, subset.length));
-        System.out.println(CountSubSetsWithGivenSum(subset, sum));
+    }
+
+
+    //https://practice.geeksforgeeks.org/problems/minimum-sum-partition/0
+    //Bottom Up Approach! Using Sub Set Problem!
+    public static int MinimumSubSetDifference(int[] arr, int n) {
+        int totalSum = 0;
+        for (int x : arr) totalSum += x;
+
+        // Normal SubSet Problem Answer
+        boolean[][] dp = new boolean[n + 1][totalSum + 1];
+
+        for (int i = 0; i < n + 1; i++)
+            for (int j = 0; j < totalSum + 1; j++) {
+                if (j == 0) dp[i][j] = true;
+                if (i == 0) dp[i][j] = false;
+            }
+
+        dp[0][0] = true;
+
+        for (int i = 1; i < n + 1; i++) {
+            for (int j = 1; j < totalSum + 1; j++) {
+                if (arr[i - 1] > j) dp[i][j] = dp[i - 1][j];
+                else dp[i][j] = dp[i - 1][j - arr[i - 1]] || dp[i - 1][j];
+            }
+        }
+
+        //Now the last row of the DP Array will be containing all the subsets possible with length == n;
+        //Traverse that last row push into a ArrayList! and find the minimum difference!
+
+        ArrayList<Integer> al = new ArrayList<>();
+
+        for (int i = 0; i < totalSum + 1; i++)
+            if (dp[n][i])
+                al.add(i);
+
+
+        int minimum_difference = Integer.MAX_VALUE;
+
+        for (int i = 0; i <= al.size() / 2; i++) {
+            minimum_difference = Math.abs(Math.min(minimum_difference, totalSum - (2 * al.get(i))));
+        }
+
+        return minimum_difference;
+    }
+
+
+    //Recursive Approach!
+    public static int MinimumSubSetDifference(int[] arr, int totalSum, int sumCalculatedInSubSet, int n) {
+        //Sum of SubSet is sumCalculatedInSubSet and other Subset is totalSum - sumCalculatedInSubSet.
+        //So after subtracting each other we will get the required Answer!
+        if (n == 0) return Math.abs((totalSum - sumCalculatedInSubSet) - sumCalculatedInSubSet);
+
+        return Math.min(
+                MinimumSubSetDifference(arr, totalSum, sumCalculatedInSubSet + arr[n - 1], n - 1),
+                MinimumSubSetDifference(arr, totalSum, sumCalculatedInSubSet, n - 1)
+        );
 
     }
 
