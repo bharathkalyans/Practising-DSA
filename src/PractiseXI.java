@@ -8,19 +8,22 @@ public class PractiseXI {
     public static void main(String[] args) {
 
 
-        int[] w = new int[]{1, 2, 3};
-        int[] v = new int[]{4, 5, 1};
-        int W = 4;
-
         int[] subset = new int[]{1, 1, 2, 3};
         System.out.println(CountSubSetWithGivenDifference(subset, 1));
+
+
 
     }
 
 
+    //This Below problems belong to  0-1 KnapSack Category!
+
+    //This is also known as target sum problem -> refer leetcode!.
     //Have to use Some Simple Math Concepts to Tackle this Question!
     public static int CountSubSetWithGivenDifference(int[] arr, int diff) {
         int sum = 0;
+//        sum = Arrays.stream(arr).sum();
+        
         for (int x : arr) sum += x;
         int n = arr.length;
 
@@ -38,15 +41,6 @@ public class PractiseXI {
 
         int[][] dp = new int[n + 1][value_sum + 1];
 
-
-        /**
-         * if (n == 0) return 0;
-         *         if (sum == 0) return 1;
-         *
-         *         if (arr[n - 1] > sum)
-         *             return CountSubSetsWithGivenSum(arr, sum, n - 1);
-         *
-         *         return CountSubSetsWithGivenSum(arr, sum - arr[n - 1], n - 1) + CountSubSetsWithGivenSum(arr, sum, n - 1);*/
 
 
         for (int i = 0; i < n + 1; i++)
