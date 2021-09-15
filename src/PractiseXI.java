@@ -7,16 +7,52 @@ public class PractiseXI {
     //Mostly DP Problems!
     public static void main(String[] args) {
 
-        int[] price = {3, 5, 8, 9, 10, 17, 17, 20};
-        int[] length = {1, 2, 3, 4, 5, 6, 7, 8};
-        int rod = 8;
-
-
-        System.out.println(RodCutting(price, length, rod, 8));
-        System.out.println(RodCutting(price, 8));
-        System.out.println(RodCuttingDP(price, 8));
+        int[] coins = {1, 2, 5};
+        System.out.println(CoinChangeI(coins, 5, 3));
+        System.out.println(CoinChangeI(coins,5));
     }
 
+
+    //https://practice.geeksforgeeks.org/problems/coin-change2448/1#
+    //https://leetcode.com/problems/coin-change-2/
+    //Same to same as SubSet Problem! with small twist.
+    public static int CoinChangeI(int[] coins, int sum) {
+        int n = coins.length;
+
+        int[][] dp = new int[n + 1][sum + 1];
+
+
+        //Initialization
+        for (int i = 0; i < n + 1; i++) { // Array Length
+            for (int j = 0; j < sum + 1; j++) { // Sum from 0 to sum + 1;
+                if (i == 0) dp[i][j] = 0;
+                if (j == 0) dp[i][j] = 1;
+            }
+        }
+
+        dp[0][0] = 1;
+
+        //Main Part!
+        for (int i = 1; i < n + 1; i++) {
+            for (int j = 1; j < sum + 1; j++) {
+                if (coins[i - 1] > j) dp[i][j] = dp[i - 1][j];
+                else dp[i][j] = dp[i - 1][j] + dp[i][j - coins[i - 1]];
+            }
+        }
+
+        //Answer!
+        return dp[n][sum];
+    }
+
+    //Similar to SubSet Problem!! 😉 But with infinite amount of choices to make!
+    public static int CoinChangeI(int[] coins, int sum, int n) {
+        if (n == 0) return 0;
+        if (sum == 0) return 1;
+
+        if (coins[n - 1] > sum) return CoinChangeI(coins, sum, n - 1);
+        return CoinChangeI(coins, sum, n - 1) + CoinChangeI(coins, sum - coins[n - 1], n);
+
+    }
 
     //Same as UnBounded KnapSack! 😉
     //Bottom Up Approach
