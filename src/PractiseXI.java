@@ -7,11 +7,112 @@ public class PractiseXI {
     //Mostly DP Problems!
     public static void main(String[] args) {
 
+        int[] price = {3, 5, 8, 9, 10, 17, 17, 20};
+        int[] length = {1, 2, 3, 4, 5, 6, 7, 8};
+        int rod = 8;
 
-        int[] subset = new int[]{1, 1, 2, 3};
-        System.out.println(CountSubSetWithGivenDifference(subset, 1));
+
+        System.out.println(RodCutting(price, length, rod, 8));
+        System.out.println(RodCutting(price, 8));
+        System.out.println(RodCuttingDP(price, 8));
+    }
 
 
+    //Same as UnBounded KnapSack! 😉
+    //Bottom Up Approach
+    public static int RodCuttingDP(int[] prices, int rod_length) {
+
+        int n = prices.length;
+        int[] length = new int[rod_length];
+
+        for (int i = 0; i < rod_length; i++) length[i] = i + 1;
+
+        int[][] dp = new int[n + 1][rod_length + 1];
+
+        for (int i = 0; i < n + 1; i++) {
+            for (int j = 0; j < rod_length + 1; j++) {
+                if (i == 0 || j == 0) dp[i][j] = 0;
+            }
+        }
+
+        for (int i = 1; i < n + 1; i++) {
+            for (int j = 1; j < rod_length + 1; j++) {
+                if (length[i - 1] > j) dp[i][j] = dp[i - 1][j];
+                else dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - length[i - 1]] + prices[i - 1]);
+            }
+        }
+
+
+        return dp[n][rod_length];
+    }
+
+
+    //Below function is from GFG!!
+    public static int RodCutting(int price[], int n) {
+        if (n <= 0)
+            return 0;
+        int max_val = Integer.MIN_VALUE;
+
+        // Recursively cut the rod in different pieces and
+        // compare different configurations
+        for (int i = 0; i < n; i++)
+            max_val = Math.max(max_val,
+                    price[i] + RodCutting(price, n - i - 1));
+
+        return max_val;
+    }
+
+    //Rod Cutting is same as UnBounded KnapSack Problem.
+    //Not even a single value changed!
+    //This solution won't work! for some test cases and I don't know the reason!
+    // Got the reason, and it is giving wrong inputs!! 😭
+
+    public static int RodCutting(int[] prices, int[] length, int rod_length, int n) {
+        if (rod_length == 0 || n == 0) return 0;
+
+        if (length[n - 1] > rod_length) return RodCutting(prices, length, rod_length, n - 1);
+
+        return Math.max(
+                RodCutting(prices, length, rod_length, n - 1),
+                RodCutting(prices, length, rod_length - length[n - 1], n) + prices[n - 1]);
+
+    }
+
+
+    //https://www.geeksforgeeks.org/unbounded-knapsack-repetition-items-allowed/
+    public static int UnBoundedKnapSack(int[] weight, int[] value, int W) {
+
+        int n = weight.length;
+        int[][] dp = new int[n + 1][W + 1];
+
+        for (int i = 0; i < n + 1; i++) {
+            for (int j = 0; j < W + 1; j++) {
+                if (i == 0 || j == 0) dp[i][j] = 0;
+            }
+        }
+
+
+        for (int i = 1; i < n + 1; i++) {
+            for (int j = 1; j < W + 1; j++) {
+                if (weight[i - 1] > j) dp[i][j] = dp[i - 1][j];
+                else dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - weight[i - 1]] + value[i - 1]);
+            }
+        }
+
+
+        return dp[n][W];
+    }
+
+    //Recursive Solution!!
+    public static int UnBoundedKnapSack(int[] weight, int[] value, int W, int n) {
+
+        if (n == 0 || W == 0) return 0;
+
+        if (weight[n - 1] > W) return UnBoundedKnapSack(weight, value, W, n - 1);
+
+        return Math.max(
+                UnBoundedKnapSack(weight, value, W, n - 1),
+                UnBoundedKnapSack(weight, value, W - weight[n - 1], n) + value[n - 1]);
 
     }
 
@@ -23,7 +124,7 @@ public class PractiseXI {
     public static int CountSubSetWithGivenDifference(int[] arr, int diff) {
         int sum = 0;
 //        sum = Arrays.stream(arr).sum();
-        
+
         for (int x : arr) sum += x;
         int n = arr.length;
 
@@ -40,7 +141,6 @@ public class PractiseXI {
         int value_sum = (sum + diff) / 2;
 
         int[][] dp = new int[n + 1][value_sum + 1];
-
 
 
         for (int i = 0; i < n + 1; i++)
