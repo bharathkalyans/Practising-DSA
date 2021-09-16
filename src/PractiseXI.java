@@ -7,9 +7,66 @@ public class PractiseXI {
     //Mostly DP Problems!
     public static void main(String[] args) {
 
-        int[] coins = {1, 2, 5};
-        System.out.println(CoinChangeI(coins, 5, 3));
-        System.out.println(CoinChangeI(coins,5));
+        int[] coins = {25, 10 , 5};
+        System.out.println(CoinChangeII(coins, 30, coins.length));
+        System.out.println(CoinChangeII(coins, 30));
+
+    }
+
+    //** Important **
+    // Draw Matrix Diagram for better understanding why we are using second row initialisation.
+    //For this PROBLEM draw matrix diagram for better understanding!
+    public static int CoinChangeII(int[] coins, int sum) {
+        int n = coins.length;
+
+        int[][] dp = new int[n + 1][sum + 1];
+
+
+        //First Normal Initialisation
+        for (int i = 0; i < n + 1; i++) {
+            for (int j = 0; j < sum + 1; j++) {
+                if (i == 0) dp[i][j] = Integer.MAX_VALUE - 1; // We are subtracting -1 from Integer.MAX_VALUE because if we add 1 in the below loop it will overflow!
+                if (i == 1 && j > 0) {
+                    if (j % coins[0] == 0) dp[1][j] = j / coins[0];
+                    else dp[1][j] = Integer.MAX_VALUE - 1;
+                }
+
+                if (j == 0) dp[i][j] = 0;
+            }
+        }
+
+        dp[0][0] = Integer.MAX_VALUE - 1;
+
+        //This problem is a bit different from others.It needs a second initialization.
+        //Initialised in the above loop itself!
+        /* for (int i = 1; i < n + 1; i++) {
+            if (i % coins[0] == 0) dp[1][i] = i / coins[0];
+            else dp[1][i] = Integer.MAX_VALUE;
+        }*/
+
+        for (int i = 2; i < n + 1; i++) {
+            for (int j = 1; j < sum + 1; j++) {
+                if (coins[i - 1] > j) dp[i][j] = dp[i - 1][j];
+                else dp[i][j] = Math.min(dp[i - 1][j], dp[i][j - coins[i - 1]] + 1);
+            }
+        }
+
+        return dp[n][sum];
+    }
+
+    //This DP Question is a bit Tricky compared to other's.Recursive Solution is easier but DP Solution need's some understanding of the question!
+    //https://practice.geeksforgeeks.org/problems/number-of-coins1824/1
+    //https://leetcode.com/problems/coin-change/
+    public static int CoinChangeII(int[] coins, int sum, int n) {
+        if (n == 0) return Integer.MAX_VALUE - 1;
+        if (sum == 0) return 0;
+
+        if (coins[n - 1] > sum) return CoinChangeII(coins, sum, n - 1);
+
+        return Math.min(
+                CoinChangeII(coins, sum, n - 1),
+                CoinChangeII(coins, sum - coins[n - 1], n) + 1
+        );
     }
 
 
