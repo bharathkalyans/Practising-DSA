@@ -7,11 +7,63 @@ public class PractiseXI {
     //Mostly DP Problems!
     public static void main(String[] args) {
 
-        int[] coins = {25, 10 , 5};
-        System.out.println(CoinChangeII(coins, 30, coins.length));
-        System.out.println(CoinChangeII(coins, 30));
+        String A = "abcdef";
+        String B = "abcedfg";
+        int m = A.length();
+        int n = B.length();
+        int[][] dp = new int[m + 1][n + 1];
+
+        for (int i = 0; i < m + 1; i++) {
+            for (int j = 0; j < n + 1; j++) {
+                dp[i][j] = -1;
+            }
+        }
+
+        System.out.println(LongestCommonSubSequenceMemoization(A, B, m, n, dp));
+        System.out.println(LongestCommonSubSequenceRecursive(A, B, m, n));
 
     }
+
+
+    //Memoization Approach!
+    public static int LongestCommonSubSequenceMemoization(String x, String y, int m, int n, int[][] dp) {
+
+        if (dp[m][n] != -1)
+            return dp[m][n];
+
+        if (m == 0 || n == 0)
+            return 0;
+        else {
+            if (x.charAt(m - 1) == y.charAt(n - 1))
+                dp[m][n] = 1 + LongestCommonSubSequenceMemoization(x, y, m - 1, n - 1, dp);
+            else
+                dp[m][n] = Math.max(
+                        LongestCommonSubSequenceMemoization(x, y, m, n - 1, dp),
+                        LongestCommonSubSequenceMemoization(x, y, m - 1, n, dp)
+                );
+        }
+        return dp[m][n];
+
+    }
+
+    //Time Complexity is O(2^N)!
+    //Recursive Solution!!
+    public static int LongestCommonSubSequenceRecursive(String x, String y, int m, int n) {
+        if (m == 0 || n == 0) return 0;
+
+        if (x.charAt(m - 1) == y.charAt(n - 1))
+            return 1 + LongestCommonSubSequenceRecursive(x, y, m - 1, n - 1);
+
+        return Math.max(
+                LongestCommonSubSequenceRecursive(x, y, m - 1, n),
+                LongestCommonSubSequenceRecursive(x, y, m, n - 1)
+        );
+
+    }
+
+
+    //This Below problems belong to  UnBounded KnapSack Category!
+
 
     //** Important **
     // Draw Matrix Diagram for better understanding why we are using second row initialisation.
@@ -25,7 +77,8 @@ public class PractiseXI {
         //First Normal Initialisation
         for (int i = 0; i < n + 1; i++) {
             for (int j = 0; j < sum + 1; j++) {
-                if (i == 0) dp[i][j] = Integer.MAX_VALUE - 1; // We are subtracting -1 from Integer.MAX_VALUE because if we add 1 in the below loop it will overflow!
+                if (i == 0)
+                    dp[i][j] = Integer.MAX_VALUE - 1; // We are subtracting -1 from Integer.MAX_VALUE because if we add 1 in the below loop it will overflow!
                 if (i == 1 && j > 0) {
                     if (j % coins[0] == 0) dp[1][j] = j / coins[0];
                     else dp[1][j] = Integer.MAX_VALUE - 1;
@@ -497,51 +550,6 @@ public class PractiseXI {
             SubSequenceOfAString(str, sb, i + 1);
             sb.deleteCharAt(sb.length() - 1);
         }
-
-    }
-
-    //TODO Have to Optimize the LCS!!
-    public static int LongestCommonSubSequence(String x, String y) {
-        int m = x.length();
-        int n = y.length();
-        int[][] dp = new int[m + 1][n + 1];
-
-        for (int[] array : dp)
-            Arrays.fill(array, -1);
-
-        return LongestCommonSubSequenceUtil(x, y, m, n, dp);
-    }
-
-    //Main Method! (Memoization)
-    public static int LongestCommonSubSequenceUtil(String x, String y, int m, int n, int[][] dp) {
-
-
-        if (m == 0 || n == 0)
-            return 0;
-
-        if (dp[m - 1][n - 1] != -1)
-            return dp[m - 1][n - 1];
-
-        if (x.charAt(m - 1) == y.charAt(n - 1))
-            dp[m - 1][n - 1] = 1 + LongestCommonSubSequenceUtil(x, y, m - 1, n - 1, dp);
-
-        return dp[m - 1][n - 1] = Math.max(
-                LongestCommonSubSequenceUtil(x, y, m, n - 1, dp),
-                LongestCommonSubSequenceUtil(x, y, m - 1, n, dp)
-        );
-
-    }
-
-    //Time Complexity is O(2^N)!
-    public static int LongestCommonSubSequence(String x, String y, int m, int n) {
-        if (m == 0 || n == 0) return 0;
-
-        if (x.charAt(m - 1) == y.charAt(n - 1))
-            return 1 + LongestCommonSubSequence(x, y, m - 1, n - 1);
-
-        return Math.max(
-                LongestCommonSubSequence(x, y, m - 1, n),
-                LongestCommonSubSequence(x, y, m, n - 1));
 
     }
 
