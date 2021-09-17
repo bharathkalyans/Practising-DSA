@@ -21,9 +21,35 @@ public class PractiseXI {
 
         System.out.println(LongestCommonSubSequenceMemoization(A, B, m, n, dp));
         System.out.println(LongestCommonSubSequenceRecursive(A, B, m, n));
-
+        System.out.println(LongestCommonSubSequence(A,B));
     }
 
+
+    //Bottom Up Approach! 😀
+    //https://leetcode.com/problems/longest-common-subsequence/submissions/
+    //https://practice.geeksforgeeks.org/problems/longest-common-subsequence/0
+    public static int LongestCommonSubSequence(String x, String y) {
+        int m = x.length();
+        int n = y.length();
+
+        int[][] dp = new int[m + 1][n + 1];
+
+        for (int i = 0; i < m + 1; i++) {
+            for (int j = 0; j < n + 1; j++) {
+                if (i == 0 || j == 0) dp[i][j] = 0;
+            }
+        }
+
+        for (int i = 1; i < m + 1; i++) {
+            for (int j = 1; j < n + 1; j++) {
+                if (x.charAt(i - 1) == y.charAt(j - 1)) dp[i][j] = 1 + dp[i - 1][j - 1];
+                else dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+            }
+        }
+
+
+        return dp[m][n];
+    }
 
     //Memoization Approach!
     public static int LongestCommonSubSequenceMemoization(String x, String y, int m, int n, int[][] dp) {
