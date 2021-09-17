@@ -7,8 +7,8 @@ public class PractiseXI {
     //Mostly DP Problems!
     public static void main(String[] args) {
 
-        String A = "abcdef";
-        String B = "abcedfg";
+        String A = "OldSite:GeeksforGeeks.org";
+        String B = "NewSite:GeeksQuiz.com";
         int m = A.length();
         int n = B.length();
         int[][] dp = new int[m + 1][n + 1];
@@ -19,9 +19,50 @@ public class PractiseXI {
             }
         }
 
-        System.out.println(LongestCommonSubSequenceMemoization(A, B, m, n, dp));
-        System.out.println(LongestCommonSubSequenceRecursive(A, B, m, n));
-        System.out.println(LongestCommonSubSequence(A,B));
+        System.out.println(LongestCommonSubString(A,B));
+        System.out.println(LongestCommonSubString(A, B, m, n, 0));
+    }
+
+
+
+    //https://www.geeksforgeeks.org/longest-common-substring-dp-29/
+    public static int LongestCommonSubString(String x, String y) {
+
+        int m = x.length();
+        int n = y.length();
+
+
+        int[][] dp = new int[m + 1][n + 1];
+
+        int max_length = 0;
+
+        for (int i = 0; i < m + 1; i++) {
+            for (int j = 0; j < n + 1; j++) {
+                if (i == 0 || j == 0) dp[i][j] = 0;
+            }
+        }
+
+
+        for (int i = 1; i < m + 1; i++) {
+            for (int j = 1; j < n + 1; j++) {
+                if (x.charAt(i - 1) == y.charAt(j - 1)) {
+                    dp[i][j] = 1 + dp[i - 1][j - 1];
+                    max_length = Math.max(max_length, dp[i][j]);
+                } else dp[i][j] = 0;
+            }
+        }
+
+
+        return max_length;
+    }
+
+    //Pure Recursive Solution!
+    public static int LongestCommonSubString(String x, String y, int m, int n, int curr_max) {
+        if (m == 0 || n == 0) return curr_max;
+
+        if (x.charAt(m - 1) == y.charAt(n - 1)) return LongestCommonSubString(x, y, m - 1, n - 1, curr_max + 1);
+
+        return Math.max(LongestCommonSubString(x, y, m - 1, n, 0), LongestCommonSubString(x, y, m, n - 1, 0));
     }
 
 
