@@ -1,7 +1,5 @@
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 public class PractiseXI {
 
@@ -9,24 +7,41 @@ public class PractiseXI {
     //Mostly DP Problems!
     public static void main(String[] args) {
 
-        String A = "AGGTAB";
-        String B = "GXTXAYB";
+        String A = "geek";
+        String B = "eke";
         int m = A.length();
         int n = B.length();
-        int[][] dp = new int[m + 1][n + 1];
 
-        for (int i = 0; i < m + 1; i++) {
-            for (int j = 0; j < n + 1; j++) {
-                dp[i][j] = -1;
-            }
-        }
+        System.out.println(ShortestSuperSequence(A, B, m, n));
+        System.out.println(ShortestSuperSequence(A, B));
 
-        System.out.println(LongestCommonSubString(A,B));
-        System.out.println(LongestCommonSubString(A, B, m, n, 0));
     }
 
 
+    //https://practice.geeksforgeeks.org/problems/shortest-common-supersequence0322/1
+    //Uses Longest Common SubSequence Function!!
+    public static int ShortestSuperSequence(String x, String y) {
+        int m = x.length();
+        int n = y.length();
+        int lcs = LongestCommonSubSequence(x, y);
 
+        return (m + n - lcs);
+    }
+
+    //Time Complexity id O(2^(p+q))!!
+    public static int ShortestSuperSequence(String x, String y, int p, int q) {
+        if (p == 0 || q == 0) return p + q;
+
+        if (x.charAt(p - 1) == y.charAt(q - 1)) {
+            return ShortestSuperSequence(x, y, p - 1, q - 1) + 1;
+        }
+
+        return Math.min(
+                ShortestSuperSequence(x, y, p - 1, q) + 1,
+                ShortestSuperSequence(x, y, p, q - 1) + 1
+        );
+
+    }
 
     public static void PrintLongestCommonSubSequence(String x, String y) {
 
