@@ -7,16 +7,24 @@ public class PractiseXI {
     //Mostly DP Problems!
     public static void main(String[] args) {
 
-        String A = "AGGTAB";
-        String B = "GXTXAYB";
+        String A = "heap";
+        String B = "pea";
         int m = A.length();
         int n = B.length();
 
-        System.out.println(ShortestSuperSequence(A, B, m, n));
-        System.out.println(ShortestSuperSequence(A, B));
-        ShortestSuperSequenceDP(A, B);
+        System.out.println(MinimumNumberOfDeletionsAndInsertions(A,B));
+
     }
 
+
+    public static int MinimumNumberOfDeletionsAndInsertions(String x, String y) {
+        int m = x.length();
+        int n = y.length();
+
+        int lcs = LongestCommonSubSequence(x, y);
+
+        return (m - lcs) + (n - lcs);
+    }
 
     //https://practice.geeksforgeeks.org/problems/shortest-common-supersequence0322/1
     //Uses Longest Common SubSequence Function!!
@@ -29,6 +37,7 @@ public class PractiseXI {
     }
 
 
+    //https://leetcode.com/problems/shortest-common-supersequence/
     //True DP Solution,No need of LCS Function!
     public static int ShortestSuperSequenceDP(String x, String y) {
         int m = x.length();
