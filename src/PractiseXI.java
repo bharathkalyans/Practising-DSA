@@ -7,14 +7,14 @@ public class PractiseXI {
     //Mostly DP Problems!
     public static void main(String[] args) {
 
-        String A = "geek";
-        String B = "eke";
+        String A = "AGGTAB";
+        String B = "GXTXAYB";
         int m = A.length();
         int n = B.length();
 
         System.out.println(ShortestSuperSequence(A, B, m, n));
         System.out.println(ShortestSuperSequence(A, B));
-
+        ShortestSuperSequenceDP(A, B);
     }
 
 
@@ -26,6 +26,72 @@ public class PractiseXI {
         int lcs = LongestCommonSubSequence(x, y);
 
         return (m + n - lcs);
+    }
+
+
+    //True DP Solution,No need of LCS Function!
+    public static int ShortestSuperSequenceDP(String x, String y) {
+        int m = x.length();
+        int n = y.length();
+
+        int[][] dp = new int[m + 1][n + 1];
+
+        //Initialisation!
+
+        for (int i = 0; i < m + 1; i++) {
+            for (int j = 0; j < n + 1; j++) {
+                if (i == 0) dp[i][j] = j;
+                if (j == 0) dp[i][j] = i;
+            }
+        }
+
+        for (int i = 1; i < m + 1; i++) {
+            for (int j = 1; j < n + 1; j++) {
+                if (x.charAt(i - 1) == y.charAt(j - 1)) dp[i][j] = 1 + dp[i - 1][j - 1];
+                else dp[i][j] = Math.min(dp[i - 1][j] + 1, dp[i][j - 1] + 1);
+            }
+        }
+
+
+        for (int i = 0; i < m + 1; i++) {
+            for (int j = 0; j < n + 1; j++) {
+                System.out.print(dp[i][j] + " ");
+            }
+            System.out.println();
+        }
+
+        //Printing the Sequence!
+        StringBuilder sb = new StringBuilder();
+
+        int i = m, j = n;
+
+        while (i > 0 && j > 0) {
+            if (x.charAt(i - 1) == y.charAt(j - 1)) {
+                sb.append(x.charAt(i - 1));
+                i--;
+                j--;
+            } else if (dp[i - 1][j] > dp[i][j - 1]) {
+                sb.append(y.charAt(j - 1));
+                j--;
+            } else {
+                sb.append(x.charAt(i - 1));
+                i--;
+            }
+        }
+
+        while (i > 0) {
+            sb.append(x.charAt(i - 1));
+            i--;
+        }
+
+        while (j > 0) {
+            sb.append(y.charAt(j - 1));
+            j--;
+        }
+
+        System.out.println(sb.reverse());
+        return dp[m][n];
+
     }
 
     //Time Complexity id O(2^(p+q))!!
