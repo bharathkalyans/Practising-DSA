@@ -12,10 +12,57 @@ public class PractiseXI {
         int m = A.length();
         int n = B.length();
 
-        System.out.println(MinimumNumberOfDeletionsAndInsertions(A,B));
-
+        String C = "bbbab";
+        System.out.println(LongestPalindromicSubSequence(C));
+        System.out.println(LongestPalindromicSubSequence(C, 0, C.length() - 1));
     }
 
+
+    //https://leetcode.com/problems/longest-palindromic-subsequence/submissions/
+    //Real DP Solution with 33ms 🙂
+    public static int LongestPalindromicSubSequenceDP(String s) {
+        int len = s.length();
+        int[][] dp = new int[len][len];
+        for (int i = len - 1; i >= 0; --i) {
+            dp[i][i] = 1;
+            for (int j = i + 1; j < len; ++j) {
+                if (s.charAt(i) == s.charAt(j)) {
+                    dp[i][j] = dp[i + 1][j - 1] + 2;
+                } else {
+                    dp[i][j] = Math.max(dp[i + 1][j], dp[i][j - 1]);
+                }
+            }
+        }
+        return dp[0][len - 1];
+    }
+
+    //Optimized Version! using LCS!!
+    public static int LongestPalindromicSubSequence(String x) {
+        String y = reverseString(x);
+        int lcs = LongestCommonSubSequence(x, y);
+        return lcs;
+    }
+
+    public static String reverseString(String x) {
+        StringBuilder sb = new StringBuilder();
+        for (char a : x.toCharArray()) sb.append(a);
+        return sb.reverse().toString();
+    }
+
+    public static int LongestPalindromicSubSequence(String x, int i, int j) {
+        if (i == j) return 1;
+
+        boolean b = x.charAt(i) == x.charAt(j);
+
+        if (b && i + 1 == j) return 2;
+
+        else if (b) return 2 + LongestPalindromicSubSequence(x, i + 1, j - 1);
+
+        else return Math.max(
+                    LongestPalindromicSubSequence(x, i + 1, j),
+                    LongestPalindromicSubSequence(x, i, j - 1));
+
+    }
 
     public static int MinimumNumberOfDeletionsAndInsertions(String x, String y) {
         int m = x.length();
