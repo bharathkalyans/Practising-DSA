@@ -12,13 +12,51 @@ public class PractiseXI {
         int m = A.length();
         int n = B.length();
 
-        String C = "aebcbda";
+        String C = "AABEBCDD";
 
-        System.out.println(MinimumDeletionsToMakeAStringPalindrome(C));
 
+        System.out.println(LongestRepeatingSubSequence(C, C, C.length(), C.length()));
+        System.out.println(LongestRepeatingSubSequence(C));
     }
 
 
+    //https://practice.geeksforgeeks.org/problems/longest-repeating-subsequence/0
+    //DP Approach!
+    public static int LongestRepeatingSubSequence(String x) {
+        int n = x.length();
+        int[][] dp = new int[n + 1][n + 1];
+
+
+        //Initialisation
+        for (int i = 0; i < n + 1; i++) {
+            for (int j = 0; j < n + 1; j++) {
+                if (i == 0 || j == 0) dp[i][j] = 0;
+            }
+        }
+
+        for (int i = 1; i < n + 1; i++) {
+            for (int j = 1; j < n + 1; j++) {
+                if (x.charAt(i - 1) == x.charAt(j - 1) && i != j) dp[i][j] = 1 + dp[i - 1][j - 1];
+                else dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+            }
+        }
+
+        return dp[n][n];
+    }
+
+    //Recursive Solution
+    public static int LongestRepeatingSubSequence(String x, String y, int m, int n) {
+
+        if (m == 0 || n == 0) return 0;
+
+        if (x.charAt(m - 1) == y.charAt(n - 1) && m != n) return 1 + LongestRepeatingSubSequence(x, y, m - 1, n - 1);
+
+        else return Math.max(
+                LongestRepeatingSubSequence(x, y, m - 1, n),
+                LongestRepeatingSubSequence(x, y, m, n - 1)
+        );
+
+    }
 
     //We use LPS to solve this problem!
     //https://leetcode.com/problems/minimum-insertion-steps-to-make-a-string-palindrome/
