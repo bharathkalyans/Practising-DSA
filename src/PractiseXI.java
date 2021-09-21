@@ -12,11 +12,24 @@ public class PractiseXI {
         int m = A.length();
         int n = B.length();
 
-        String C = "bbbab";
-        System.out.println(LongestPalindromicSubSequence(C));
-        System.out.println(LongestPalindromicSubSequence(C, 0, C.length() - 1));
+        String C = "aebcbda";
+
+        System.out.println(MinimumDeletionsToMakeAStringPalindrome(C));
+
     }
 
+
+
+    //We use LPS to solve this problem!
+    //https://leetcode.com/problems/minimum-insertion-steps-to-make-a-string-palindrome/
+    //https://practice.geeksforgeeks.org/problems/minimum-deletitions/0
+    public static int MinimumDeletionsToMakeAStringPalindrome(String x) {
+
+        int length = x.length();
+        int lps = LongestPalindromicSubSequence(x);
+        return length - lps;
+
+    }
 
     //https://leetcode.com/problems/longest-palindromic-subsequence/submissions/
     //Real DP Solution with 33ms 🙂
