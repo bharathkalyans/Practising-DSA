@@ -7,16 +7,90 @@ public class PractiseXI {
     //Mostly DP Problems!
     public static void main(String[] args) {
 
-        String A = "heap";
-        String B = "pea";
+        String A = "baaabab";
+        String B = "a*ab";
         int m = A.length();
         int n = B.length();
 
-        String C = "AABEBCDD";
+        System.out.println(SequencePatternMatching(A, B));
+
+    }
 
 
-        System.out.println(LongestRepeatingSubSequence(C, C, C.length(), C.length()));
-        System.out.println(LongestRepeatingSubSequence(C));
+
+
+    //https://leetcode.com/problems/edit-distance/
+    //https://practice.geeksforgeeks.org/problems/edit-distance3702/1#
+    //Recursive Approach
+    public int EditDistance(String x, String y, int m, int n){
+        if(m==0 || n==0){
+            return m+n;
+        }
+        if(x.charAt(m-1) == y.charAt(n-1)) return EditDistance(x,y,m-1,n-1);
+
+        return 1 + Math.min(
+                Math.min(EditDistance(x,y,m-1,n), EditDistance(x,y,m,n-1)),
+                EditDistance(x,y,m-1,n-1)
+        );
+    }
+
+    //DP Approach built on recursive Approach!! 😉
+    public int EditDistance(String x, String y){
+        int m = x.length();
+        int n = y.length();
+
+        int[][] dp = new int[m+1][n+1];
+
+        //Initialisation!
+        for(int i=0;i<m+1;i++){
+            for(int j=0;j<n+1;j++){
+                if(i == 0) dp[i][j] = j;
+                if(j == 0) dp[i][j] = i;
+            }
+        }
+
+        for(int i=1;i<m+1;i++){
+            for(int j=1;j<n+1;j++){
+                if(x.charAt(i-1) == y.charAt(j-1)) dp[i][j] = dp[i-1][j-1];
+                else dp[i][j] = 1 + Math.min(Math.min(dp[i-1][j],dp[i][j-1]),dp[i-1][j-1]);
+            }
+        }
+
+
+        return dp[m][n];
+    }
+
+    //Wild Pattern Matching (LeetCode)
+    //DP Approach! Passing only 1054 test cases out of 1081 🥲!
+    public static boolean SequencePatternMatching(String x, String y) {
+        int m = x.length();
+        int n = y.length();
+        int lcs = LongestCommonSubSequence(x, y);
+
+        int onlyCharactersLength = getCharactersLength(x.toCharArray());
+
+        return onlyCharactersLength == lcs;
+
+    }
+
+    private static int getCharactersLength(char[] x) {
+        int len = 0;
+        for (char a : x) if (a != '*' && a != '?') len++;
+        return len;
+    }
+
+    //Might be wrong!!
+    public static boolean SequencePatternMatching(String str, String pattern, int m, int n) {
+
+        if (n == 0) return m == 0;
+
+        if (pattern.charAt(n - 1) == '?' || pattern.charAt(n - 1) == str.charAt(m - 1)) {
+            return SequencePatternMatching(str, pattern, m - 1, n - 1);
+        } else if (pattern.charAt(n - 1) == '*') {
+            while (n > 0 && pattern.charAt(n - 1) == '*') n--;
+
+            return SequencePatternMatching(str, pattern, m, n);
+        } else return false;
     }
 
 
