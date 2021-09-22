@@ -6,53 +6,93 @@ public class PractiseXI {
 
     //Mostly DP Problems!
     public static void main(String[] args) {
+        int[] arr = {40, 20, 30, 10, 30};
 
-        String A = "baaabab";
-        String B = "a*ab";
-        int m = A.length();
-        int n = B.length();
-
-        System.out.println(SequencePatternMatching(A, B));
+        System.out.println(MatrixChainMultiplication(arr, 1, arr.length - 1));
 
     }
 
 
+
+    //Memoized Solution Faster than Recursive Solution!
+    public static int MatrixChainMultiplication(int[] arr, int i, int j, int[][] dp) {
+        if (i >= j) return 0;
+
+        if (dp[i][j] != -1) return dp[i][j];
+
+        int min = Integer.MAX_VALUE;
+
+        for (int k = i; k <= j - 1; k++) {
+
+            int temp_min = MatrixChainMultiplication(arr, i, k) +
+                    MatrixChainMultiplication(arr, k + 1, j) +
+                    (arr[i - 1] * arr[k] * arr[j]);
+
+            if (temp_min < min) min = temp_min;
+            dp[i][j] = min;
+        }
+        return min;
+    }
+
+
+    //Recursive Solution
+    //https://practice.geeksforgeeks.org/problems/matrix-chain-multiplication0303/1
+    // i  starts from 1 and j = n-1 !
+    public static int MatrixChainMultiplication(int[] arr, int i, int j) {
+        if (i >= j) return 0;
+
+        int min = Integer.MAX_VALUE;
+
+        for (int k = i; k <= j - 1; k++) {
+
+            int temp_min = MatrixChainMultiplication(arr, i, k) +
+                    MatrixChainMultiplication(arr, k + 1, j) +
+                    (arr[i - 1] * arr[k] * arr[j]);
+
+            if (temp_min < min) min = temp_min;
+        }
+
+        return min;
+    }
+
+
+    /***This Below problems belong to  The Longest Common SubSequence Category! **/
 
 
     //https://leetcode.com/problems/edit-distance/
     //https://practice.geeksforgeeks.org/problems/edit-distance3702/1#
     //Recursive Approach
-    public int EditDistance(String x, String y, int m, int n){
-        if(m==0 || n==0){
-            return m+n;
+    public int EditDistance(String x, String y, int m, int n) {
+        if (m == 0 || n == 0) {
+            return m + n;
         }
-        if(x.charAt(m-1) == y.charAt(n-1)) return EditDistance(x,y,m-1,n-1);
+        if (x.charAt(m - 1) == y.charAt(n - 1)) return EditDistance(x, y, m - 1, n - 1);
 
         return 1 + Math.min(
-                Math.min(EditDistance(x,y,m-1,n), EditDistance(x,y,m,n-1)),
-                EditDistance(x,y,m-1,n-1)
+                Math.min(EditDistance(x, y, m - 1, n), EditDistance(x, y, m, n - 1)),
+                EditDistance(x, y, m - 1, n - 1)
         );
     }
 
     //DP Approach built on recursive Approach!! 😉
-    public int EditDistance(String x, String y){
+    public int EditDistance(String x, String y) {
         int m = x.length();
         int n = y.length();
 
-        int[][] dp = new int[m+1][n+1];
+        int[][] dp = new int[m + 1][n + 1];
 
         //Initialisation!
-        for(int i=0;i<m+1;i++){
-            for(int j=0;j<n+1;j++){
-                if(i == 0) dp[i][j] = j;
-                if(j == 0) dp[i][j] = i;
+        for (int i = 0; i < m + 1; i++) {
+            for (int j = 0; j < n + 1; j++) {
+                if (i == 0) dp[i][j] = j;
+                if (j == 0) dp[i][j] = i;
             }
         }
 
-        for(int i=1;i<m+1;i++){
-            for(int j=1;j<n+1;j++){
-                if(x.charAt(i-1) == y.charAt(j-1)) dp[i][j] = dp[i-1][j-1];
-                else dp[i][j] = 1 + Math.min(Math.min(dp[i-1][j],dp[i][j-1]),dp[i-1][j-1]);
+        for (int i = 1; i < m + 1; i++) {
+            for (int j = 1; j < n + 1; j++) {
+                if (x.charAt(i - 1) == y.charAt(j - 1)) dp[i][j] = dp[i - 1][j - 1];
+                else dp[i][j] = 1 + Math.min(Math.min(dp[i - 1][j], dp[i][j - 1]), dp[i - 1][j - 1]);
             }
         }
 
