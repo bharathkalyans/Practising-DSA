@@ -1,18 +1,50 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class PractiseXI {
 
 
     //Mostly DP Problems!
     public static void main(String[] args) {
-        int[] arr = {40, 20, 30, 10, 30};
 
-        System.out.println(MatrixChainMultiplication(arr, 1, arr.length - 1));
+        String s = "eegiicgaeadbcfacfhifdbiehbgejcaeggcgbahfcajfhjjdgj";
+        System.out.println(PalindromePartioning(s.toCharArray(), 0, s.length() - 1));
+        int n = s.length();
+
+
 
     }
 
 
+
+
+
+    //https://leetcode.com/problems/palindrome-partitioning-ii/
+    //Recursive Solution
+    //https://practice.geeksforgeeks.org/problems/palindromic-patitioning4845/1
+    public static int PalindromePartioning(char[] str, int i, int j) {
+        if (i >= j) return 0;
+        if (isPalindrome(str, i, j)) return 0;
+        int answer = Integer.MAX_VALUE;
+        int temp_answer;
+        for (int k = i; k < j; k++) {
+            temp_answer = PalindromePartioning(str, i, k) +
+                    PalindromePartioning(str, k + 1, j) + 1;
+
+            if (temp_answer < answer) answer = temp_answer;
+        }
+        return answer;
+    }
+
+    private static boolean isPalindrome(char[] str, int i, int j) {
+        while (i < j) {
+            if (str[i] != str[j]) return false;
+            i++;
+            j--;
+        }
+        return true;
+    }
 
     //Memoized Solution Faster than Recursive Solution!
     public static int MatrixChainMultiplication(int[] arr, int i, int j, int[][] dp) {
