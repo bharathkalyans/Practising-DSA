@@ -1,25 +1,70 @@
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class PractiseXI {
 
+    static int[][] dp = new int[1001][1001];
 
     //Mostly DP Problems!
     public static void main(String[] args) {
 
-        String s = "eegiicgaeadbcfacfhifdbiehbgejcaeggcgbahfcajfhjjdgj";
-        System.out.println(PalindromePartioning(s.toCharArray(), 0, s.length() - 1));
-        int n = s.length();
-
-
+        String s = "T|T&F^T";
+        System.out.println(EvaluateExpressionToTrue(s, 0, s.length() - 1, 1));
 
     }
 
 
+    //Use a 3D Array for optimization!
+    //Recursive Solution
+    //God level Problem🥱
+    //https://practice.geeksforgeeks.org/problems/boolean-parenthesization5610/1
+    public static int EvaluateExpressionToTrue(String s, int i, int j, int isTrue) {
+        //As XOR is an Operation included in the String we will be needing both the False and True Values
+        //That is why we are passing extra variable isTrue! so that we can get what we desire as output
+        //For E.g. I want false in my left part and true in my right part and if my operation is xor ^ then it will be added to the
+        //main answer!
+        if (i > j) return 0;
+        if (i == j) {
+            if (isTrue == 1) {
+                return (s.charAt(i) == 'T') ? 1 : 0;
+            } else {
+                return (s.charAt(i) == 'F') ? 1 : 0;
+            }
+        }
 
 
+        int answer = 0;
+        for (int k = i + 1; k < j; k += 2) {
+            int leftTrue = EvaluateExpressionToTrue(s, i, k - 1, 1);
+            int leftFalse = EvaluateExpressionToTrue(s, i, k - 1, 0);
+            int rightTrue = EvaluateExpressionToTrue(s, k + 1, j, 1);
+            int rightFalse = EvaluateExpressionToTrue(s, k + 1, j, 0);
 
+            if (s.charAt(k) == '&') {
+                if (isTrue == 1) {
+                    answer += leftTrue * rightTrue;
+                } else {
+                    answer += leftFalse * rightFalse + leftTrue * rightFalse + leftFalse * rightTrue;
+                }
+            } else if (s.charAt(k) == '|') {
+                if (isTrue == 1) {
+                    answer += leftTrue * rightTrue + leftFalse * rightTrue + leftTrue * rightFalse;
+                } else {
+                    answer += leftFalse * rightFalse;
+                }
+            } else if (s.charAt(k) == '^') {
+                if (isTrue == 1)
+                    answer += leftFalse * rightTrue + leftTrue * rightFalse;
+                else
+                    answer += leftFalse * rightFalse + leftTrue * rightTrue;
+            }
+
+        }
+        return answer;
+    }
+
+
+    //Use DP Array for better time complexity!
     //https://leetcode.com/problems/palindrome-partitioning-ii/
     //Recursive Solution
     //https://practice.geeksforgeeks.org/problems/palindromic-patitioning4845/1
@@ -940,7 +985,6 @@ public class PractiseXI {
         return SubSetSum(arr, sum - arr[n - 1], n - 1) || SubSetSum(arr, sum, n - 1);
     }
 
-    static int[][] dp = new int[1001][1001];
 
     public static int KnapSack01(int W, int wt[], int val[], int n) {
         for (int[] row : dp)
