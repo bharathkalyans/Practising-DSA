@@ -10,23 +10,69 @@ public class PractiseXI {
     public static void main(String[] args) {
 
 
-
         fillDPArray();
         String s = "T|F^F&T|F^F^F^T|T&T^T|F^T^F&F^T|T^F";
         System.out.println(EvaluateExpressionToTrueDP(s, 0, s.length() - 1, 1));
         System.out.println(EvaluateExpressionToTrue(s, 0, s.length() - 1, 1));
 
 
-
     }
 
 
-    public static void fillDPArray(){
+    // Important Problem! have to rewatch the tutorial again!
+    public static boolean isScrambled(String S1, String S2) {
+
+        if (S1.length() != S2.length()) return false;
+
+        int n = S1.length();
+
+        if (n == 0) return true;
+
+        if (S1.equals(S2)) return true;
+
+
+        char[] tempArray1 = S1.toCharArray();
+        char[] tempArray2 = S2.toCharArray();
+
+        // Checking condition for Anagram
+        Arrays.sort(tempArray1);
+        Arrays.sort(tempArray2);
+
+        String copy_S1 = new String(tempArray1);
+        String copy_S2 = new String(tempArray2);
+
+
+        if (!copy_S1.equals(copy_S2)) return false;
+
+
+        for (int i = 1; i < n; i++) {
+
+            if (isScrambled(S1.substring(0, i),
+                    S2.substring(0, i)) &&
+                    isScrambled(S1.substring(i, n),
+                            S2.substring(i, n))) {
+                return true;
+            }
+
+            if (isScrambled(S1.substring(n - i, n),
+                    S2.substring(0, i)) &&
+                    isScrambled(S1.substring(0, n - i),
+                            S2.substring(i, n))) {
+                return true;
+            }
+        }
+
+
+        return false;
+    }
+
+    public static void fillDPArray() {
         for (int[][] A : DP)
             for (int[] B : A)
                 Arrays.fill(B, -1);
 
     }
+
     //Memoized Version! 3D Array!
     public static int EvaluateExpressionToTrueDP(String s, int i, int j, int isTrue) {
         if (i > j) return 0;
