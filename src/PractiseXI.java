@@ -4,15 +4,85 @@ import java.util.Arrays;
 public class PractiseXI {
 
     static int[][] dp = new int[1001][1001];
+    static int[][][] DP = new int[201][201][2];
 
     //Mostly DP Problems!
     public static void main(String[] args) {
 
-        String s = "T|T&F^T";
+
+
+        fillDPArray();
+        String s = "T|F^F&T|F^F^F^T|T&T^T|F^T^F&F^T|T^F";
+        System.out.println(EvaluateExpressionToTrueDP(s, 0, s.length() - 1, 1));
         System.out.println(EvaluateExpressionToTrue(s, 0, s.length() - 1, 1));
+
+
 
     }
 
+
+    public static void fillDPArray(){
+        for (int[][] A : DP)
+            for (int[] B : A)
+                Arrays.fill(B, -1);
+
+    }
+    //Memoized Version! 3D Array!
+    public static int EvaluateExpressionToTrueDP(String s, int i, int j, int isTrue) {
+        if (i > j) return 0;
+        if (i == j) {
+            if (isTrue == 1) {
+                return (s.charAt(i) == 'T') ? 1 : 0;
+            } else {
+                return (s.charAt(i) == 'F') ? 1 : 0;
+            }
+        }
+
+        if (DP[i][j][isTrue] != -1)
+            return DP[i][j][isTrue];
+
+        int answer = 0, leftTrue, rightTrue, leftFalse, rightFalse;
+        for (int k = i + 1; k < j; k += 2) {
+
+            if (DP[i][k - 1][1] != -1) {
+                leftTrue = DP[i][k - 1][1];
+            } else
+                leftTrue = EvaluateExpressionToTrueDP(s, i, k - 1, 1);
+            if (DP[i][k - 1][0] != -1) {
+                leftFalse = DP[i][k - 1][0];
+            } else
+                leftFalse = EvaluateExpressionToTrueDP(s, i, k - 1, 0);
+            if (DP[k + 1][j][1] != -1) {
+                rightTrue = DP[k + 1][j][1];
+            } else rightTrue = EvaluateExpressionToTrueDP(s, k + 1, j, 1);
+
+            if (DP[k + 1][j][0] != -1) {
+                rightFalse = DP[k + 1][j][0];
+            } else
+                rightFalse = EvaluateExpressionToTrueDP(s, k + 1, j, 0);
+
+            if (s.charAt(k) == '&') {
+                if (isTrue == 1) {
+                    answer += leftTrue * rightTrue;
+                } else {
+                    answer += leftFalse * rightFalse + leftTrue * rightFalse + leftFalse * rightTrue;
+                }
+            } else if (s.charAt(k) == '|') {
+                if (isTrue == 1) {
+                    answer += leftTrue * rightTrue + leftFalse * rightTrue + leftTrue * rightFalse;
+                } else {
+                    answer += leftFalse * rightFalse;
+                }
+            } else if (s.charAt(k) == '^') {
+                if (isTrue == 1)
+                    answer += leftFalse * rightTrue + leftTrue * rightFalse;
+                else
+                    answer += leftFalse * rightFalse + leftTrue * rightTrue;
+            }
+            DP[i][j][isTrue] = answer;
+        }
+        return answer;
+    }
 
     //Use a 3D Array for optimization!
     //Recursive Solution
