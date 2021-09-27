@@ -1,23 +1,64 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 
+
 public class PractiseXI {
 
-    static int[][] dp = new int[1001][1001];
+    static int[][] dp = new int[201][201];
     static int[][][] DP = new int[201][201][2];
 
     //Mostly DP Problems!
     public static void main(String[] args) {
 
+        for (int[] row : dp) Arrays.fill(row, -1);
 
-        fillDPArray();
-        String s = "T|F^F&T|F^F^F^T|T&T^T|F^T^F&F^T|T^F";
-        System.out.println(EvaluateExpressionToTrueDP(s, 0, s.length() - 1, 1));
-        System.out.println(EvaluateExpressionToTrue(s, 0, s.length() - 1, 1));
-
-
+        System.out.println(EggDroppingProblem(4, 2));
+        System.out.println(EggDroppingProblemDP(4, 2));
     }
 
+
+    // Memoization Problem!
+    public static int EggDroppingProblemDP(int floors, int eggs) {
+        if (floors == 0 || floors == 1) return floors;
+        if (eggs == 1) return floors;
+
+        if (dp[floors][eggs]!=-1) return dp[floors][eggs];
+
+        int min_trails = Integer.MAX_VALUE;
+        for (int k = 1; k <= floors; k++) {
+            // I am considering here math.max because in question they are asking the worst case possible!
+            // Hence, using Math.max!
+            int temp_ans = 1 + Math.max(
+                    EggDroppingProblemDP(floors - k, eggs),
+                    EggDroppingProblemDP(k - 1, eggs - 1));
+
+            min_trails = Math.min(min_trails, temp_ans);
+        }
+
+
+        return dp[floors][eggs] = min_trails;
+    }
+
+    //https://practice.geeksforgeeks.org/problems/egg-dropping-puzzle/0
+    //Recursive Approach
+    public static int EggDroppingProblem(int floors, int eggs) {
+        if (floors == 0 || floors == 1) return eggs;
+        if (eggs == 1) return floors;
+
+        int min_trails = Integer.MAX_VALUE;
+        for (int k = 1; k <= floors; k++) {
+            // I am considering here math.max because in question they are asking the worst case possible!
+            // Hence, using Math.max!
+            int temp_ans = 1 + Math.max(
+                    EggDroppingProblem(floors - k, eggs),
+                    EggDroppingProblem(k - 1, eggs - 1));
+
+            min_trails = Math.min(min_trails, temp_ans);
+        }
+
+
+        return min_trails;
+    }
 
     // Important Problem! have to rewatch the tutorial again!
     public static boolean isScrambled(String S1, String S2) {
