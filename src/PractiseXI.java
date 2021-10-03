@@ -10,11 +10,14 @@ public class PractiseXI {
     //Mostly DP Problems!
     public static void main(String[] args) {
 
-        for (int[] row : dp) Arrays.fill(row, -1);
+        int[] arr = {1, 3, 6, 7, 9, 4, 10, 5, 6};
+        System.out.println(LongestIncreasingSubSequence(arr, arr.length));
 
-        System.out.println(EggDroppingProblem(4, 2));
-        System.out.println(EggDroppingProblemDP(4, 2));
+
     }
+
+
+    /***This Below problems belong to  TMatrix Chain Multiplication Category! **/
 
 
     // Memoization Problem!
@@ -22,7 +25,7 @@ public class PractiseXI {
         if (floors == 0 || floors == 1) return floors;
         if (eggs == 1) return floors;
 
-        if (dp[floors][eggs]!=-1) return dp[floors][eggs];
+        if (dp[floors][eggs] != -1) return dp[floors][eggs];
 
         int min_trails = Integer.MAX_VALUE;
         for (int k = 1; k <= floors; k++) {
@@ -292,6 +295,39 @@ public class PractiseXI {
 
     /***This Below problems belong to  The Longest Common SubSequence Category! **/
 
+
+    //https://leetcode.com/problems/longest-increasing-subsequence/
+    // DP Approach
+    public static int LongestIncreasingSubSequence(int[] arr, int n) {
+        int[] dp = new int[n];
+        Arrays.fill(dp, 1);
+        int max_value = 0;
+        for (int i = 1; i < n; i++) {
+            for (int j = 0; j < i; j++) {
+                if (arr[i] > arr[j]) {
+                    dp[i] = Math.max(dp[i], dp[j] + 1);
+                }
+            }
+        }
+        for (int x : dp) {
+            if (x > max_value)
+                max_value = x;
+        }
+
+        return max_value;
+    }
+
+    //Recursion //Previous will be passed as Integer.MIN_VALUE in main function!
+    public static int LongestIncreasingSubSequence(int[] arr, int n, int prev) {
+        if (n == arr.length) return 0;
+
+        int include = 0;
+        if (arr[n] > prev)
+            include = LongestIncreasingSubSequence(arr, n + 1, arr[n]);
+        int exclude = LongestIncreasingSubSequence(arr, n + 1, prev);
+        return Math.max(include, exclude);
+
+    }
 
     //https://leetcode.com/problems/edit-distance/
     //https://practice.geeksforgeeks.org/problems/edit-distance3702/1#
