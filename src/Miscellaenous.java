@@ -1,17 +1,60 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Miscellaenous {
     public static void main(String[] args) {
 
-        int[] arr = {5, 4, 9, 8, 3, 6, 5, 4};
+        int[] arr = {10, 4, 5, 90, 120, 80};
 
-        System.out.println(MergeArrayToMakePalindrome(arr, arr.length));
+
+        int[] r = StockSpan(arr);
+        for (int x : r)
+            System.out.print(x + " ");
 
     }
 
+
+    public static int[] StockSpan(int[] arr) {
+        int[] result = new int[arr.length];
+        result[0] = 1;
+
+        Stack<Integer> stack = new Stack<>();
+        stack.push(0);
+
+        for (int i = 1; i < arr.length; i++) {
+            while (!stack.isEmpty() && arr[stack.peek()] <= arr[i])
+                stack.pop();
+
+            result[i] = stack.isEmpty() ? i + 1 : i - stack.peek();
+
+            stack.push(i);
+        }
+
+        return result;
+    }
+
+    public static int[] NextGreaterElement(int[] arr) {
+
+        if (arr == null || arr.length == 0) return new int[]{};
+        if (arr.length == 1) return arr;
+
+        int[] result = new int[arr.length];
+        Stack<Integer> s = new Stack<>();
+        s.push(arr[0]);
+
+        for (int i = arr.length - 1; i >= 0; i--) {
+
+            while (!s.isEmpty() && s.peek() <= arr[i]) s.pop();
+
+            if (s.isEmpty()) result[i] = -1;
+            else result[i] = s.peek();
+
+            s.push(arr[i]);
+
+            result[i - 1] = s.peek();
+        }
+
+        return result;
+    }
 
     public static int minOperations(int n) {
         int[] arr = new int[n];
