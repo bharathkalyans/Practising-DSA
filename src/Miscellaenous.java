@@ -3,15 +3,91 @@ import java.util.*;
 public class Miscellaenous {
     public static void main(String[] args) {
 
-        int[] arr = {10, 4, 5, 90, 120, 80};
-
-
-        int[] r = StockSpan(arr);
-        for (int x : r)
-            System.out.print(x + " ");
+        int[] arr = {6, 2, 5, 4, 5, 1, 6};
+        System.out.println(MaximumAreaHistogram(arr));
+        int[] nsl = NSL(arr);
+        for (int x : nsl) System.out.print(x + " ");
+        System.out.println();
+        int[] nsr = NSR(arr);
+        for (int x : nsr) System.out.print(x + " ");
+        System.out.println();
+        System.out.println(MaxHistogram(arr));
 
     }
 
+
+    //https://leetcode.com/problems/largest-rectangle-in-histogram/submissions/
+    public static int MaxHistogram(int[] arr) {
+        int[] NSL = NSL(arr);
+        int[] NSR = NSR(arr);
+
+        int[] result = new int[arr.length];
+
+        int max_area = Integer.MIN_VALUE;
+
+        for (int i = 0; i < arr.length; i++) {
+            result[i] = NSR[i] - NSL[i] - 1;
+        }
+
+        for (int i = 0; i < arr.length; i++) {
+            max_area = Math.max(max_area, result[i] * arr[i]);
+        }
+        return max_area;
+    }
+
+    public static int[] NSR(int[] arr) {
+        int[] result = new int[arr.length];
+        int n = arr.length;
+        result[arr.length - 1] = arr.length;
+
+        Stack<Integer> s = new Stack<>();
+        s.push(arr.length - 1);
+
+        for (int i = arr.length - 2; i >= 0; i--) {
+            while (!s.isEmpty() && arr[s.peek()] >= arr[i]) s.pop();
+
+            result[i] = s.isEmpty() ? n : s.peek();
+            s.push(i);
+        }
+
+        return result;
+    }
+
+    public static int[] NSL(int[] arr) {
+        int[] result = new int[arr.length];
+        result[0] = -1;
+        Stack<Integer> s = new Stack<>();
+        s.push(0);
+        for (int i = 0; i < arr.length; i++) {
+            while (!s.isEmpty() && arr[s.peek()] >= arr[i]) s.pop();
+            result[i] = s.isEmpty() ? -1 : s.peek();
+            s.push(i);
+        }
+        return result;
+    }
+
+    //Naive Approach
+    public static int MaximumAreaHistogram(int[] arr) {
+        int max_area = Integer.MIN_VALUE;
+
+        for (int i = 0; i < arr.length; i++) {
+            int curr_max = arr[i];
+
+            for (int j = i + 1; j < arr.length; j++) {
+                if (arr[j] < arr[i]) break;
+                curr_max += arr[i];
+            }
+
+            for (int k = i - 1; k >= 0; k--) {
+                if (arr[k] < arr[i]) break;
+                curr_max += arr[i];
+            }
+            max_area = Math.max(max_area, curr_max);
+
+        }
+
+        return max_area;
+    }
 
     public static int[] StockSpan(int[] arr) {
         int[] result = new int[arr.length];
