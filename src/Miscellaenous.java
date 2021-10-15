@@ -3,18 +3,38 @@ import java.util.*;
 public class Miscellaenous {
     public static void main(String[] args) {
 
-        int[] arr = {6, 2, 5, 4, 5, 1, 6};
-        System.out.println(MaximumAreaHistogram(arr));
-        int[] nsl = NSL(arr);
-        for (int x : nsl) System.out.print(x + " ");
-        System.out.println();
-        int[] nsr = NSR(arr);
-        for (int x : nsr) System.out.print(x + " ");
-        System.out.println();
-        System.out.println(MaxHistogram(arr));
+        int M[][] = {{0, 1, 1, 0},
+                {1, 1, 1, 1},
+                {1, 1, 1, 1},
+                {1, 1, 0, 0}};
 
+        System.out.println(MaxRectangleInBinaryMatrix(M));
     }
 
+
+
+    public static int MaxRectangleInBinaryMatrix(int[][] matrix) {
+
+        int max_area = Integer.MIN_VALUE;
+        int[] hist_array = new int[matrix[0].length];
+
+        for (int i = 0; i < matrix[0].length; i++)
+            hist_array[i] = matrix[0][i];
+
+        max_area = Math.max(max_area,MaxHistogram(hist_array));
+
+        for (int i = 1; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[0].length; j++) {
+                if (matrix[i][j] != 0)
+                    hist_array[j] += 1;
+                else hist_array[j] = 0;
+            }
+            int hist_area = MaxHistogram(hist_array);
+            max_area = Math.max(max_area, hist_area);
+        }
+
+        return max_area;
+    }
 
     //https://leetcode.com/problems/largest-rectangle-in-histogram/submissions/
     public static int MaxHistogram(int[] arr) {
