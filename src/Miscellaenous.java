@@ -3,14 +3,111 @@ import java.util.*;
 public class Miscellaenous {
     public static void main(String[] args) {
 
-        int M[][] = {{0, 1, 1, 0},
-                {1, 1, 1, 1},
-                {1, 1, 1, 1},
-                {1, 1, 0, 0}};
+        LongestPalindromeInAString("aaaabbaa");
 
-        System.out.println(MaxRectangleInBinaryMatrix(M));
     }
 
+    //https://practice.geeksforgeeks.org/problems/longest-palindrome-in-a-string3411/1
+    public static void LongestPalindromeInAString(String str) {
+        char[] s = str.toCharArray();
+        int n = str.length();
+
+        String answer = String.valueOf(str.charAt(0));
+
+        //aaaabbaa
+        for (int i = 1; i < str.length(); i++) {
+            //Two possible cases :: a.Odd Length b.Even Length
+
+            //For ODD length
+            int l = i - 1, r = i + 1;
+            while (l >= 0 && r < n && s[l] == s[r]) {
+                l--;
+                r++;
+            }
+            l++;
+            r--;
+            if (r - l + 1 > answer.length()) {
+                answer = str.substring(l, r + 1);
+            }
+
+            //For Even Length
+            int ll = i - 1, rr = i;
+            while (ll >= 0 && rr < n && s[ll] == s[rr]) {
+                ll--;
+                rr++;
+            }
+            ll++;
+            rr--;
+            if (rr - ll + 1 > answer.length()) {
+                answer = str.substring(ll, rr + 1);
+
+            }
+        }
+        System.out.println(answer);
+    }
+
+    public static String LongestPalindrome(String S) {
+        String result = "";
+        for (int i = 0; i < S.length(); i++) {
+            for (int j = i; j < S.length(); j++) {
+                String subStr = S.substring(i, j);
+                if (isPalindrome(subStr)) {
+                    if (subStr.length() > result.length())
+                        result = subStr;
+                }
+            }
+        }
+
+        return result;
+    }
+
+    private static boolean isPalindrome(String subStr) {
+        int l = 0, h = subStr.length() - 1;
+        while (l < h) {
+            if (subStr.charAt(l) == subStr.charAt(h)) {
+                l++;
+                h--;
+            } else return false;
+        }
+        return true;
+    }
+
+    public static int kthSmallest(int[][] mat, int n, int k) {
+
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
+        for (int i = 0; i < n; i++)
+            for (int j = 0; j < n; j++)
+                pq.add(mat[i][j]);
+        System.out.println(pq);
+        for (int i = 0; i < k - 1; i++)
+            pq.poll();
+
+        int answer = pq.remove();
+        return answer;
+    }
+
+    public static int FindSpecificPairInMatrixEff(int[][] matrix) {
+        return 1;
+    }
+
+    // Bad Time Complexity! O(n^4)
+    public static int FindSpecificPairInMatrix(int[][] matrix) {
+        int max_value = Integer.MIN_VALUE;
+        int m = matrix.length;
+        int n = matrix[0].length;
+
+        for (int a = 0; a < m - 1; a++) {
+            for (int b = 0; b < n - 1; b++) {
+                for (int c = a + 1; c < m; c++) {
+                    for (int d = b + 1; d < n; d++) {
+                        max_value = Math.max(max_value, matrix[c][d] - matrix[a][b]);
+                    }
+                }
+            }
+        }
+
+        return max_value;
+    }
 
 
     public static int MaxRectangleInBinaryMatrix(int[][] matrix) {
@@ -21,7 +118,7 @@ public class Miscellaenous {
         for (int i = 0; i < matrix[0].length; i++)
             hist_array[i] = matrix[0][i];
 
-        max_area = Math.max(max_area,MaxHistogram(hist_array));
+        max_area = Math.max(max_area, MaxHistogram(hist_array));
 
         for (int i = 1; i < matrix.length; i++) {
             for (int j = 0; j < matrix[0].length; j++) {
