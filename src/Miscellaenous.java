@@ -1,10 +1,220 @@
 import java.util.*;
 
 public class Miscellaenous {
+
+    static long[][] dp = new long[1000][1000];
+
     public static void main(String[] args) {
 
-        LongestPalindromeInAString("aaaabbaa");
+        char[][] grid = {{'G', 'E', 'E', 'K', 'S', 'F', 'O', 'R', 'G', 'E', 'E', 'K', 'S'},
+                {'G', 'E', 'E', 'K', 'S', 'Q', 'U', 'I', 'Z', 'G', 'E', 'E', 'K'},
+                {'I', 'D', 'E', 'Q', 'A', 'P', 'R', 'A', 'C', 'T', 'I', 'C', 'E'}};
 
+        IsWordPresentInGrid(grid, "GEEKS");
+
+
+    }
+
+
+    //Traversing all 8 Directions!
+    static int[] x = {-1, -1, -1, 0, 0, 1, 1, 1};
+    static int[] y = {-1, 0, 1, -1, 1, -1, 0, 1};
+
+    public static int IsWordPresentInGrid(char[][] grid, String str) {
+
+        int m = grid.length;
+        int n = grid[0].length;
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (searchInGrid(grid, str, i, j)) {
+                    System.out.println("Pattern found at :: " + i + " " + j);
+                }
+            }
+        }
+
+        return 0;
+    }
+
+    private static boolean searchInGrid(char[][] grid, String str, int row, int column) {
+        if (grid[row][column] != str.charAt(0)) return false;
+
+        int len = str.length();
+
+        for (int directions = 0; directions < 8; directions++) {
+            int characters, row_direction = row + x[directions], column_direction = column + y[directions];
+
+            for (characters = 1; characters < len; characters++) {
+                if (row_direction < 0 ||
+                        column_direction < 0 ||
+                        row_direction >= grid.length ||
+                        column_direction >= grid[0].length
+                )
+                    break;
+
+                if (grid[row_direction][column_direction] != str.charAt(characters))
+                    break;
+
+
+                row_direction += x[directions];
+                column_direction += y[directions];
+
+            }
+
+            if (characters == len) return true;
+
+        }
+        return false;
+    }
+
+    public static String removeConsecutiveCharacter(String S) {
+
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < S.length(); i++) {
+
+            if (sb.isEmpty()) {
+                sb.append(S.charAt(i));
+                continue;
+            }
+
+            char x = S.charAt(i);
+            while (!sb.isEmpty() && sb.charAt(sb.length() - 1) == x) sb.deleteCharAt(sb.length() - 1);
+            sb.append(x);
+        }
+
+        return sb.toString();
+    }
+
+    static long countPS(String str) {
+        // Your code here
+        long mod = 1000000000 + 7;
+        int n = str.length();
+
+        return solve(str, 0, n - 1) % mod;
+    }
+
+    static long solve(String str, int m, int n) {
+
+        if (m > n) return 0;
+
+        if (dp[m][n] != -1) return dp[m][n];
+
+
+        if (m == n) return dp[m][n] = 1;
+
+        else if (str.charAt(m) == str.charAt(n))
+            return dp[m][n] = solve(str, m, n - 1) + solve(str, m + 1, n) + 1;
+
+        else return dp[m][n] = solve(str, m, n - 1) +
+                    solve(str, m + 1, n) -
+                    solve(str, m + 1, n - 1);
+    }
+
+    public static int MinimumReversals(String str) {
+        Stack<Character> stack = new Stack<>();
+
+
+        for (int i = 0; i < str.length(); i++) {
+            char temp = str.charAt(i);
+            if (temp == '}' && !stack.isEmpty() && stack.peek() == '{') {
+                stack.pop();
+                continue;
+            }
+
+            stack.push(temp);
+        }
+
+        int closed = 0, opened = 0;
+        while (!stack.isEmpty()) {
+            if (stack.peek() == '{') opened++;
+            else closed++;
+            stack.pop();
+        }
+
+        int reversals = opened % 2 == 0 ? opened / 2 : opened / 2 + 1;
+
+        reversals += closed % 2 == 0 ? closed / 2 : closed / 2 + 1;
+        return reversals;
+    }
+
+    public static void ConvertToNumericKeyPad(String word) {
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < word.length(); i++) {
+            sb.append(getValueFromHashMap(String.valueOf(word.charAt(i))));
+        }
+
+        System.out.println(sb);
+
+    }
+
+    public static int getValueFromHashMap(String letter) {
+        HashMap<String, Integer> map = new HashMap<>();
+        map.put("A", 2);
+        map.put("B", 22);
+        map.put("C", 222);
+        map.put("D", 3);
+        map.put("E", 33);
+        map.put("F", 333);
+
+        map.put("G", 4);
+        map.put("H", 44);
+        map.put("I", 444);
+        map.put("J", 5);
+        map.put("K", 55);
+        map.put("L", 555);
+
+        map.put("M", 6);
+        map.put("N", 66);
+        map.put("O", 666);
+        map.put("P", 7);
+        map.put("Q", 77);
+        map.put("R", 777);
+        map.put("S", 7777);
+
+
+        map.put("T", 8);
+        map.put("U", 88);
+        map.put("V", 888);
+        map.put("W", 9);
+        map.put("X", 99);
+        map.put("Y", 999);
+        map.put("Z", 9999);
+
+        return map.get(letter);
+    }
+
+    public static boolean ispar(String x) {
+
+        char[] arr = x.toCharArray();
+        Stack<Character> stack = new Stack<>();
+
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == '{' || arr[i] == '(' || arr[i] == '[') {
+                stack.push(arr[i]);
+            }
+            if (stack.isEmpty()) return false;
+
+            char temp;
+            switch (arr[i]) {
+                case ')':
+                    temp = stack.pop();
+                    if (temp == '[' || temp == '{') return false;
+                    break;
+                case '}':
+                    temp = stack.pop();
+                    if (temp == '(' || temp == '[') return false;
+                    break;
+                case ']':
+                    temp = stack.pop();
+                    if (temp == '(' || temp == '{') return false;
+                    break;
+            }
+
+        }
+
+        return stack.isEmpty();
     }
 
     //https://practice.geeksforgeeks.org/problems/longest-palindrome-in-a-string3411/1
