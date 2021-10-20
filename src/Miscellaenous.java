@@ -6,15 +6,62 @@ public class Miscellaenous {
 
     public static void main(String[] args) {
 
-        char[][] grid = {{'G', 'E', 'E', 'K', 'S', 'F', 'O', 'R', 'G', 'E', 'E', 'K', 'S'},
-                {'G', 'E', 'E', 'K', 'S', 'Q', 'U', 'I', 'Z', 'G', 'E', 'E', 'K'},
-                {'I', 'D', 'E', 'Q', 'A', 'P', 'R', 'A', 'C', 'T', 'I', 'C', 'E'}};
 
-        IsWordPresentInGrid(grid, "GEEKS");
-
+        RomanToInteger("MCMXCIV");
 
     }
 
+    public static String longestCommonPrefix(String[] strs) {
+        if (strs.length == 0) return "";
+        String prefix = strs[0];
+        for (int i = 1; i < strs.length; i++)
+            while (strs[i].indexOf(prefix) != 0) {
+                prefix = prefix.substring(0, prefix.length() - 1);
+                if (prefix.isEmpty()) return "";
+            }
+        return prefix;
+    }
+
+    public static int getValueOfRomanValue(char r) {
+        if (r == 'I')
+            return 1;
+        if (r == 'V')
+            return 5;
+        if (r == 'X')
+            return 10;
+        if (r == 'L')
+            return 50;
+        if (r == 'C')
+            return 100;
+        if (r == 'D')
+            return 500;
+        if (r == 'M')
+            return 1000;
+        return -1;
+    }
+
+    public static void RomanToInteger(String roman) {
+
+        int result = 0;
+
+        for (int i = 0; i < roman.length(); i++) {
+            int val1 = getValueOfRomanValue(roman.charAt(i));
+
+            if (i + 1 < roman.length()) {
+                int val2 = getValueOfRomanValue(roman.charAt(i + 1));
+
+                if (val1 >= val2) result += val1;
+                else {
+                    result += val2 - val1;
+                    i++;
+                }
+
+            } else result += val1;
+
+        }
+
+        System.out.println(result);
+    }
 
     //Traversing all 8 Directions!
     static int[] x = {-1, -1, -1, 0, 0, 1, 1, 1};
