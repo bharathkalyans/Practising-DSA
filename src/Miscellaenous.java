@@ -6,10 +6,92 @@ public class Miscellaenous {
 
     public static void main(String[] args) {
 
-
-        RomanToInteger("MCMXCIV");
-
+        PrintAnagramsTogether(new String[]{"cat", "dog", "tac", "god", "act"});
     }
+
+
+    public static List<List<String>> PrintAnagramsTogether(String[] arr) {
+        HashMap<String, List<String>> map = new HashMap<>();
+
+
+        for (int i = 0; i < arr.length; i++) {
+            String s = arr[i];
+            char[] a = s.toCharArray();
+            Arrays.sort(a);
+            String newString = String.valueOf(a);
+
+            if (map.containsKey(newString)) {
+                map.get(newString).add(s);
+            } else {
+                ArrayList<String> l = new ArrayList<>();
+                l.add(s);
+                map.put(newString, l);
+            }
+
+        }
+
+//        for (Map.Entry<String, List<String>> mm : map.entrySet()) {
+//            System.out.println(mm.getValue());
+//        }
+
+        List<List<String>> al = new ArrayList<>(map.size());
+        for (int i = 0; i < map.size(); i++) al.add(new ArrayList<>());
+
+        int index = 0;
+        for (Map.Entry<String, List<String>> mm : map.entrySet()) {
+            al.get(index++).addAll(mm.getValue());
+        }
+
+        for (int i = 0; i < al.size(); i++) {
+            System.out.println(al.get(i));
+        }
+        return al;
+    }
+
+    public static int MinimumNumberOfSwaps(String str) {
+        char[] s = str.toCharArray();
+        int swaps = 0;
+
+        int open = 0, closed = 0, imbalance = 0;
+
+        for (int i = 0; i < s.length; i++) {
+            if (s[i] == '[') {
+                open++;
+                if (imbalance > 0) {
+                    swaps += closed - open;
+                    imbalance--;
+                }
+            } else if (s[i] == ']') {
+                closed++;
+
+                imbalance = closed - open;
+            }
+        }
+
+        return swaps;
+    }
+
+    public static void FirstRepeatedWord(String str) {
+        String[] words = str.split(" ");
+
+        String result = "";
+        int index_of_string = str.length();
+
+        HashMap<String, Integer> map = new HashMap();
+
+        for (int i = 0; i < words.length; i++) {
+            if (!map.containsKey(words[i])) map.put(words[i], i);
+            else {
+                int index = map.get(words[i]);
+                if (index < index_of_string) {
+                    index_of_string = index;
+                    result = words[i];
+                }
+            }
+        }
+        System.out.println("Result is  :: " + result);
+    }
+
 
     public static String longestCommonPrefix(String[] strs) {
         if (strs.length == 0) return "";
