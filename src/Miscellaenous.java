@@ -1,14 +1,74 @@
 import java.util.*;
 
+class CharFreq {
+    char character;
+    int count;
+
+    CharFreq(char c, int count) {
+        character = c;
+        this.count = count;
+    }
+}
+
 public class Miscellaenous {
 
     static long[][] dp = new long[1000][1000];
 
     public static void main(String[] args) {
 
-        PrintAnagramsTogether(new String[]{"cat", "dog", "tac", "god", "act"});
+        PrintCharactersFrequency("Aabb");
+
     }
 
+    //https://www.geeksforgeeks.org/transform-one-string-to-another-using-minimum-number-of-given-operation/
+    public static int TransformOneStringToAnother(String A, String B) {
+
+        int result = 0;
+
+        if (A.length() != B.length()) return 0;
+
+        int i = A.length() - 1, j = B.length() - 1;
+
+        while (i >= 0) {
+            if (A.charAt(i) != B.charAt(j)) {
+                result++;
+            } else j--;
+            i--;
+
+        }
+
+        return result;
+    }
+
+    //https://leetcode.com/problems/sort-characters-by-frequency/
+    public static void PrintCharactersFrequency(String str) {
+        char[] s = str.toCharArray();
+
+        HashMap<Character, Integer> map = new HashMap<>();
+
+        for (Character c : s) {
+            if (!map.containsKey(c)) map.put(c, 1);
+            else map.put(c, map.get(c) + 1);
+        }
+
+
+        ArrayList<CharFreq> list = new ArrayList<>();
+        for (Map.Entry<Character, Integer> m : map.entrySet())
+            list.add(new CharFreq(m.getKey(), m.getValue()));
+
+        list.sort((o1, o2) -> o2.count - o1.count);
+
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < list.size(); i++) {
+            CharFreq temp = list.get(i);
+            for (int j = 0; j < temp.count; j++)
+                sb.append(temp.character);
+        }
+
+
+        System.out.println(sb);
+    }
 
     public static List<List<String>> PrintAnagramsTogether(String[] arr) {
         HashMap<String, List<String>> map = new HashMap<>();
@@ -77,7 +137,7 @@ public class Miscellaenous {
         String result = "";
         int index_of_string = str.length();
 
-        HashMap<String, Integer> map = new HashMap();
+        HashMap<String, Integer> map = new HashMap<>();
 
         for (int i = 0; i < words.length; i++) {
             if (!map.containsKey(words[i])) map.put(words[i], i);
