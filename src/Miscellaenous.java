@@ -16,8 +16,34 @@ public class Miscellaenous {
 
     public static void main(String[] args) {
 
-        PrintCharactersFrequency("Aabb");
+        System.out.println(areIsomorphic("aab","xxy"));
 
+
+
+    }
+
+
+    public static boolean areIsomorphic(String s1, String s2) {
+
+        int m = s1.length();
+        int n = s2.length();
+
+        if (m != n) return false;
+
+        char[] charArrayOne = new char[256];
+        char[] charArrayTwo = new char[256];
+
+        for (char c : charArrayOne) {
+            System.out.print(c+" ");
+        }
+
+        for (int i = 0; i < m; i++) {
+            charArrayOne[s1.charAt(i)]++;
+            charArrayTwo[s2.charAt(i)]++;
+            if (charArrayOne[s1.charAt(i)] != charArrayTwo[s2.charAt(i)]) return false;
+        }
+
+        return true;
     }
 
     //https://www.geeksforgeeks.org/transform-one-string-to-another-using-minimum-number-of-given-operation/
