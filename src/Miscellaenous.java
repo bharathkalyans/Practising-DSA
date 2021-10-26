@@ -16,12 +16,49 @@ public class Miscellaenous {
 
     public static void main(String[] args) {
 
-        System.out.println(areIsomorphic("aab","xxy"));
-
-
+        SmallestWindowOfSubString("AABBBCBBAC");
 
     }
 
+
+    public String findSubString(String str) {
+        Map<Character, Integer> map = new HashMap<>();
+        Set<Character> set = new HashSet<>();
+        for (char i : str.toCharArray()) set.add(i);
+        int i = -1, j = -1;
+        String res = str;
+
+        while (i < str.length() - 1 && j < str.length() - 1) {
+            while (i < str.length() - 1 && map.size() < set.size()) {
+                i++;
+                char c = str.charAt(i);
+                map.put(c, map.getOrDefault(c, 0) + 1);
+            }
+            while (j < i && map.size() == set.size()) {
+                String temp = str.substring(j + 1, i + 1);
+                if (temp.length() < res.length()) res = temp;
+                j++;
+                char c = str.charAt(j);
+                if (map.get(c) == 1) map.remove(c);
+                else map.put(c, map.get(c) - 1);
+            }
+        }
+        return res;
+    }
+
+    public static String SmallestWindowOfSubString(String str) {
+
+        char[] s = str.toCharArray();
+        HashSet<Character> set = new HashSet<>();
+        for (char character : s) set.add(character);
+
+
+        HashSet<Character> set2 = new HashSet<>();
+        int n = str.length();
+
+
+        return "";
+    }
 
     public static boolean areIsomorphic(String s1, String s2) {
 
@@ -34,7 +71,7 @@ public class Miscellaenous {
         char[] charArrayTwo = new char[256];
 
         for (char c : charArrayOne) {
-            System.out.print(c+" ");
+            System.out.print(c + " ");
         }
 
         for (int i = 0; i < m; i++) {
