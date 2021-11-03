@@ -16,10 +16,147 @@ public class Miscellaenous {
 
     public static void main(String[] args) {
 
-        SmallestWindowOfSubString("AABBBCBBAC");
 
     }
 
+
+    //https://practice.geeksforgeeks.org/problems/count-triplets-with-sum-smaller-than-x5549/1
+    public static long countTriplets(long[] arr, int target) {
+        Arrays.sort(arr);
+        long count = 0;
+        int n = arr.length;
+
+        for (int i = 0; i < n - 2; i++) {
+            int low = i + 1, high = n - 1;
+            while (low < high) {
+                if (arr[i] + arr[low] + arr[high] >= target) {
+                    high--;
+                }else{
+                    count += high - low;
+                }
+            }
+        }
+
+        return count;
+    }
+
+    public int answer = 0;
+
+    public void solve(TreeNode root, StringBuilder sb) {
+        if (root == null) return;
+
+        sb.append(root.val);
+        solve(root.left, sb);
+        if (root.left == null && root.right == null) {
+            int value = Integer.parseInt(sb.toString());
+            answer += value;
+
+        }
+        solve(root.right, sb);
+        sb.deleteCharAt(sb.length() - 1);
+    }
+
+    //https://leetcode.com/problems/4sum/submissions/
+    public ArrayList<ArrayList<Integer>> fourSum(int[] nums, int target) {
+        Arrays.sort(nums);
+        ArrayList<ArrayList<Integer>> list = new ArrayList<>();
+        int n = nums.length;
+
+        for (int i = 0; i < nums.length - 3; i++) {
+            if (i == 0 || (i > 0 && nums[i] != nums[i - 1])) {
+
+                for (int j = i + 1; j < nums.length - 2; j++) {
+                    if (j == i + 1 || (j > i + 1 && nums[j] != nums[j - 1])) {
+                        int low = j + 1, high = nums.length - 1;
+
+                        while (low < high) {
+                            if (nums[i] + nums[j] + nums[low] + nums[high] == target) {
+//                                list.add(Arrays.asList(nums[i], nums[j], nums[low], nums[high]));
+                                ArrayList<Integer> al = new ArrayList<>();
+                                al.add(nums[i]);
+                                al.add(nums[j]);
+                                al.add(nums[low]);
+                                al.add(nums[high]);
+                                list.add(al);
+                                while (low < high && nums[low] == nums[low + 1]) low++;
+                                while (low < high && nums[high] == nums[high - 1]) high--;
+                                low++;
+                                high--;
+
+                            } else if (nums[i] + nums[j] + nums[low] + nums[high] < target) {
+                                low++;
+                            } else {
+                                high--;
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+
+        return list;
+    }
+
+    public List<List<Integer>> threeSum(int[] nums) {
+        Arrays.sort(nums);
+        List<List<Integer>> list = new ArrayList<>();
+        int n = nums.length;
+        for (int i = 0; i < nums.length - 2; i++) {
+            if (i == 0 || (i > 0 && nums[i] != nums[i - 1])) {
+                int low = i + 1, high = n - 1;
+                while (low < high) {
+                    if (nums[i] + nums[low] + nums[high] < 0) {
+                        low++;
+                    } else if (nums[i] + nums[low] + nums[high] > 0) {
+                        high--;
+                    } else {
+                        list.add(Arrays.asList(nums[i], nums[low], nums[high]));
+                        while (low < high && nums[low] == nums[low + 1]) low++;
+                        while (low < high && nums[high] == nums[high - 1]) high--;
+                        low++;
+                        high--;
+                    }
+                }
+            }
+        }
+
+        return list;
+    }
+
+    public static boolean PairWithGivenDifference(int[] arr, int diff) {
+
+        Arrays.sort(arr);
+
+        int low = 0, high = arr.length - 1;
+        while (low < high) {
+            if (arr[high] - arr[low] == diff) return true;
+            else if (arr[high] - arr[low] > diff) high--;
+            else low++;
+        }
+
+        return false;
+    }
+
+    //https://leetcode.com/problems/majority-element-ii/submissions/
+    public List<Integer> majorityElement(int[] nums) {
+        List<Integer> list = new ArrayList<>();
+        int n = nums.length;
+
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for (int x : nums)
+            map.put(x, map.getOrDefault(x, 0) + 1);
+
+
+        for (Map.Entry<Integer, Integer> m : map.entrySet()) {
+            int key = m.getKey();
+            int value = m.getValue();
+            if (Math.floor(n / 3) < value) list.add(key);
+        }
+
+
+        return list;
+    }
 
     public String findSubString(String str) {
         Map<Character, Integer> map = new HashMap<>();
@@ -46,19 +183,6 @@ public class Miscellaenous {
         return res;
     }
 
-    public static String SmallestWindowOfSubString(String str) {
-
-        char[] s = str.toCharArray();
-        HashSet<Character> set = new HashSet<>();
-        for (char character : s) set.add(character);
-
-
-        HashSet<Character> set2 = new HashSet<>();
-        int n = str.length();
-
-
-        return "";
-    }
 
     public static boolean areIsomorphic(String s1, String s2) {
 
