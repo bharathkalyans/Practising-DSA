@@ -16,9 +16,89 @@ public class Miscellaenous {
 
     public static void main(String[] args) {
 
+        String val = Integer.toBinaryString(5);
+
+        System.out.println(val);
+        int[] ar = {};
 
     }
 
+    public int minSwaps(int[] nums) {
+        int swaps = 0;
+
+        int[] arr = Arrays.copyOfRange(nums, 0, nums.length);
+        Arrays.sort(arr);
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < arr.length; i++) {
+            map.put(nums[i], i);
+        }
+
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] != arr[i]) {
+                swaps++;
+                int val = nums[i];
+                int real_index = map.get(nums[i]);
+                //Swapping
+                int temp = nums[i];
+                nums[i] = arr[i];
+                nums[real_index] = temp;
+                //Updating the indexes in the hash map!
+
+                map.put(nums[i], i);
+                map.put(val, map.get(nums[i]));
+            }
+        }
+
+        return swaps;
+    }
+
+    public int[] sortByBits(int[] arr) {
+        Integer[] a = new Integer[arr.length];
+        int index = 0;
+        for (int x : arr) a[index++] = x;
+        SortByBitCounts(a);
+        index = 0;
+        for (Integer x : a)
+            arr[index++] = x;
+        return arr;
+    }
+
+    public static void SortByBitCounts(Integer[] arr) {
+        Arrays.sort(arr, new Comparator<Integer>() {
+
+            @Override
+            public int compare(Integer o1, Integer o2) {
+
+                int c1 = Integer.bitCount(o1);
+                int c2 = Integer.bitCount(o2);
+                if (c1 <= c2)
+                    return 1;
+                else
+                    return -1;
+            }
+        });
+    }
+
+    public static void SubArrayWithSumZero(int[] arr, int sum) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+        int curr_sum = 0;
+
+        for (int i = 0; i < arr.length; i++) {
+            curr_sum += arr[i];
+
+            if (curr_sum == sum) {
+                System.out.println("Sub Array is found at :: 0 to " + i);
+            }
+            if (map.containsKey(curr_sum - sum)) {
+                System.out.println("Sub Array is found at :: " + (map.get(curr_sum) + 1) + " to " + i);
+            } else {
+                map.put(curr_sum, i);
+            }
+
+        }
+
+        System.out.println(map);
+    }
 
     //https://practice.geeksforgeeks.org/problems/count-triplets-with-sum-smaller-than-x5549/1
     public static long countTriplets(long[] arr, int target) {
@@ -31,7 +111,7 @@ public class Miscellaenous {
             while (low < high) {
                 if (arr[i] + arr[low] + arr[high] >= target) {
                     high--;
-                }else{
+                } else {
                     count += high - low;
                 }
             }
