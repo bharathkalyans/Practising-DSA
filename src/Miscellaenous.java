@@ -16,10 +16,56 @@ public class Miscellaenous {
 
     public static void main(String[] args) {
 
-        String val = Integer.toBinaryString(5);
 
-        System.out.println(val);
-        int[] ar = {};
+        String val = "00000";
+        System.out.println(Integer.parseInt(val));
+        long b = Long.parseLong(val);
+        System.out.println(b);
+    }
+
+
+
+    //https://leetcode.com/problems/add-strings/
+    public static String addStrings(String num1, String num2) {
+        int n1 = num1.length() - 1;
+        int n2 = num2.length() - 1;
+        int carry = 0;
+        StringBuilder sb = new StringBuilder();
+        int i = n1, j = n2;
+        while (i >= 0 && j >= 0) {
+            int number1 = num1.charAt(i) - '0';
+            int number2 = num2.charAt(j) - '0';
+
+            int sum = number1 + number2 + carry;
+            carry = 0;
+            if (sum > 10) {
+                carry = 1;
+            }
+            sb.append(sum % 10);
+            i--;
+            j--;
+        }
+
+        while (i >= 0) {
+            if (carry == 1) {
+                int number = num1.charAt(i) - '0';
+                sb.append(number + 1);
+                carry = 0;
+            } else {
+                int numb = num1.charAt(i) - '0';
+                sb.append(numb);
+            }
+            i--;
+        }
+
+        int d = sb.length() - 1;
+        while (d >= 0) {
+            if (sb.charAt(d) !='0')
+                return return sb.reverse().toString();
+        }
+
+        if (carry == 1) sb.append(carry);
+        return sb.reverse().toString();
 
     }
 
