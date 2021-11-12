@@ -23,7 +23,46 @@ public class Miscellaenous {
         System.out.println(b);
     }
 
+    public ListNode removeNthFromEnd(ListNode head, int K) {
+        if (head == null) return null;
+        int count = 0;
+        ListNode temp = head;
+        while (temp != null) {
+            count++;
+            temp = temp.next;
+        }
 
+        int toDeleteIndex = count - K;
+
+        temp = head;
+        while (toDeleteIndex > 0) {
+            temp = temp.next;
+            toDeleteIndex--;
+        }
+
+
+        temp.next = temp.next.next;
+
+        return head;
+    }
+
+    public static TreeNode SortUnSortedLinkedList(TreeNode root) {
+        HashSet<TreeNode> set = new HashSet<>();
+        TreeNode temp = root;
+        TreeNode prev = null;
+
+        while (temp != null) {
+            if (!set.contains(temp)) {
+                set.add(temp);
+                prev = temp;
+            } else {
+                prev.right = temp.right;
+            }
+            temp = temp.right;
+        }
+
+        return null;
+    }
 
     //https://leetcode.com/problems/add-strings/
     public static String addStrings(String num1, String num2) {
@@ -60,8 +99,8 @@ public class Miscellaenous {
 
         int d = sb.length() - 1;
         while (d >= 0) {
-            if (sb.charAt(d) !='0')
-                return return sb.reverse().toString();
+            if (sb.charAt(d) != '0')
+                return sb.reverse().toString();
         }
 
         if (carry == 1) sb.append(carry);
