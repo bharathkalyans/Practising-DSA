@@ -16,11 +16,23 @@ public class Miscellaenous {
 
     public static void main(String[] args) {
 
+        int count = 0;
+        for (int i = 2000; i < 3000; i++)
+            if (isLeapYear(i)) {
+                count++;
+                System.out.println(i + " is a Leap Year");
+            }
 
-        String val = "00000";
-        System.out.println(Integer.parseInt(val));
-        long b = Long.parseLong(val);
-        System.out.println(b);
+        System.out.println(count + " total leap years");
+    }
+
+    // To get a Leap Year
+    public static boolean isLeapYear(int year) {
+        if (year % 400 == 0) return true;
+        else if (year % 100 == 0) return false;
+        else if (year % 4 == 0) return true;
+
+        return false;
     }
 
     public ListNode removeNthFromEnd(ListNode head, int K) {
