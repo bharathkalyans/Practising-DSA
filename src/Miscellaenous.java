@@ -16,10 +16,135 @@ public class Miscellaenous {
 
     public static void main(String[] args) {
 
+        LLNode s = new LLNode(12);
+        s.next = new LLNode(15);
+        s.next.next = new LLNode(10);
+        s.next.next.next = new LLNode(11);
+        s.next.next.next.next = new LLNode(3);
+
 
     }
 
 
+    //https://practice.geeksforgeeks.org/problems/segregate-even-and-odd-nodes-in-a-linked-list5035/1#
+    public static ListNode SegregateEvenOdd(ListNode head) {
+        if (head == null || head.next == null) return head;
+
+        ListNode curr = head;
+        ListNode evenStart = null;
+        ListNode oddStart = null;
+        ListNode evenEnd = null;
+        ListNode oddEnd = null;
+
+        while (curr != null) {
+            if (curr.val % 2 == 0) {
+                if (evenStart == null) {
+                    evenStart = curr;
+                    evenEnd = curr;
+                } else {
+                    evenEnd.next = curr;
+                    evenEnd = evenEnd.next;
+                }
+            } else {
+                if (oddStart == null) {
+                    oddStart = curr;
+                    oddEnd = curr;
+                } else {
+                    oddEnd.next = curr;
+                    oddEnd = oddEnd.next;
+                }
+            }
+            curr = curr.next;
+        }
+
+        if (oddStart == null) return evenStart;
+        else if(evenStart == null) return oddStart;
+
+
+        evenEnd.next = oddStart;
+        oddEnd.next = null;
+        head = evenStart;
+        return head;
+    }
+
+    // Number of Islands Problem!
+    public static int numberOfIslands(int[][] matrix) {
+        int m = matrix.length;
+        int n = matrix[0].length;
+        boolean[][] visited = new boolean[m][n];
+
+        for (boolean[] row : visited)
+            Arrays.fill(row, false);
+
+        int number_of_islands = 0;
+
+        // Checking every node whether we can group islands and count them!
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (matrix[i][j] == 1 && !visited[i][j]) {
+                    dfs(visited, matrix, i, j);
+                    number_of_islands++;
+                }
+            }
+        }
+
+        return number_of_islands;
+
+    }
+
+    public static void dfs(boolean[][] visited, int[][] matrix, int row, int column) {
+        int m = matrix.length;
+        int n = matrix[0].length;
+
+        // Safe Condition to proceed further!
+        if (isSafe(m, n, row, column, visited, matrix)) {
+
+            // Marking the visited node as 'TRUE'
+            visited[row][column] = true;
+
+
+            // Searching in all 8 Directions!
+            dfs(visited, matrix, row + 1, column);
+            dfs(visited, matrix, row, column + 1);
+            dfs(visited, matrix, row - 1, column);
+            dfs(visited, matrix, row, column - 1);
+            dfs(visited, matrix, row + 1, column + 1);
+            dfs(visited, matrix, row + 1, column - 1);
+            dfs(visited, matrix, row - 1, column + 1);
+            dfs(visited, matrix, row - 1, column - 1);
+        }
+
+        return;
+
+    }
+
+    public static boolean isSafe(int m, int n, int row, int column, boolean[][] visited, int[][] matrix) {
+        if (row >= 0 && column >= 0 && row < m && column < n && (matrix[row][column] == 1 && !visited[row][column]))
+            return true;
+        return false;
+
+    }
+
+    public int[] nextLargerNodes(ListNode head) {
+        ArrayList<Integer> al = new ArrayList<>();
+        int max = Integer.MIN_VALUE;
+        ListNode curr = head;
+        while (curr != null) {
+            if (curr.val > max) {
+                max = curr.val;
+                al.add(0);
+            } else {
+                al.add(max);
+            }
+            curr = curr.next;
+        }
+        int[] result = new int[al.size()];
+
+        for (int i = al.size() - 1; i >= 0; i--) {
+            result[i] = al.get(i);
+        }
+        return result;
+    }
 
 
     //https://practice.geeksforgeeks.org/problems/merge-k-sorted-linked-lists/1
