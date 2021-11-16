@@ -16,14 +16,34 @@ public class Miscellaenous {
 
     public static void main(String[] args) {
 
-        int count = 0;
-        for (int i = 2000; i < 3000; i++)
-            if (isLeapYear(i)) {
-                count++;
-                System.out.println(i + " is a Leap Year");
-            }
 
-        System.out.println(count + " total leap years");
+    }
+
+
+
+
+    //https://practice.geeksforgeeks.org/problems/merge-k-sorted-linked-lists/1
+    public ListNode mergeKLists(ListNode[] lists) {
+        if (lists == null || lists.length == 0 || lists.length == 1)
+            return null;
+        PriorityQueue<ListNode> pq = new PriorityQueue<>((o1, o2) -> o1.val - o2.val);
+        ListNode dummy = new ListNode(-1);
+        ListNode tail = dummy;
+
+        for (ListNode l : lists) {
+            if (l != null) pq.offer(l);
+        }
+
+        while (!pq.isEmpty()) {
+            tail.next = pq.poll();
+            tail = tail.next;
+
+            if (tail.next != null) pq.offer(tail.next);
+
+        }
+
+
+        return dummy.next;
     }
 
     // To get a Leap Year
