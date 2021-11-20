@@ -25,6 +25,65 @@ public class Miscellaenous {
 
     }
 
+    public List<List<Integer>> verticalTraversal(TreeNode root) {
+        List<List<Integer>> list = new ArrayList<>();
+        if (root == null) return list;
+
+        TreeMap<Integer, List<Integer>> map = new TreeMap<>();
+        preorder(root, map, 0);
+
+        // Now traverse and add it to the list
+        for (List<Integer> list_of_nodes : map.values()) {
+            Collections.sort(list_of_nodes);
+            list.add(new ArrayList<>());
+            for (Integer list_of_node : list_of_nodes) {
+                list.get(list.size() - 1).add(list_of_node);
+            }
+        }
+        return list;
+    }
+
+    public void preorder(TreeNode root, TreeMap<Integer, List<Integer>> map, int distance) {
+        // Value -> Left -> Right
+        if (root == null) return;
+
+        map.computeIfAbsent(distance, k -> new ArrayList<>());
+        map.get(distance).add(root.val);
+
+        preorder(root.left, map, distance - 1);
+        preorder(root.right, map, distance + 1);
+    }
+
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        List<List<Integer>> l = new ArrayList<>();
+        if (root == null) return l;
+
+        Queue<TreeNode> q = new LinkedList<>();
+        q.add(root);
+        q.add(null);
+
+        while (!q.isEmpty() && q.peek() != null) {
+
+            List<Integer> list = new ArrayList<>();
+            while (q.peek() != null) {
+
+                TreeNode temp = q.poll();
+                list.add(temp.val);
+
+                if (temp.left != null)
+                    q.add(temp.left);
+
+                if (temp.right != null)
+                    q.add(temp.right);
+
+            }
+            l.add(list);
+            q.poll();
+            q.add(null);
+        }
+
+        return l;
+    }
 
     //https://practice.geeksforgeeks.org/problems/segregate-even-and-odd-nodes-in-a-linked-list5035/1#
     public static ListNode SegregateEvenOdd(ListNode head) {
@@ -58,7 +117,7 @@ public class Miscellaenous {
         }
 
         if (oddStart == null) return evenStart;
-        else if(evenStart == null) return oddStart;
+        else if (evenStart == null) return oddStart;
 
 
         evenEnd.next = oddStart;
