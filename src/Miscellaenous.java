@@ -22,7 +22,24 @@ public class Miscellaenous {
         s.next.next.next = new LLNode(11);
         s.next.next.next.next = new LLNode(3);
 
+        TreeMap<Integer, List<Integer>> map = new TreeMap<>();
 
+        System.out.println(getFactors(100));
+
+    }
+
+    public static ArrayList<Integer> getFactors(int n) {
+        ArrayList<Integer> l = new ArrayList<>();
+        for (int i = 1; i * i < n; i++) {
+            if (n % i == 0) {
+                if (n / i == i) l.add(i);
+                else {
+                    l.add(i);
+                    l.add(n / i);
+                }
+            }
+        }
+        return l;
     }
 
     public List<List<Integer>> verticalTraversal(TreeNode root) {
