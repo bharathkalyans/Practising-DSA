@@ -16,16 +16,51 @@ public class Miscellaenous {
 
     public static void main(String[] args) {
 
-        LLNode s = new LLNode(12);
-        s.next = new LLNode(15);
-        s.next.next = new LLNode(10);
-        s.next.next.next = new LLNode(11);
-        s.next.next.next.next = new LLNode(3);
 
-        TreeMap<Integer, List<Integer>> map = new TreeMap<>();
+        int[] nums = {3, 2, 1, 5, 6, 4};
+        new Miscellaenous().findKthLargest(nums, 2);
+    }
 
-        System.out.println(getFactors(100));
 
+    //Getting Kth Largest Element using Quick Sort!
+    public int findKthLargest(int[] nums, int k) {
+        int n = nums.length;
+        return quicksort(nums, 0, n - 1, n - k);
+    }
+
+    public int quicksort(int[] arr, int low, int high, int k) {
+        if (low > high) return arr[low];
+
+        int pivot = getPartition(arr, low, high);
+        System.out.println("Got partition at :: " + pivot);
+        if (pivot == k)
+            return arr[pivot];
+
+        if (pivot < k)
+            return quicksort(arr, pivot + 1, high, k);
+        else return quicksort(arr, low, pivot - 1, k);
+
+    }
+
+    public int getPartition(int[] arr, int low, int high) {
+        int j = low - 1;
+        int value = arr[high];
+
+        for (int i = low; i <= high - 1; i++) {
+            if (arr[i] < value) {
+                j++;
+                swap(arr, i, j);
+            }
+        }
+        swap(arr, j + 1, high);
+        return j + 1;
+
+    }
+
+    public void swap(int[] arr, int i, int j) {
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
     }
 
     public static ArrayList<Integer> getFactors(int n) {
