@@ -17,9 +17,14 @@ public class Miscellaenous {
     public static void main(String[] args) {
 
 
-        int[] nums = {3, 2, 1, 5, 6, 4};
-        new Miscellaenous().findKthLargest(nums, 2);
+        int[] nums = {3, 2, 1, 2, 2, 4};
+        Arrays.sort(nums);
+        int index = Arrays.binarySearch(nums, 12);
+        System.out.println("Index :: " + index);
+
     }
+
+
 
 
     //Getting Kth Largest Element using Quick Sort!
