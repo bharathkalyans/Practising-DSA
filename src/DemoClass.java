@@ -1,13 +1,37 @@
 import java.util.Arrays;
+import java.util.TreeMap;
 
 public class DemoClass {
 
     public static void main(String[] args) {
 
-        int[] a = {7, 4, 3, 9, 1, 8, 5, 2, 6};
-        getAverages(a, 3);
+    }
 
+    public String[] getFolderNames(String[] names) {
+        TreeMap<String, Integer> map = new TreeMap<>();
 
+        for (String name : names) {
+
+            if (!map.containsKey(name)) {
+                map.put(name, 1);
+            } else {
+                int getTotalFiles = map.get(name);
+
+                String newFile = name + "(" + (getTotalFiles + 1) + ")";
+                while (!map.containsKey(newFile)) {
+                    getTotalFiles++;
+                    newFile = name + "(" + getTotalFiles + ")";
+                }
+                map.put(newFile, getTotalFiles + 1);
+
+            }
+        }
+        String[] result = new String[names.length];
+        int index = 0;
+        for (String s : map.keySet())
+            result[index++] = s;
+
+        return result;
     }
 
     public static void getAverages(int[] nums, int k) {
