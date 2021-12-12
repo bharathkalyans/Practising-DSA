@@ -1,10 +1,55 @@
-import java.util.Arrays;
-import java.util.TreeMap;
+import java.util.*;
 
 public class DemoClass {
 
     public static void main(String[] args) {
 
+    }
+
+
+    public static long subArrayRanges(int[] nums) {
+        if (nums == null || nums.length == 0) return 0;
+
+        long sum = 0;
+        int n = nums.length;
+
+        for (int i = 0; i < n; i++) {
+            int largest = nums[i], smallest = nums[i];
+            for (int j = i; j < n; j++) {
+                largest = Math.max(largest, nums[j]);
+                smallest = Math.min(smallest, nums[j]);
+                sum += (largest - smallest);
+            }
+        }
+        System.out.println("Sum is :: " + sum);
+        return sum;
+    }
+
+    public int countPoints(String rings) {
+        int n = rings.length();
+
+        if (n < 6) return 0;
+
+        int count = 0;
+        HashMap<Character, HashSet<Character>> map = new HashMap<>();
+
+        for (int i = 1; i < n; i = i + 2) {
+            Character color = rings.charAt(i - 1);
+            Character index = rings.charAt(i);
+
+            if (!map.containsKey(index)) {
+                map.put(index, new HashSet<>());
+            }
+            map.get(index).add(color);
+        }
+
+
+        for (Map.Entry<Character, HashSet<Character>> m : map.entrySet()) {
+            if (m.getValue().size() == 3) count++;
+        }
+
+
+        return count;
     }
 
     public String[] getFolderNames(String[] names) {
