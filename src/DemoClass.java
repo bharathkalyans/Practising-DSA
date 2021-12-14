@@ -4,8 +4,50 @@ public class DemoClass {
 
     public static void main(String[] args) {
 
+        System.out.println(compareVersion("1.01", "1.001"));
     }
 
+
+    // https://leetcode.com/problems/compare-version-numbers/discuss/1628734/Simple-Merge-Sort-Style-Code!!
+    public static int compareVersion(String v1, String v2) {
+
+
+        String[] l = v1.split("\\.");
+        String[] r = v2.split("\\.");
+
+        int n = l.length;
+        int m = r.length;
+
+        int i = 0, j = 0;
+
+        while (i < n && j < m) {
+            int a = Integer.parseInt(l[i]);
+            int b = Integer.parseInt(r[j]);
+
+            if (a == b) {
+                i++;
+                j++;
+            } else if (a > b) return 1;
+            else if (a < b) return -1;
+
+        }
+
+        while (i < n) {
+            int val = Integer.parseInt(l[i]);
+            if (i > 0) return 1;
+            i++;
+        }
+
+
+        while (j < m) {
+            int val = Integer.parseInt(r[j]);
+            if (j > 0) return 1;
+            j++;
+        }
+
+
+        return 0;
+    }
 
     public static long subArrayRanges(int[] nums) {
         if (nums == null || nums.length == 0) return 0;
