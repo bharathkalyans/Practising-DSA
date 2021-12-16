@@ -4,7 +4,19 @@ public class DemoClass {
 
     public static void main(String[] args) {
 
-        System.out.println(compareVersion("1.01", "1.001"));
+    }
+
+    // Maximize SubSet of Product Array!
+    int Maximize(int[] arr, int n) {
+
+        Arrays.sort(arr);
+        long M = 1000000007;
+        long sum = 0;
+
+        for (int i = 0; i < arr.length; i++) {
+            sum += (long) arr[i] * i;
+        }
+        return (int) ((sum) % M);
     }
 
 
