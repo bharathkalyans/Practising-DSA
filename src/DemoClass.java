@@ -3,7 +3,32 @@ import java.util.*;
 public class DemoClass {
 
     public static void main(String[] args) {
+        System.out.println((int) 'a');
+    }
 
+
+    //https://leetcode.com/contest/biweekly-contest-65/problems/check-whether-two-strings-are-almost-equivalent/
+    public boolean checkAlmostEquivalent(String word1, String word2) {
+        HashMap<Character, Integer> map1 = new HashMap<>();
+        HashMap<Character, Integer> map2 = new HashMap<>();
+
+        for (char c : word1.toCharArray()) {
+            map1.put(c, map1.getOrDefault(c, 0) + 1);
+        }
+
+        for (char c : word2.toCharArray()) {
+            map2.put(c, map2.getOrDefault(c, 0) + 1);
+        }
+
+        for (int i = 0; i < 26; i++) {
+            char c = (char) (i + 'a');
+            int freq1 = map1.getOrDefault(c, 0);
+            int freq2 = map2.get(c);
+            if (Math.abs(freq1 - freq2) > 3) return false;
+
+        }
+
+        return true;
     }
 
     // Maximize SubSet of Product Array!
