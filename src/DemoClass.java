@@ -3,9 +3,53 @@ import java.util.*;
 public class DemoClass {
 
     public static void main(String[] args) {
-        System.out.println((int) 'a');
+
+        int[] a = {12, 6, 12, 6, 14, 2, 13, 17, 3, 8, 11, 7, 4, 11, 18, 8, 8, 3};
+        System.out.println(kIncreasing(a, 1));
+
     }
 
+
+
+    public static int kIncreasing(int[] arr, int k) {
+        int min = 0;
+        int n = arr.length;
+        for (int i = 0; i < n - k; i++) {
+            if (arr[i] > arr[i + k]) {
+                arr[i + k] = arr[i];
+                min++;
+            }
+        }
+        return min;
+    }
+
+    public static long getDescentPeriods(int[] prices, int n) {
+        long total = 0L;
+        int[] suffix = new int[n];
+        Arrays.fill(suffix, 1);
+        for (int i = n - 1; i > 0; i--) {
+            if (prices[i - 1] - prices[i] == 1) {
+                suffix[i - 1] += suffix[i];
+            }
+        }
+
+        for (int x : suffix) total += x;
+        return total;
+    }
+
+
+    public static String addSpaces(String s, int[] spaces) {
+        StringBuilder sb = new StringBuilder();
+        int n = s.length();
+        HashSet<Integer> set = new HashSet<>();
+        for (int space : spaces) set.add(space);
+
+        for (int i = 0; i < n; i++) {
+            if (set.contains(i)) sb.append(" ");
+            sb.append(s.charAt(i));
+        }
+        return sb.toString();
+    }
 
     //https://leetcode.com/contest/biweekly-contest-65/problems/check-whether-two-strings-are-almost-equivalent/
     public boolean checkAlmostEquivalent(String word1, String word2) {
