@@ -3,13 +3,66 @@ import java.util.*;
 public class DemoClass {
 
     public static void main(String[] args) {
-
-        int[] a = {12, 6, 12, 6, 14, 2, 13, 17, 3, 8, 11, 7, 4, 11, 18, 8, 8, 3};
-        System.out.println(kIncreasing(a, 1));
-
+        System.out.println(finalCount(10, 4));
     }
 
 
+
+
+    static int finalCount(int n, int x) {
+        int count = 0;
+        int bob = x, alice = n - x;
+        while (bob != alice) {
+            if (alice > bob)
+                alice -= bob;
+            else bob -= alice;
+            count++;
+        }
+        return count;
+    }
+
+    static int sumOfString(String num) {
+        int n = num.length();
+        int sum = 0;
+        for (int i = 0; i < n; i++) {
+            for (int j = i; j < n; j++) {
+                int number = Integer.parseInt(num.substring(i, j + 1));
+                sum += number;
+            }
+        }
+        return sum;
+    }
+
+
+    static int reverseOfDigits(int n) {
+        int rev = 0;
+        int temp = n;
+        while (temp > 0) {
+            int digit = temp % 10;
+            rev = rev * 10 + digit;
+            temp = temp / 10;
+        }
+        return rev;
+    }
+
+    public static int Pairs(int[] arr, int sum) {
+
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for (int j : arr) {
+            map.put(j, map.getOrDefault(j, 0) + 1);
+        }
+
+        int count = 0;
+        for (int j : arr) {
+            if (map.containsKey(sum - j))
+                count += map.get(j);
+
+            if (sum - j == j) count -= map.get(j);
+        }
+
+        System.out.println("Count is :: " + count / 2);
+        return count / 2;
+    }
 
     public static int kIncreasing(int[] arr, int k) {
         int min = 0;
