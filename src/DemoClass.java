@@ -4,7 +4,106 @@ public class DemoClass {
 
     public static void main(String[] args) {
         DemoClass obj = new DemoClass();
+        int[] a = new int[]{2, 1, 3, 1, 2, 3, 3};
 
+        obj.executeInstructions(3, new int[]{0, 1}, "RRDDLU");
+
+
+    }
+
+
+    // LeetCode Weekly Contest 273
+    public int[] executeInstructions(int n, int[] startPos, String s) {
+
+        int[] result = new int[s.length()];
+        if (n == 1) return result;
+
+        int r = startPos[0];
+        int c = startPos[1];
+        for (int i = 0; i < s.length(); i++) {
+            result[i] = dfs(s, i, r, c, n, n);
+        }
+        for (int x : result) System.out.print(x + " ");
+        return result;
+    }
+
+    public boolean isSafe(String s, int r, int c, int R, int C) {
+        if (r >= 0 && (r < R) && c >= 0 && (c < C)) return true;
+        else return false;
+    }
+
+    public int dfs(String s, int index, int r, int c, int R, int C) {
+        if (index < s.length() && r >= 0 && (r < R) && c >= 0 && (c < C)) {
+//        if (index < s.length() && r >= 0 && (r < R) && c >= 0 && (c < C)) {
+            char direction = s.charAt(index);
+            if (direction == 'L') {
+                if (isSafe(s, r, c - 1, R, C))
+                    return 1 + dfs(s, index + 1, r, c - 1, R, C);
+            } else if (direction == 'R') {
+                if (isSafe(s, r, c + 1, R, C))
+                    return 1 + dfs(s, index + 1, r, c + 1, R, C);
+            } else if (direction == 'U') {
+                if (isSafe(s, r - 1, c, R, C))
+                    return 1 + dfs(s, index + 1, r - 1, c, R, C);
+            } else if (direction == 'D') {
+                if (isSafe(s, r + 1, c, R, C))
+                    return 1 + dfs(s, index + 1, r + 1, c, R, C);
+            } else return 0;
+        }
+        return 0;
+    }
+
+
+
+    public long[] getDistances(int[] arr, int m) {
+        int n = arr.length;
+        long[] result = new long[n];
+
+        HashMap<Integer, ArrayList<Integer>> map = new HashMap<>();
+        // Creating a map! and list of its indices!
+        for (int i = 0; i < n; i++) {
+            if (!map.containsKey(arr[i]))
+                map.put(arr[i], new ArrayList<>());
+            map.get(arr[i]).add(i);
+        }
+
+        for (int i = 0; i < n; i++) {
+            long diff = 0;
+            ArrayList<Integer> temp = map.get(arr[i]);
+            // Now traverse the ArrayList and add the diff!
+            for (int p = 0; p < temp.size(); p++) {
+                diff += Math.abs(i - temp.get(p));
+            }
+            result[i] = diff;
+        }
+
+//        for (long x : result) System.out.print(x + " ");
+        return result;
+    }
+
+    public long[] getDistances(int[] arr) {
+        int n = arr.length;
+        long[] result = new long[n];
+
+        for (int i = 0; i < n; i++) {
+            long diff = 0;
+            for (int j = 0; j < i; j++) {
+                if (arr[i] == arr[j]) {
+//                    System.out.println("Found a Value :: " + arr[i]);
+                    diff += Math.abs(i - j);
+                }
+            }
+
+            for (int k = i + 1; k < n; k++) {
+                if (arr[i] == arr[k]) {
+//                    System.out.println("Found a Value :: " + arr[i]);
+                    diff += Math.abs(i - k);
+                }
+            }
+            result[i] = diff;
+        }
+//        for (long x : result) System.out.print(x + " ");
+        return result;
     }
 
     //https://leetcode.com/contest/biweekly-contest-65/problems/check-whether-two-strings-are-almost-equivalent/
