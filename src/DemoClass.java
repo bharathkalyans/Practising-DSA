@@ -6,11 +6,36 @@ public class DemoClass {
         DemoClass obj = new DemoClass();
         int[] a = new int[]{2, 1, 3, 1, 2, 3, 3};
 
-        obj.executeInstructions(3, new int[]{0, 1}, "RRDDLU");
-
+        System.out.println(simplifyPath("/a/./b/../../c/"));
 
     }
 
+    //https://leetcode.com/problems/simplify-path/submissions/
+    public static String simplifyPath(String path) {
+        ArrayDeque<String> s = new ArrayDeque<>();
+        StringBuilder sb = new StringBuilder();
+
+        String[] str = path.split("/");
+        for (String s1 : str) System.out.print(s1 + " ");
+        System.out.println("String length :: " + str.length);
+        for (String name : str) {
+            if (name.length() == 0) continue;
+            if (name.equals("..")) {
+                if (!s.isEmpty())
+                    s.removeLast();
+            } else if (name.equals(".")) {
+                continue;
+            } else {
+                s.add(name);
+            }
+        }
+        if (s.isEmpty()) return "/";
+
+        while (!s.isEmpty()) {
+            sb.append("/").append(s.remove());
+        }
+        return sb.toString();
+    }
 
     // LeetCode Weekly Contest 273
     public int[] executeInstructions(int n, int[] startPos, String s) {
@@ -52,7 +77,6 @@ public class DemoClass {
         }
         return 0;
     }
-
 
 
     public long[] getDistances(int[] arr, int m) {
