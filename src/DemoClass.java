@@ -4,10 +4,72 @@ public class DemoClass {
 
     public static void main(String[] args) {
         DemoClass obj = new DemoClass();
-        int[] a = new int[]{2, 1, 3, 1, 2, 3, 3};
+        int[] a = new int[]{2, 2, 1, 2};
+        System.out.println(maximumInvitations(a));
+    }
 
-        System.out.println(simplifyPath("/a/./b/../../c/"));
+    //https://leetcode.com/contest/weekly-contest-274
+    public static int maximumInvitations(int[] favorite) {
+        int total_people = 0;
+        HashMap<Integer, ArrayList<Integer>> map = new HashMap<>();
 
+        for (int i = 0; i < favorite.length; i++) {
+            if (!map.containsKey(favorite[i])) {
+                map.put(favorite[i], new ArrayList<>());
+            }
+            if (map.get(favorite[i]).size() < 2) map.get(favorite[i]).add(i);
+        }
+
+        for (ArrayList<Integer> al : map.values()) {
+            total_people += al.size();
+        }
+        return total_people;
+    }
+
+    public static int numberOfBeams(String[] bank) {
+        int n = bank.length;
+        if (n == 0 || n == 1) return 0;
+
+        int beams = 0;
+
+        int prev_ones = 0;
+        String first = bank[0];
+        for (int i = 0; i < bank[0].length(); i++) {
+            if (first.charAt(i) == '1') {
+                prev_ones++;
+                System.out.println("Got 1 in Prev::");
+            }
+        }
+
+
+        for (int i = 1; i < n; i++) {
+            String curr_layer = bank[i];
+            int curr_ones = 0;
+            for (int j = 0; j < curr_layer.length(); j++)
+                if (curr_layer.charAt(j) == '1') curr_ones++;
+
+            if (curr_ones == 0) continue;
+            else {
+                beams += prev_ones * curr_ones;
+                prev_ones = curr_ones;
+            }
+        }
+
+        return beams;
+    }
+
+    public boolean asteroidsDestroyed(int mass, int[] asteroids) {
+        PriorityQueue<Integer> pq = new PriorityQueue(Collections.reverseOrder());
+        for (int a : asteroids)
+            pq.add(a);
+
+        for (int as : pq) {
+            int temp = pq.poll();
+            if (temp < mass) mass += temp;
+            else return false;
+        }
+
+        return true;
     }
 
     //https://leetcode.com/problems/simplify-path/submissions/
