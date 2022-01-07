@@ -1,11 +1,189 @@
 import java.util.*;
 
 public class DemoClass {
-
     public static void main(String[] args) {
         DemoClass obj = new DemoClass();
-        int[] a = new int[]{2, 2, 1, 2};
-        System.out.println(maximumInvitations(a));
+        System.out.println(FirstNonRepeating("aabcc"));
+    }
+
+    public static String FirstNonRepeating(String A) {
+
+        StringBuilder sb = new StringBuilder();
+        HashSet<Character> set = new HashSet<>();
+        Character nr = '#';
+        for (char c : A.toCharArray()) {
+            System.out.println("Character is :: " + c);
+            if (!set.contains(c)) {
+                sb.append(c);
+                nr = c;
+            } else {
+                nr = '#';
+                System.out.println("Non Repeating is :: " + nr);
+                sb.append(nr);
+            }
+            set.add(c);
+            System.out.println("Current String is :: " + sb.toString());
+        }
+        return sb.toString();
+    }
+
+    // Program 1
+    public static int sol(int[] arr) {
+        int count = 0;
+        int n = arr.length;
+        for (int i = 0; i < n; i++) {
+            int[] temp = getSum(arr[i]);
+            if (temp[0] == 0 && temp[1] == 0) continue;
+            if ((temp[0] != 0 && arr[i] % temp[0] == 0) || (temp[1] != 0 && arr[i] % temp[1] == 0)) count++;
+        }
+
+        return count;
+    }
+
+    public static int[] getSum(int x) {
+        int sum = 0, product = 1;
+        int temp = x;
+        while (temp > 0) {
+            int digit = temp % 10;
+            sum += digit;
+            product *= digit;
+            temp = temp / 10;
+        }
+        return new int[]{sum, product};
+    }
+
+
+    public static int s(int[] arr) {
+        int n = arr.length;
+        int maxPrime = Integer.MIN_VALUE;
+        int minPrime = Integer.MAX_VALUE;
+
+        for (int j : arr) {
+            if (isPrime(j)) {
+                maxPrime = Math.max(maxPrime, j);
+                minPrime = Math.min(minPrime, j);
+            }
+        }
+        return Math.abs(maxPrime - minPrime);
+    }
+
+    public static boolean isPrime(int x) {
+        if (x < 2) return false;
+        if (x == 2) return true;
+        for (int i = 3; i < x; i++) {
+            if (x % i == 0) return false;
+        }
+        return true;
+    }
+
+    public static double angle(String g) {
+
+        String[] time = g.split(":");
+        int h = Integer.parseInt(time[0]);
+        int m = Integer.parseInt(time[1]);
+
+        if (h == 12)
+            h = 0;
+        if (m == 60) {
+            m = 0;
+            h += 1;
+            if (h > 12)
+                h = h - 12;
+        }
+
+        double hour_angle = (0.5 * (h * 60 + m));
+        double minute_angle = (6 * m);
+
+        // Find the difference between two angles
+        double angle = Math.abs(hour_angle - minute_angle);
+
+        // smaller angle of two possible angles
+        angle = Math.min(360 - angle, angle);
+
+        return round(angle, 1);
+    }
+
+    public static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        long factor = (long) Math.pow(10, places);
+        value = value * factor;
+        long tmp = Math.round(value);
+        return (double) tmp / factor;
+    }
+
+    // Program 2
+    public static int numSpecial(int[] arr) {
+        int count = 0;
+        for (int j : arr) {
+            String temp = String.valueOf(j);
+            String[] c = temp.split("");
+            Arrays.sort(c, Collections.reverseOrder());
+            StringBuilder sb = new StringBuilder();
+            for (String g : c) sb.append(g);
+            int new_number = Integer.parseInt(sb.toString());
+            if (new_number == j) count++;
+        }
+
+        return count;
+    }
+
+
+    public static int numTriplets(int[] arr) {
+        int count = 0, n = arr.length;
+        if (n < 3) return 0;
+        for (int i = 0; i < n - 2; i++) {
+            if ((arr[i] + arr[i + 1] + arr[i + 2]) % 3 == 0) count++;
+        }
+        return count;
+    }
+
+    public static int findNum(int[] arr) {
+        int n = arr.length;
+        if (n == 1) return -1;
+
+        for (int i = 0; i < n; i++)
+            for (int j = 0; j < i; j++)
+                for (int k = 0; k < i; k++)
+                    if (arr[j] * arr[k] == arr[i]) return i;
+
+        return -1;
+    }
+
+    public static int count(int X) {
+        int count = 0;
+        int even = 0, sum = 0;
+        while (even <= X) {
+            if (sum % 2 == 0 || isPrime(sum)) {
+                sum += even;
+                count++;
+            }
+            even += 2;
+        }
+        return count;
+    }
+
+    public static int check(int[] A) {
+        int n = A.length;
+        int sum = 0;
+        for (int x : A) sum += x;
+        return sum * n;
+    }
+
+    public int findJudge(int n, int[][] trust) {
+        int m = trust.length;
+        if (m == 1) return trust[0][1];
+        HashSet<Long> set = new HashSet<>();
+
+        for (int[] ints : trust) {
+            set.add((long) ints[0]);
+        }
+
+        for (int i = 1; i <= n; i++) {
+            if (!set.contains(i)) return i;
+        }
+
+        return -1;
     }
 
     //https://leetcode.com/contest/weekly-contest-274
