@@ -6,6 +6,54 @@ public class DemoClass {
         obj.kthLargestNumber(new String[]{"2", "21", "12", "1"}, 3);
     }
 
+    // Very Interesting and Important Question!
+    public String reorganizeString(String s) {
+
+        int n = s.length(), limit = n % 2 == 0 ? n / 2 : (n + 1) / 2;
+
+        HashMap<Character, Integer> map = new HashMap<>();
+        PriorityQueue<Character> pq = new PriorityQueue<>((a, b) -> map.get(b) - map.get(a));
+        StringBuilder sb = new StringBuilder();
+
+        //Create a Frequency table.
+        for (char c : s.toCharArray())
+            map.put(c, map.getOrDefault(c, 0) + 1);
+
+        // Creating our Max Heap to Store the Characters that repeat the most!
+        for (Map.Entry<Character, Integer> mm : map.entrySet()) {
+            char character = mm.getKey();
+            int freq = mm.getValue();
+            if (freq > limit) return "";
+            pq.add(character);
+        }
+
+        while (pq.size() > 1) {
+            char first = pq.poll();
+            char second = pq.poll();
+            int frequencyOfFirst = map.get(first);
+            int frequencyOfSecond = map.get(second);
+            sb.append(first).append(second);
+
+            if (frequencyOfFirst - 1 > 0) {
+                map.put(first, frequencyOfFirst - 1);
+                pq.add(first);
+            }
+
+            if (frequencyOfSecond - 1 > 0) {
+                map.put(second, frequencyOfSecond - 1);
+                pq.add(second);
+            }
+        }
+
+        if (!pq.isEmpty()) {
+            char last = pq.poll();
+            if (map.get(last) > 1) return "";
+            sb.append(last);
+        }
+
+        return sb.toString();
+    }
+
     //https://leetcode.com/problems/find-the-kth-largest-integer-in-the-array/
     public void kthLargestNumber(String[] nums, int k) {
         int n = nums.length;
