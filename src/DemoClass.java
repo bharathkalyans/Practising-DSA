@@ -3,7 +3,23 @@ import java.util.*;
 public class DemoClass {
     public static void main(String[] args) {
         DemoClass obj = new DemoClass();
-        System.out.println(FirstNonRepeating("aabcc"));
+        obj.kthLargestNumber(new String[]{"2", "21", "12", "1"}, 3);
+    }
+
+    //https://leetcode.com/problems/find-the-kth-largest-integer-in-the-array/
+    public void kthLargestNumber(String[] nums, int k) {
+        int n = nums.length;
+        Arrays.sort(nums, (x, y) -> {
+            int l1 = x.length();
+            int l2 = y.length();
+            if (l1 > l2) return 1;
+            else if (l1 < l2) return -1;
+            else {
+                return x.compareTo(y);
+            }
+        });
+        for (String j : nums) System.out.print(j + " ");
+        System.out.println(nums[n - k]);
     }
 
     public static String FirstNonRepeating(String A) {
