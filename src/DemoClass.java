@@ -1,9 +1,69 @@
 import java.util.*;
 
+class Pair {
+    int ele, x, y;
+
+    Pair(int e, int x, int y) {
+        ele = e;
+        this.x = x;
+        this.y = y;
+    }
+}
+
 public class DemoClass {
     public static void main(String[] args) {
         DemoClass obj = new DemoClass();
-        obj.kthLargestNumber(new String[]{"2", "21", "12", "1"}, 3);
+        int arr[][] = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
+        System.out.println(mergeKArrays(arr, arr.length));
+    }
+
+
+
+    public static ArrayList<Integer> mergeKArrays(int[][] arr, int k) {
+        ArrayList<Integer> al = new ArrayList<>();
+        PriorityQueue<Pair> pq = new PriorityQueue<>(Comparator.comparingInt(a -> a.ele));
+
+        for (int i = 0; i < k; i++)
+            pq.add(new Pair(arr[i][0], i, 0));
+
+
+        while (!pq.isEmpty()) {
+            Pair temp = pq.poll();
+            al.add(temp.ele);
+            int curr_x = temp.x, curr_y = temp.y;
+            if (curr_y + 1 < k)
+                pq.add(new Pair(arr[curr_x][curr_y + 1], curr_x, curr_y + 1));
+
+        }
+        return al;
+    }
+
+    public static int finalValue(String s, int[] part1, int[] part2) {
+        long M = 1000000007;
+        int n = part2.length;
+        long frequency = 1;
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < n; i++) {
+            String substring = s.substring(part1[i] - 1);
+            System.out.println("SubString is :: " + substring);
+            sb.append(substring, 0, part2[i]);
+            System.out.println("Appending a SubString of length :: " + substring.substring(0, part2[i]));
+        }
+        HashMap<Character, Integer> map = new HashMap<>();
+
+        for (char c : sb.toString().toCharArray()) {
+            map.put(c, map.getOrDefault(c, 0) + 1);
+        }
+        int[] alpha = new int[26];
+        for (Map.Entry<Character, Integer> mm : map.entrySet()) {
+            char c = mm.getKey();
+            int freq = mm.getValue();
+            alpha[c - 'a'] = freq;
+        }
+        for (int i = 0; i < 26; i++) {
+            frequency *= alpha[i];
+        }
+        return (int) (frequency % M);
     }
 
     // Very Interesting and Important Question!
