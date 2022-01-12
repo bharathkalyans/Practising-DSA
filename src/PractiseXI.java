@@ -323,7 +323,7 @@ public class PractiseXI {
 
         int include = 0;
         if (arr[n] > prev)
-            include = LongestIncreasingSubSequence(arr, n + 1, arr[n]);
+            include = 1 + LongestIncreasingSubSequence(arr, n + 1, arr[n]);
         int exclude = LongestIncreasingSubSequence(arr, n + 1, prev);
         return Math.max(include, exclude);
 

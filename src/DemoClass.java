@@ -1,42 +1,14 @@
 import java.util.*;
 
-class Pair {
-    int ele, x, y;
 
-    Pair(int e, int x, int y) {
-        ele = e;
-        this.x = x;
-        this.y = y;
-    }
-}
 
 public class DemoClass {
     public static void main(String[] args) {
         DemoClass obj = new DemoClass();
-        int arr[][] = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
-        System.out.println(mergeKArrays(arr, arr.length));
+
+
     }
 
-
-
-    public static ArrayList<Integer> mergeKArrays(int[][] arr, int k) {
-        ArrayList<Integer> al = new ArrayList<>();
-        PriorityQueue<Pair> pq = new PriorityQueue<>(Comparator.comparingInt(a -> a.ele));
-
-        for (int i = 0; i < k; i++)
-            pq.add(new Pair(arr[i][0], i, 0));
-
-
-        while (!pq.isEmpty()) {
-            Pair temp = pq.poll();
-            al.add(temp.ele);
-            int curr_x = temp.x, curr_y = temp.y;
-            if (curr_y + 1 < k)
-                pq.add(new Pair(arr[curr_x][curr_y + 1], curr_x, curr_y + 1));
-
-        }
-        return al;
-    }
 
     public static int finalValue(String s, int[] part1, int[] part2) {
         long M = 1000000007;
