@@ -1,12 +1,32 @@
 import java.util.*;
 
 
-
 public class DemoClass {
     public static void main(String[] args) {
         DemoClass obj = new DemoClass();
+        System.out.println(obj.minMoves(656101987, 2));
+    }
 
+    public int minMoves(int target, int maxDoubles) {
+        int moves = 0;
 
+        while (target != 1) {
+            if (maxDoubles == 0) return moves + target - 1;
+            System.out.println("Target value is :: " + target);
+            if (maxDoubles >= 0 && target % 2 == 0) {
+                System.out.println("I am in Dividing by 2 with maxDoubles as :: " + maxDoubles);
+                target /= 2;
+                moves++;
+                maxDoubles--;
+            } else {
+                System.out.println("I am in Subtracting");
+                target -= 1;
+                moves++;
+            }
+            System.out.println("Current moves are :: " + moves);
+        }
+
+        return moves;
     }
 
 
