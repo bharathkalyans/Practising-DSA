@@ -7,6 +7,62 @@ public class DemoClass {
         System.out.println(obj.minMoves(656101987, 2));
     }
 
+
+    //https://leetcode.com/contest/weekly-contest-277/
+    public List<Integer> findLonely(int[] nums) {
+        List<Integer> list = new ArrayList<>();
+
+        HashMap<Integer, Integer> map = new LinkedHashMap<>();
+
+        for (int element : nums)
+            map.put(element, map.getOrDefault(element, 0) + 1);
+
+        for (Map.Entry<Integer, Integer> mm : map.entrySet()) {
+            int key = mm.getKey();
+            int frequency = mm.getValue();
+            if (frequency > 1) continue;
+            if (!map.containsKey(key - 1) && !map.containsKey(key + 1))
+                list.add(key);
+        }
+
+        return list;
+    }
+
+    public int[] rearrangeArray(int[] nums) {
+        int n = nums.length, index = 0;
+        int[] result = new int[n];
+        int[] positive = new int[n / 2];
+        int[] negative = new int[n / 2];
+        int p = 0, neg = 0;
+        for (int num : nums) {
+            if (num < 0) negative[neg++] = num;
+            else positive[p++] = num;
+        }
+        p = 0;
+        neg = 0;
+        for (int i = 0; i < n; i += 2)
+            result[i] = positive[p++];
+
+
+        for (int i = 1; i < n; i += 2)
+            result[i] = negative[neg++];
+
+        return result;
+    }
+
+
+    public int countElements(int[] nums) {
+        int n = nums.length, count = 0;
+        Arrays.sort(nums);
+
+        for (int i = 1; i < n - 1; i++) {
+            if (nums[i] > nums[0] && nums[i] < nums[n - 1])
+                count++;
+        }
+
+        return count;
+    }
+
     public int minMoves(int target, int maxDoubles) {
         int moves = 0;
 
