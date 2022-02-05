@@ -481,8 +481,6 @@ public class PractiseVI {
         while (!q.isEmpty()) {
             int ele = q.poll();
 
-//            System.out.println("Polled : " + ele);
-
             toposort[index++] = ele;
 
             for (int x : adj.get(ele)) {

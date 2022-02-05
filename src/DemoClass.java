@@ -4,7 +4,7 @@ import java.util.*;
 public class DemoClass {
     public static void main(String[] args) {
         DemoClass obj = new DemoClass();
-        System.out.println(obj.minMoves(656101987, 2));
+
     }
 
 
