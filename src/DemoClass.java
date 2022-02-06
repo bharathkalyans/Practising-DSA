@@ -4,9 +4,92 @@ import java.util.*;
 public class DemoClass {
     public static void main(String[] args) {
         DemoClass obj = new DemoClass();
-
+        int[] a = new int[]{4, 1, 2, 3};
+        System.out.println(obj.smallestNumber(-301));
     }
 
+
+    //Leetcode Weekly Contest - 279
+    public void swap(char[] c, int i, int j) {
+        char temp = c[i];
+        c[i] = c[j];
+        c[j] = temp;
+    }
+
+    public void reverseChar(char[] c) {
+        int low = 0, high = c.length - 1;
+        while (low < high) {
+            swap(c, low, high);
+            low++;
+            high--;
+        }
+    }
+
+    public long smallestNumber(long num) {
+        if (num == 0) return 0;
+        boolean isNegative = num < 0;
+
+        if (isNegative)
+            num = num * -1;
+
+        String number = String.valueOf(num);
+        char[] nn = number.toCharArray();
+
+        Arrays.sort(nn);
+        if (isNegative) {
+            reverseChar(nn);
+        }
+
+        int i = 0;
+        while (nn[i] == '0') i++;
+
+        swap(nn, 0, i);
+
+        StringBuilder result = new StringBuilder();
+        if (isNegative)
+            result.append("-");
+
+        for (char cc : nn)
+            result.append(cc);
+
+        num = Long.parseLong(result.toString());
+
+        return num;
+    }
+
+
+    public int[] sortEvenOdd(int[] nums) {
+
+        int n = nums.length;
+        ArrayList<Integer> odd = new ArrayList<>();
+        ArrayList<Integer> even = new ArrayList<>();
+        boolean flag = false;
+        for (int num : nums) {
+            if (flag) odd.add(num);
+            else even.add(num);
+            flag = !flag;
+        }
+
+
+        odd.sort(Collections.reverseOrder());
+        Collections.sort(even);
+
+        System.out.println(odd);
+        System.out.println(even);
+
+        int index = 0;
+
+        for (int x : even) {
+            nums[index] = x;
+            index += 2;
+        }
+        index = 1;
+        for (int x : odd) {
+            nums[index] = x;
+            index += 2;
+        }
+        return nums;
+    }
 
     //https://leetcode.com/contest/weekly-contest-277/
     public List<Integer> findLonely(int[] nums) {
